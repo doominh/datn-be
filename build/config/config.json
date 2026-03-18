@@ -1,0 +1,31 @@
+{
+	"development": {
+		"username": "freedb_toothhive",
+		"password": "dK*H9nWn78bcbHY",
+		"database": "freedb_toothhive",
+		"host": "sql.freedb.tech",
+		"query": {
+			"raw": true
+		},
+		"timezone": "+07:00",
+		"dialect": "mysql"
+	},
+	"test": {
+		"username": "root",
+		"password": null,
+		"database": "database_test",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	},
+	"production": {
+		"username": "freedb_toothhive",
+		"password": "dK*H9nWn78bcbHY",
+		"database": "freedb_toothhive",
+		"host": "sql.freedb.tech",
+		"query": {
+			"raw": true
+		},
+		"timezone": "+07:00",
+		"dialect": "mysql"
+	}
+}
