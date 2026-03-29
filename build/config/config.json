@@ -20,8 +20,8 @@
 	"production": {
 		"username": "uvhrgdfgvkw72egc",
 		"password": "tR1Mi0odhGLbpkOsSQtz",
-		"database": "boyy7cdwscudqepo5b91",
-		"host": "boyy7cdwscudqepo5b91-mysql.services.clever-cloud.com",
+		"database": "boyy7cdwscudqepo5b9l",
+		"host": "boyy7cdwscudqepo5b9l-mysql.services.clever-cloud.com",
 		"port": 3306,
 		"query": { "raw": true },
 		"timezone": "+07:00",
