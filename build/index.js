@@ -18,7 +18,7 @@ var _schedule = _interopRequireDefault(require("./routes/schedule"));
 var _appointment = _interopRequireDefault(require("./routes/appointment"));
 var _bill = _interopRequireDefault(require("./routes/bill"));
 var _report = _interopRequireDefault(require("./routes/report"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 require('dotenv').config();
 var app = (0, _express["default"])();
 

@@ -18,13 +18,12 @@
 		"dialect": "mysql"
 	},
 	"production": {
-		"username": "freedb_toothhive",
-		"password": "dK*H9nWn78bcbHY",
-		"database": "freedb_toothhive",
-		"host": "sql.freedb.tech",
-		"query": {
-			"raw": true
-		},
+		"username": "uvhrgdfgvkw72egc",
+		"password": "tR1Mi0odhGLbpkOsSQtz",
+		"database": "boyy7cdwscudqepo5b91",
+		"host": "boyy7cdwscudqepo5b91-mysql.services.clever-cloud.com",
+		"port": 3306,
+		"query": { "raw": true },
 		"timezone": "+07:00",
 		"dialect": "mysql"
 	}
