@@ -16,6 +16,8 @@ import scheduleRoutes from './routes/schedule';
 import appointmentRoutes from './routes/appointment';
 import billRoutes from './routes/bill';
 import reportRoutes from './routes/report';
+import chatRoutes from './routes/chat.route';
+import rateLimit from 'express-rate-limit';
 require('dotenv').config();
 
 const app = express();
@@ -38,6 +40,18 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+const chatLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 phút
+    max: 10,             // tối đa 15 request/IP/phút
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        errCode: 429,
+        reply: 'Bạn đang nhắn tin quá nhanh. Vui lòng chờ 1 phút rồi thử lại, hoặc gọi (028) 1234 5678 để được hỗ trợ.',
+        action: null,
+    },
+});
+
 //ROUTES
 app.get('/', (req, res) => res.send('Backend Toothhive'));
 app.use('/api/auth', authRoutes);
@@ -51,6 +65,7 @@ app.use('/api/schedule', scheduleRoutes);
 app.use('/api/appointment', appointmentRoutes);
 app.use('/api/bill', billRoutes);
 app.use('/api/report', reportRoutes);
+app.use('/api/chat', chatLimiter, chatRoutes);
 
 connect();
 
