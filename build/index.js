@@ -18,7 +18,9 @@ var _schedule = _interopRequireDefault(require("./routes/schedule"));
 var _appointment = _interopRequireDefault(require("./routes/appointment"));
 var _bill = _interopRequireDefault(require("./routes/bill"));
 var _report = _interopRequireDefault(require("./routes/report"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+var _chat = _interopRequireDefault(require("./routes/chat.route"));
+var _expressRateLimit = _interopRequireDefault(require("express-rate-limit"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 require('dotenv').config();
 var app = (0, _express["default"])();
 
@@ -42,6 +44,19 @@ app.use(_bodyParser["default"].urlencoded({
   limit: '50mb',
   extended: true
 }));
+var chatLimiter = (0, _expressRateLimit["default"])({
+  windowMs: 60 * 1000,
+  // 1 phút
+  max: 10,
+  // tối đa 15 request/IP/phút
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    errCode: 429,
+    reply: 'Bạn đang nhắn tin quá nhanh. Vui lòng chờ 1 phút rồi thử lại, hoặc gọi (028) 1234 5678 để được hỗ trợ.',
+    action: null
+  }
+});
 
 //ROUTES
 app.get('/', function (req, res) {
@@ -58,6 +73,7 @@ app.use('/api/schedule', _schedule["default"]);
 app.use('/api/appointment', _appointment["default"]);
 app.use('/api/bill', _bill["default"]);
 app.use('/api/report', _report["default"]);
+app.use('/api/chat', chatLimiter, _chat["default"]);
 (0, _connectDB["default"])();
 var port = process.env.PORT || 8080;
 var server = _http["default"].createServer(app);

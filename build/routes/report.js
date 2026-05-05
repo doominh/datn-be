@@ -3,7 +3,7 @@
 var _express = _interopRequireDefault(require("express"));
 var _middleware = _interopRequireDefault(require("../controllers/middleware"));
 var _report = _interopRequireDefault(require("../controllers/report"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var router = _express["default"].Router();
 router.get("/current/revenue", _middleware["default"].verifyAdmin, _report["default"].handleGetCurrentRevenue);
 router.get("/current/appointment", _middleware["default"].verifyAdmin, _report["default"].handleGetCurrentAppointment);

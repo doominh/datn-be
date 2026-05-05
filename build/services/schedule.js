@@ -15,27 +15,26 @@ var _excluded = ["DoctorSchedule"],
   _excluded7 = ["EmployeeSchedule"],
   _excluded8 = ["Schedules"],
   _excluded9 = ["Schedules"],
-  _excluded0 = ["EmployeeSchedule"],
-  _excluded1 = ["DoctorSchedule"];
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+  _excluded10 = ["EmployeeSchedule"],
+  _excluded11 = ["DoctorSchedule"];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var _require = require('sequelize'),
   Op = _require.Op;
 //LẤY 7 NGÀY CỦA 1 TUẦN THEO ISO WEEK
@@ -51,22 +50,22 @@ var getDaysOfWeek = function getDaysOfWeek(week, year) {
 
 //THÊM MỚI BẢNG DOCTOR_SCHEDULE
 var createDoctorSchedule = function createDoctorSchedule(doctorIDList, schedule_id) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(resolve, reject) {
-      var doctorSchedules, invalid, valid, _t;
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.p = _context.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resolve, reject) {
+      var doctorSchedules, invalid, valid;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
           case 0:
-            _context.p = 0;
-            _context.n = 1;
+            _context.prev = 0;
+            _context.next = 3;
             return _index["default"].DoctorSchedule.findAll({
               where: {
                 doctor_id: doctorIDList,
                 schedule_id: schedule_id
               }
             });
-          case 1:
-            doctorSchedules = _context.v;
+          case 3:
+            doctorSchedules = _context.sent;
             doctorSchedules = doctorSchedules.map(function (doctorSchedule) {
               return doctorSchedule.doctor_id;
             });
@@ -84,28 +83,29 @@ var createDoctorSchedule = function createDoctorSchedule(doctorIDList, schedule_
               }
             });
             if (!valid.length) {
-              _context.n = 2;
+              _context.next = 11;
               break;
             }
-            _context.n = 2;
+            _context.next = 11;
             return _index["default"].DoctorSchedule.bulkCreate(valid);
-          case 2:
+          case 11:
             resolve({
               valid: valid.map(function (item) {
                 return item.doctor_id;
               }),
               invalid: invalid
             });
-            _context.n = 4;
+            _context.next = 17;
             break;
-          case 3:
-            _context.p = 3;
-            _t = _context.v;
-            reject(_t);
-          case 4:
-            return _context.a(2);
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](0);
+            reject(_context.t0);
+          case 17:
+          case "end":
+            return _context.stop();
         }
-      }, _callee, null, [[0, 3]]);
+      }, _callee, null, [[0, 14]]);
     }));
     return function (_x, _x2) {
       return _ref.apply(this, arguments);
@@ -115,22 +115,22 @@ var createDoctorSchedule = function createDoctorSchedule(doctorIDList, schedule_
 
 //THÊM MỚI BẢNG EMPLOYEE_SCHEDULE
 var createEmployeeSchedule = function createEmployeeSchedule(employeeIDList, schedule_id) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(resolve, reject) {
-      var employeeSchedules, invalid, valid, _t2;
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.p = _context2.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(resolve, reject) {
+      var employeeSchedules, invalid, valid;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.p = 0;
-            _context2.n = 1;
+            _context2.prev = 0;
+            _context2.next = 3;
             return _index["default"].EmployeeSchedule.findAll({
               where: {
                 employee_id: employeeIDList,
                 schedule_id: schedule_id
               }
             });
-          case 1:
-            employeeSchedules = _context2.v;
+          case 3:
+            employeeSchedules = _context2.sent;
             employeeSchedules = employeeSchedules.map(function (employeeSchedule) {
               return employeeSchedule.employee_id;
             });
@@ -148,28 +148,29 @@ var createEmployeeSchedule = function createEmployeeSchedule(employeeIDList, sch
               }
             });
             if (!valid.length) {
-              _context2.n = 2;
+              _context2.next = 11;
               break;
             }
-            _context2.n = 2;
+            _context2.next = 11;
             return _index["default"].EmployeeSchedule.bulkCreate(valid);
-          case 2:
+          case 11:
             resolve({
               valid: valid.map(function (item) {
                 return item.employee_id;
               }),
               invalid: invalid
             });
-            _context2.n = 4;
+            _context2.next = 17;
             break;
-          case 3:
-            _context2.p = 3;
-            _t2 = _context2.v;
-            reject(_t2);
-          case 4:
-            return _context2.a(2);
+          case 14:
+            _context2.prev = 14;
+            _context2.t0 = _context2["catch"](0);
+            reject(_context2.t0);
+          case 17:
+          case "end":
+            return _context2.stop();
         }
-      }, _callee2, null, [[0, 3]]);
+      }, _callee2, null, [[0, 14]]);
     }));
     return function (_x3, _x4) {
       return _ref2.apply(this, arguments);
@@ -179,16 +180,16 @@ var createEmployeeSchedule = function createEmployeeSchedule(employeeIDList, sch
 
 //LẤY TẤT CẢ LỊCH LÀM VIỆC TRONG 1 TUẦN CỦA CÁC BÁC SĨ
 var getDoctorSchedulesByWeek = function getDoctorSchedulesByWeek(week, year) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(resolve, reject) {
-      var daysOfWeek, rawData, doctors, doctorScheduleList, data, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(resolve, reject) {
+      var daysOfWeek, rawData, doctors, doctorScheduleList, data;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.p = 0;
+            _context3.prev = 0;
             //lấy 7 ngày của tuần cần xem
             daysOfWeek = getDaysOfWeek(week, year); //join các bảng cần lấy dữ liệu
-            _context3.n = 1;
+            _context3.next = 4;
             return _index["default"].Doctor.findAll({
               attributes: [['doctor_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               include: [{
@@ -203,15 +204,15 @@ var getDoctorSchedulesByWeek = function getDoctorSchedulesByWeek(week, year) {
               raw: true,
               nest: true
             });
-          case 1:
-            rawData = _context3.v;
-            _context3.n = 2;
+          case 4:
+            rawData = _context3.sent;
+            _context3.next = 7;
             return _index["default"].Doctor.findAll({
               attributes: [['doctor_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               order: [['createdAt', 'ASC']]
             });
-          case 2:
-            doctors = _context3.v;
+          case 7:
+            doctors = _context3.sent;
             //thiết kế cấu trúc api
             doctorScheduleList = [];
             doctors.forEach(function (doctor) {
@@ -257,16 +258,17 @@ var getDoctorSchedulesByWeek = function getDoctorSchedulesByWeek(week, year) {
               data.push(byUser);
             });
             resolve(data);
-            _context3.n = 4;
+            _context3.next = 18;
             break;
-          case 3:
-            _context3.p = 3;
-            _t3 = _context3.v;
-            reject(_t3);
-          case 4:
-            return _context3.a(2);
+          case 15:
+            _context3.prev = 15;
+            _context3.t0 = _context3["catch"](0);
+            reject(_context3.t0);
+          case 18:
+          case "end":
+            return _context3.stop();
         }
-      }, _callee3, null, [[0, 3]]);
+      }, _callee3, null, [[0, 15]]);
     }));
     return function (_x5, _x6) {
       return _ref3.apply(this, arguments);
@@ -276,16 +278,16 @@ var getDoctorSchedulesByWeek = function getDoctorSchedulesByWeek(week, year) {
 
 //LẤY TẤT CẢ LỊCH LÀM VIỆC TRONG 1 TUẦN CỦA CÁC QTV, LT, PT
 var getEmployeeSchedulesByWeek = function getEmployeeSchedulesByWeek(week, year) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(resolve, reject) {
-      var daysOfWeek, rawData, employees, employeeScheduleList, data, _t4;
-      return _regenerator().w(function (_context4) {
-        while (1) switch (_context4.p = _context4.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(resolve, reject) {
+      var daysOfWeek, rawData, employees, employeeScheduleList, data;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.p = 0;
+            _context4.prev = 0;
             //lấy 7 ngày của tuần cần xem
             daysOfWeek = getDaysOfWeek(week, year); //join các bảng cần lấy dữ liệu
-            _context4.n = 1;
+            _context4.next = 4;
             return _index["default"].Employee.findAll({
               attributes: [['employee_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -303,9 +305,9 @@ var getEmployeeSchedulesByWeek = function getEmployeeSchedulesByWeek(week, year)
               raw: true,
               nest: true
             });
-          case 1:
-            rawData = _context4.v;
-            _context4.n = 2;
+          case 4:
+            rawData = _context4.sent;
+            _context4.next = 7;
             return _index["default"].Employee.findAll({
               attributes: [['employee_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -313,8 +315,8 @@ var getEmployeeSchedulesByWeek = function getEmployeeSchedulesByWeek(week, year)
               },
               order: [['createdAt', 'ASC']]
             });
-          case 2:
-            employees = _context4.v;
+          case 7:
+            employees = _context4.sent;
             //thiết kế cấu trúc api
             employeeScheduleList = [];
             employees.forEach(function (employee) {
@@ -360,16 +362,17 @@ var getEmployeeSchedulesByWeek = function getEmployeeSchedulesByWeek(week, year)
               data.push(byUser);
             });
             resolve(data);
-            _context4.n = 4;
+            _context4.next = 18;
             break;
-          case 3:
-            _context4.p = 3;
-            _t4 = _context4.v;
-            reject(_t4);
-          case 4:
-            return _context4.a(2);
+          case 15:
+            _context4.prev = 15;
+            _context4.t0 = _context4["catch"](0);
+            reject(_context4.t0);
+          case 18:
+          case "end":
+            return _context4.stop();
         }
-      }, _callee4, null, [[0, 3]]);
+      }, _callee4, null, [[0, 15]]);
     }));
     return function (_x7, _x8) {
       return _ref4.apply(this, arguments);
@@ -379,14 +382,14 @@ var getEmployeeSchedulesByWeek = function getEmployeeSchedulesByWeek(week, year)
 
 //LẤY LỊCH LÀM VIỆC CỦA BÁC SĨ TRONG 1 THÁNG
 var getDoctorSchedulesByMonth = function getDoctorSchedulesByMonth(daysOfMonth) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(resolve, reject) {
-      var rawData, doctors, doctorScheduleList, data, _t5;
-      return _regenerator().w(function (_context5) {
-        while (1) switch (_context5.p = _context5.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resolve, reject) {
+      var rawData, doctors, doctorScheduleList, data;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.p = 0;
-            _context5.n = 1;
+            _context5.prev = 0;
+            _context5.next = 3;
             return _index["default"].Doctor.findAll({
               attributes: [['doctor_id', 'user_id'], 'fullname'],
               include: [{
@@ -401,15 +404,15 @@ var getDoctorSchedulesByMonth = function getDoctorSchedulesByMonth(daysOfMonth) 
               raw: true,
               nest: true
             });
-          case 1:
-            rawData = _context5.v;
-            _context5.n = 2;
+          case 3:
+            rawData = _context5.sent;
+            _context5.next = 6;
             return _index["default"].Doctor.findAll({
               attributes: [['doctor_id', 'user_id'], 'fullname'],
               order: [['createdAt', 'ASC']]
             });
-          case 2:
-            doctors = _context5.v;
+          case 6:
+            doctors = _context5.sent;
             //thiết kế cấu trúc api
             doctorScheduleList = [];
             doctors.forEach(function (doctor) {
@@ -455,18 +458,19 @@ var getDoctorSchedulesByMonth = function getDoctorSchedulesByMonth(daysOfMonth) 
               data.push(byUser);
             });
             resolve(data);
-            _context5.n = 4;
+            _context5.next = 17;
             break;
-          case 3:
-            _context5.p = 3;
-            _t5 = _context5.v;
-            reject(_t5);
-          case 4:
-            return _context5.a(2);
+          case 14:
+            _context5.prev = 14;
+            _context5.t0 = _context5["catch"](0);
+            reject(_context5.t0);
+          case 17:
+          case "end":
+            return _context5.stop();
         }
-      }, _callee5, null, [[0, 3]]);
+      }, _callee5, null, [[0, 14]]);
     }));
-    return function (_x9, _x0) {
+    return function (_x9, _x10) {
       return _ref5.apply(this, arguments);
     };
   }());
@@ -474,14 +478,14 @@ var getDoctorSchedulesByMonth = function getDoctorSchedulesByMonth(daysOfMonth) 
 
 //LẤY LỊCH LÀM VIỆC CỦA NHÂN VIÊN TRONG 1 THÁNG
 var getEmployeeSchedulesByMonth = function getEmployeeSchedulesByMonth(daysOfMonth) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(resolve, reject) {
-      var rawData, employees, employeeScheduleList, data, _t6;
-      return _regenerator().w(function (_context6) {
-        while (1) switch (_context6.p = _context6.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(resolve, reject) {
+      var rawData, employees, employeeScheduleList, data;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.p = 0;
-            _context6.n = 1;
+            _context6.prev = 0;
+            _context6.next = 3;
             return _index["default"].Employee.findAll({
               attributes: [['employee_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -499,9 +503,9 @@ var getEmployeeSchedulesByMonth = function getEmployeeSchedulesByMonth(daysOfMon
               raw: true,
               nest: true
             });
-          case 1:
-            rawData = _context6.v;
-            _context6.n = 2;
+          case 3:
+            rawData = _context6.sent;
+            _context6.next = 6;
             return _index["default"].Employee.findAll({
               attributes: [['employee_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -509,8 +513,8 @@ var getEmployeeSchedulesByMonth = function getEmployeeSchedulesByMonth(daysOfMon
               },
               order: [['createdAt', 'ASC']]
             });
-          case 2:
-            employees = _context6.v;
+          case 6:
+            employees = _context6.sent;
             //thiết kế cấu trúc api
             employeeScheduleList = [];
             employees.forEach(function (employee) {
@@ -556,18 +560,19 @@ var getEmployeeSchedulesByMonth = function getEmployeeSchedulesByMonth(daysOfMon
               data.push(byUser);
             });
             resolve(data);
-            _context6.n = 4;
+            _context6.next = 17;
             break;
-          case 3:
-            _context6.p = 3;
-            _t6 = _context6.v;
-            reject(_t6);
-          case 4:
-            return _context6.a(2);
+          case 14:
+            _context6.prev = 14;
+            _context6.t0 = _context6["catch"](0);
+            reject(_context6.t0);
+          case 17:
+          case "end":
+            return _context6.stop();
         }
-      }, _callee6, null, [[0, 3]]);
+      }, _callee6, null, [[0, 14]]);
     }));
-    return function (_x1, _x10) {
+    return function (_x11, _x12) {
       return _ref6.apply(this, arguments);
     };
   }());
@@ -578,50 +583,51 @@ var getEmployeeSchedulesByMonth = function getEmployeeSchedulesByMonth(daysOfMon
 //LẤY TẤT CẢ LỊCH LÀM VIỆC THEO TUẦN
 //(datatable lịch của quản trị viên)
 var getAllByWeek = function getAllByWeek(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(resolve, reject) {
-      var doctorSchedules, employeeSchedules, _t7;
-      return _regenerator().w(function (_context7) {
-        while (1) switch (_context7.p = _context7.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resolve, reject) {
+      var doctorSchedules, employeeSchedules;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) switch (_context7.prev = _context7.next) {
           case 0:
-            _context7.p = 0;
+            _context7.prev = 0;
             if (!(!data.week || !data.year)) {
-              _context7.n = 1;
+              _context7.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context7.n = 4;
+            _context7.next = 12;
             break;
-          case 1:
-            _context7.n = 2;
+          case 5:
+            _context7.next = 7;
             return getDoctorSchedulesByWeek(data.week, data.year);
-          case 2:
-            doctorSchedules = _context7.v;
-            _context7.n = 3;
+          case 7:
+            doctorSchedules = _context7.sent;
+            _context7.next = 10;
             return getEmployeeSchedulesByWeek(data.week, data.year);
-          case 3:
-            employeeSchedules = _context7.v;
+          case 10:
+            employeeSchedules = _context7.sent;
             resolve({
               errCode: 0,
               message: "Get all of the week ".concat(data.week, "/").concat(data.year),
               data: [].concat(_toConsumableArray(doctorSchedules), _toConsumableArray(employeeSchedules))
             });
-          case 4:
-            _context7.n = 6;
+          case 12:
+            _context7.next = 17;
             break;
-          case 5:
-            _context7.p = 5;
-            _t7 = _context7.v;
-            reject(_t7);
-          case 6:
-            return _context7.a(2);
+          case 14:
+            _context7.prev = 14;
+            _context7.t0 = _context7["catch"](0);
+            reject(_context7.t0);
+          case 17:
+          case "end":
+            return _context7.stop();
         }
-      }, _callee7, null, [[0, 5]]);
+      }, _callee7, null, [[0, 14]]);
     }));
-    return function (_x11, _x12) {
+    return function (_x13, _x14) {
       return _ref7.apply(this, arguments);
     };
   }());
@@ -630,45 +636,45 @@ var getAllByWeek = function getAllByWeek(data) {
 //LẤY LỊCH LÀM VIỆC CỦA 1 BÁC SĨ THEO NGÀY
 //(hiển thị bên client)
 var getDoctorSchedulesByDate = function getDoctorSchedulesByDate(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(resolve, reject) {
-      var currentDate, currentTime, doctor_id, doctor, rawData, schedules, length, temp, i, j, time_i, time_j, _t8;
-      return _regenerator().w(function (_context8) {
-        while (1) switch (_context8.p = _context8.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(resolve, reject) {
+      var currentDate, currentTime, doctor_id, doctor, rawData, schedules, length, temp, i, j, time_i, time_j;
+      return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+        while (1) switch (_context8.prev = _context8.next) {
           case 0:
-            _context8.p = 0;
+            _context8.prev = 0;
             if (!(!data.doctor_id || !data.date)) {
-              _context8.n = 1;
+              _context8.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context8.n = 7;
+            _context8.next = 28;
             break;
-          case 1:
+          case 5:
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate();
             currentTime = _index2["default"].getCurrentTime(); //data.date là ngày hiện tại hoặc tương lai
             if (!(data.date >= currentDate)) {
-              _context8.n = 6;
+              _context8.next = 27;
               break;
             }
             doctor_id = data.doctor_id.toLowerCase();
-            _context8.n = 2;
+            _context8.next = 11;
             return _index["default"].Doctor.findOne({
               where: {
                 doctor_id: doctor_id
               }
             });
-          case 2:
-            doctor = _context8.v;
+          case 11:
+            doctor = _context8.sent;
             if (!doctor) {
-              _context8.n = 4;
+              _context8.next = 24;
               break;
             }
-            _context8.n = 3;
+            _context8.next = 15;
             return _index["default"].Doctor.findAll({
               where: {
                 doctor_id: doctor_id
@@ -685,8 +691,8 @@ var getDoctorSchedulesByDate = function getDoctorSchedulesByDate(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            rawData = _context8.v;
+          case 15:
+            rawData = _context8.sent;
             //lọc để chỉ lấy phần lịch làm việc còn khả dụng
             schedules = rawData.map(function (item) {
               return item.Schedules;
@@ -720,34 +726,35 @@ var getDoctorSchedulesByDate = function getDoctorSchedulesByDate(data) {
               message: 'Get doctor schedule by date',
               data: schedules
             });
-            _context8.n = 5;
+            _context8.next = 25;
             break;
-          case 4:
+          case 24:
             resolve({
               errCode: 1,
               message: "Doctor doesn't exist"
             });
-          case 5:
-            _context8.n = 7;
+          case 25:
+            _context8.next = 28;
             break;
-          case 6:
+          case 27:
             resolve({
               errCode: 2,
               message: "Can't get doctor's schedule from the past"
             });
-          case 7:
-            _context8.n = 9;
+          case 28:
+            _context8.next = 33;
             break;
-          case 8:
-            _context8.p = 8;
-            _t8 = _context8.v;
-            reject(_t8);
-          case 9:
-            return _context8.a(2);
+          case 30:
+            _context8.prev = 30;
+            _context8.t0 = _context8["catch"](0);
+            reject(_context8.t0);
+          case 33:
+          case "end":
+            return _context8.stop();
         }
-      }, _callee8, null, [[0, 8]]);
+      }, _callee8, null, [[0, 30]]);
     }));
-    return function (_x13, _x14) {
+    return function (_x15, _x16) {
       return _ref8.apply(this, arguments);
     };
   }());
@@ -756,39 +763,39 @@ var getDoctorSchedulesByDate = function getDoctorSchedulesByDate(data) {
 //LẤY LỊCH LÀM VIỆC CỦA 1 NHÂN VIÊN (QT, LT, BS, PT) THEO NGÀY
 //(trang chi tiết lịch làm việc)
 var getUserSchedulesByDate = function getUserSchedulesByDate(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(resolve, reject) {
-      var user_id, prefix, user, rawData, _rawData$, Schedules, _user, schedules, length, temp, i, j, time_i, time_j, _t9, _t0;
-      return _regenerator().w(function (_context9) {
-        while (1) switch (_context9.p = _context9.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resolve, reject) {
+      var user_id, prefix, user, rawData, _rawData$, Schedules, _user, schedules, length, temp, i, j, time_i, time_j;
+      return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+        while (1) switch (_context9.prev = _context9.next) {
           case 0:
-            _context9.p = 0;
+            _context9.prev = 0;
             if (!(!data.user_id || !data.date)) {
-              _context9.n = 1;
+              _context9.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context9.n = 10;
+            _context9.next = 27;
             break;
-          case 1:
+          case 5:
             user_id = data.user_id.toLowerCase();
             prefix = user_id.slice(0, 2);
-            _context9.n = 2;
+            _context9.next = 9;
             return (0, _auth.getUserByID)(user_id);
-          case 2:
-            user = _context9.v;
+          case 9:
+            user = _context9.sent;
             if (!user) {
-              _context9.n = 9;
+              _context9.next = 26;
               break;
             }
-            _t9 = prefix;
-            _context9.n = _t9 === 'qt' ? 3 : _t9 === 'lt' ? 3 : _t9 === 'pt' ? 3 : _t9 === 'bs' ? 5 : 7;
+            _context9.t0 = prefix;
+            _context9.next = _context9.t0 === 'qt' ? 14 : _context9.t0 === 'lt' ? 14 : _context9.t0 === 'pt' ? 14 : _context9.t0 === 'bs' ? 18 : 22;
             break;
-          case 3:
-            _context9.n = 4;
+          case 14:
+            _context9.next = 16;
             return _index["default"].Employee.findAll({
               attributes: [['employee_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -806,11 +813,11 @@ var getUserSchedulesByDate = function getUserSchedulesByDate(data) {
               raw: true,
               nest: true
             });
-          case 4:
-            rawData = _context9.v;
-            return _context9.a(3, 8);
-          case 5:
-            _context9.n = 6;
+          case 16:
+            rawData = _context9.sent;
+            return _context9.abrupt("break", 23);
+          case 18:
+            _context9.next = 20;
             return _index["default"].Doctor.findAll({
               attributes: [['doctor_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -828,12 +835,12 @@ var getUserSchedulesByDate = function getUserSchedulesByDate(data) {
               raw: true,
               nest: true
             });
-          case 6:
-            rawData = _context9.v;
-            return _context9.a(3, 8);
-          case 7:
-            return _context9.a(3, 8);
-          case 8:
+          case 20:
+            rawData = _context9.sent;
+            return _context9.abrupt("break", 23);
+          case 22:
+            return _context9.abrupt("break", 23);
+          case 23:
             //trong DB có lịch của data.date
             if (rawData.length) {
               //lọc lấy thông tin nhân viên và lịch làm việc
@@ -901,26 +908,27 @@ var getUserSchedulesByDate = function getUserSchedulesByDate(data) {
                 message: "Doesn't have any schedule for this date"
               });
             }
-            _context9.n = 10;
+            _context9.next = 27;
             break;
-          case 9:
+          case 26:
             resolve({
               errCode: 1,
               message: "User doesn't exist"
             });
-          case 10:
-            _context9.n = 12;
+          case 27:
+            _context9.next = 32;
             break;
-          case 11:
-            _context9.p = 11;
-            _t0 = _context9.v;
-            reject(_t0);
-          case 12:
-            return _context9.a(2);
+          case 29:
+            _context9.prev = 29;
+            _context9.t1 = _context9["catch"](0);
+            reject(_context9.t1);
+          case 32:
+          case "end":
+            return _context9.stop();
         }
-      }, _callee9, null, [[0, 11]]);
+      }, _callee9, null, [[0, 29]]);
     }));
-    return function (_x15, _x16) {
+    return function (_x17, _x18) {
       return _ref9.apply(this, arguments);
     };
   }());
@@ -929,41 +937,41 @@ var getUserSchedulesByDate = function getUserSchedulesByDate(data) {
 //LẤY LỊCH LÀM VIỆC THEO TUẦN CỦA 1 NHÂN VIÊN
 //(datatable lịch của 1 nhân viên)
 var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(resolve, reject) {
-      var user_id, prefix, user, daysOfWeek, rawData, _rawData$2, Schedules, _user2, _data, byUser, _t1, _t10;
-      return _regenerator().w(function (_context0) {
-        while (1) switch (_context0.p = _context0.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(resolve, reject) {
+      var user_id, prefix, user, daysOfWeek, rawData, _rawData$2, Schedules, _user2, _data, byUser;
+      return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+        while (1) switch (_context10.prev = _context10.next) {
           case 0:
-            _context0.p = 0;
+            _context10.prev = 0;
             if (!(!data.user_id || !data.week || !data.year)) {
-              _context0.n = 1;
+              _context10.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context0.n = 10;
+            _context10.next = 28;
             break;
-          case 1:
+          case 5:
             user_id = data.user_id.toLowerCase();
             prefix = user_id.slice(0, 2);
-            _context0.n = 2;
+            _context10.next = 9;
             return (0, _auth.getUserByID)(user_id);
-          case 2:
-            user = _context0.v;
+          case 9:
+            user = _context10.sent;
             if (!user) {
-              _context0.n = 9;
+              _context10.next = 27;
               break;
             }
             //lấy 7 ngày của tuần cần xem
             daysOfWeek = getDaysOfWeek(data.week, data.year); //join các bảng cần lấy dữ liệu
-            _t1 = prefix;
-            _context0.n = _t1 === 'lt' ? 3 : _t1 === 'pt' ? 3 : _t1 === 'bs' ? 5 : 7;
+            _context10.t0 = prefix;
+            _context10.next = _context10.t0 === 'lt' ? 15 : _context10.t0 === 'pt' ? 15 : _context10.t0 === 'bs' ? 19 : 23;
             break;
-          case 3:
-            _context0.n = 4;
+          case 15:
+            _context10.next = 17;
             return _index["default"].Employee.findAll({
               attributes: [['employee_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -981,11 +989,11 @@ var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
               raw: true,
               nest: true
             });
-          case 4:
-            rawData = _context0.v;
-            return _context0.a(3, 8);
-          case 5:
-            _context0.n = 6;
+          case 17:
+            rawData = _context10.sent;
+            return _context10.abrupt("break", 24);
+          case 19:
+            _context10.next = 21;
             return _index["default"].Doctor.findAll({
               attributes: [['doctor_id', 'user_id'], 'fullname', 'avatar', 'dob', 'gender', 'phone', 'email'],
               where: {
@@ -1003,12 +1011,12 @@ var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
               raw: true,
               nest: true
             });
-          case 6:
-            rawData = _context0.v;
-            return _context0.a(3, 8);
-          case 7:
-            return _context0.a(3, 8);
-          case 8:
+          case 21:
+            rawData = _context10.sent;
+            return _context10.abrupt("break", 24);
+          case 23:
+            return _context10.abrupt("break", 24);
+          case 24:
             if (rawData.length) {
               _rawData$2 = rawData[0], Schedules = _rawData$2.Schedules, _user2 = _objectWithoutProperties(_rawData$2, _excluded8);
               _data = [];
@@ -1028,7 +1036,7 @@ var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
                       case 'pt':
                         //thống nhất tên các biến
                         var EmployeeSchedule = Schedules.EmployeeSchedule,
-                          restEmployee = _objectWithoutProperties(Schedules, _excluded0);
+                          restEmployee = _objectWithoutProperties(Schedules, _excluded10);
                         byDate.list.push(_objectSpread(_objectSpread({}, restEmployee), {}, {
                           UserSchedule: {
                             user_schedule_id: EmployeeSchedule.employee_schedule_id,
@@ -1043,7 +1051,7 @@ var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
                       case 'bs':
                         //thống nhất tên các biến
                         var DoctorSchedule = Schedules.DoctorSchedule,
-                          restDoctor = _objectWithoutProperties(Schedules, _excluded1);
+                          restDoctor = _objectWithoutProperties(Schedules, _excluded11);
                         byDate.list.push(_objectSpread(_objectSpread({}, restDoctor), {}, {
                           UserSchedule: {
                             user_schedule_id: DoctorSchedule.employee_schedule_id,
@@ -1074,27 +1082,28 @@ var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
                 message: "Doesn't have any schedule for this week"
               });
             }
-            _context0.n = 10;
+            _context10.next = 28;
             break;
-          case 9:
+          case 27:
             resolve({
               errCode: 1,
               message: "User doesn't exist"
             });
-          case 10:
-            _context0.n = 12;
+          case 28:
+            _context10.next = 33;
             break;
-          case 11:
-            _context0.p = 11;
-            _t10 = _context0.v;
-            reject(_t10);
-          case 12:
-            return _context0.a(2);
+          case 30:
+            _context10.prev = 30;
+            _context10.t1 = _context10["catch"](0);
+            reject(_context10.t1);
+          case 33:
+          case "end":
+            return _context10.stop();
         }
-      }, _callee0, null, [[0, 11]]);
+      }, _callee10, null, [[0, 30]]);
     }));
-    return function (_x17, _x18) {
-      return _ref0.apply(this, arguments);
+    return function (_x19, _x20) {
+      return _ref10.apply(this, arguments);
     };
   }());
 };
@@ -1102,50 +1111,50 @@ var getUserSchedulesByWeek = function getUserSchedulesByWeek(data) {
 //LẤY LỊCH LÀM VIỆC CỦA CÁC BÁC SĨ ĐIỀU TRỊ 1 DANH MỤC THEO NGÀY VÀ CA KHÁM ĐƯỢC CHỌN
 //(trang đặt lịch hẹn dành cho lễ tân)
 var getAllByCategoryDateSession = function getAllByCategoryDateSession(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(resolve, reject) {
-      var category_id, session_id, doctorsByCategory, doctorSchedulesList, _iterator, _step, doctor, result, schedules, _t11, _t12;
-      return _regenerator().w(function (_context1) {
-        while (1) switch (_context1.p = _context1.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(resolve, reject) {
+      var category_id, session_id, doctorsByCategory, doctorSchedulesList, _iterator, _step, doctor, result, schedules;
+      return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+        while (1) switch (_context11.prev = _context11.next) {
           case 0:
-            _context1.p = 0;
+            _context11.prev = 0;
             if (!(!data.category_id || !data.date || !data.session_id)) {
-              _context1.n = 1;
+              _context11.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context1.n = 11;
+            _context11.next = 33;
             break;
-          case 1:
+          case 5:
             category_id = data.category_id.toLowerCase();
             session_id = data.session_id.toLowerCase();
-            _context1.n = 2;
+            _context11.next = 9;
             return (0, _doctor.getAllByCategoryID)({
               category_id: category_id
             });
-          case 2:
-            doctorsByCategory = _context1.v;
+          case 9:
+            doctorsByCategory = _context11.sent;
             doctorsByCategory = doctorsByCategory.data;
             doctorSchedulesList = [];
             _iterator = _createForOfIteratorHelper(doctorsByCategory);
-            _context1.p = 3;
+            _context11.prev = 13;
             _iterator.s();
-          case 4:
+          case 15:
             if ((_step = _iterator.n()).done) {
-              _context1.n = 7;
+              _context11.next = 24;
               break;
             }
             doctor = _step.value;
-            _context1.n = 5;
+            _context11.next = 19;
             return getDoctorSchedulesByDate({
               doctor_id: doctor.doctor_id,
               date: data.date
             });
-          case 5:
-            result = _context1.v;
+          case 19:
+            result = _context11.sent;
             schedules = result.data;
             if (schedules.find(function (schedule) {
               return schedule.Session.session_id === session_id;
@@ -1155,21 +1164,21 @@ var getAllByCategoryDateSession = function getAllByCategoryDateSession(data) {
                 schedules: schedules
               });
             }
-          case 6:
-            _context1.n = 4;
+          case 22:
+            _context11.next = 15;
             break;
-          case 7:
-            _context1.n = 9;
+          case 24:
+            _context11.next = 29;
             break;
-          case 8:
-            _context1.p = 8;
-            _t11 = _context1.v;
-            _iterator.e(_t11);
-          case 9:
-            _context1.p = 9;
+          case 26:
+            _context11.prev = 26;
+            _context11.t0 = _context11["catch"](13);
+            _iterator.e(_context11.t0);
+          case 29:
+            _context11.prev = 29;
             _iterator.f();
-            return _context1.f(9);
-          case 10:
+            return _context11.finish(29);
+          case 32:
             if (doctorSchedulesList.length) {
               resolve({
                 errCode: 0,
@@ -1182,175 +1191,177 @@ var getAllByCategoryDateSession = function getAllByCategoryDateSession(data) {
                 message: 'Not found'
               });
             }
-          case 11:
-            _context1.n = 13;
+          case 33:
+            _context11.next = 38;
             break;
-          case 12:
-            _context1.p = 12;
-            _t12 = _context1.v;
-            reject(_t12);
-          case 13:
-            return _context1.a(2);
+          case 35:
+            _context11.prev = 35;
+            _context11.t1 = _context11["catch"](0);
+            reject(_context11.t1);
+          case 38:
+          case "end":
+            return _context11.stop();
         }
-      }, _callee1, null, [[3, 8, 9, 10], [0, 12]]);
+      }, _callee11, null, [[0, 35], [13, 26, 29, 32]]);
     }));
-    return function (_x19, _x20) {
-      return _ref1.apply(this, arguments);
+    return function (_x21, _x22) {
+      return _ref11.apply(this, arguments);
     };
   }());
 };
 
 //THÊM MỚI LỊCH LÀM VIỆC
 var createSchedule = function createSchedule(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(resolve, reject) {
-      var currentDate, session_id, session, schedule, schedule_id, doctorIDList, resultDoctor, employeeIDList, resultEmployee, _t13;
-      return _regenerator().w(function (_context10) {
-        while (1) switch (_context10.p = _context10.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(resolve, reject) {
+      var currentDate, session_id, session, schedule, schedule_id, doctorIDList, resultDoctor, employeeIDList, resultEmployee;
+      return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+        while (1) switch (_context12.prev = _context12.next) {
           case 0:
-            _context10.p = 0;
+            _context12.prev = 0;
             if (!(!data.date || !data.employees || !data.session_id)) {
-              _context10.n = 1;
+              _context12.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context10.n = 11;
+            _context12.next = 35;
             break;
-          case 1:
+          case 5:
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate(); //data.date là ngày tương lai
             if (!(data.date > currentDate)) {
-              _context10.n = 10;
+              _context12.next = 34;
               break;
             }
             session_id = data.session_id.toLowerCase();
-            _context10.n = 2;
+            _context12.next = 10;
             return _index["default"].Session.findOne({
               where: {
                 session_id: session_id
               }
             });
-          case 2:
-            session = _context10.v;
+          case 10:
+            session = _context12.sent;
             if (!session) {
-              _context10.n = 8;
+              _context12.next = 31;
               break;
             }
-            _context10.n = 3;
+            _context12.next = 14;
             return _index["default"].Schedule.findOne({
               where: {
                 session_id: session_id,
                 date: data.date
               }
             });
-          case 3:
-            schedule = _context10.v;
+          case 14:
+            schedule = _context12.sent;
             if (schedule) {
-              _context10.n = 5;
+              _context12.next = 20;
               break;
             }
             schedule_id = _index2["default"].createID('ll');
-            _context10.n = 4;
+            _context12.next = 19;
             return _index["default"].Schedule.create({
               schedule_id: schedule_id,
               session_id: session_id,
               date: data.date
             });
-          case 4:
-            schedule = _context10.v;
-          case 5:
+          case 19:
+            schedule = _context12.sent;
+          case 20:
             //thêm mới bảng doctor_schedule
             doctorIDList = data.employees.filter(function (user_id) {
               return user_id.slice(0, 2) === 'bs';
             });
-            _context10.n = 6;
+            _context12.next = 23;
             return createDoctorSchedule(doctorIDList, schedule.schedule_id);
-          case 6:
-            resultDoctor = _context10.v;
+          case 23:
+            resultDoctor = _context12.sent;
             //thêm mới bảng employee_schedule
             employeeIDList = data.employees.filter(function (user_id) {
               return user_id.slice(0, 2) !== 'bs';
             });
-            _context10.n = 7;
+            _context12.next = 27;
             return createEmployeeSchedule(employeeIDList, schedule.schedule_id);
-          case 7:
-            resultEmployee = _context10.v;
+          case 27:
+            resultEmployee = _context12.sent;
             resolve({
               errCode: 0,
               validUsers: [].concat(_toConsumableArray(resultDoctor.valid), _toConsumableArray(resultEmployee.valid)),
               invalidUsers: [].concat(_toConsumableArray(resultDoctor.invalid), _toConsumableArray(resultEmployee.invalid))
             });
-            _context10.n = 9;
+            _context12.next = 32;
             break;
-          case 8:
+          case 31:
             resolve({
               errCode: 1,
               message: "Session doesn't exist"
             });
-          case 9:
-            _context10.n = 11;
+          case 32:
+            _context12.next = 35;
             break;
-          case 10:
+          case 34:
             resolve({
               errCode: 2,
               message: 'Cannot create schedule for the past'
             });
-          case 11:
-            _context10.n = 13;
+          case 35:
+            _context12.next = 40;
             break;
-          case 12:
-            _context10.p = 12;
-            _t13 = _context10.v;
-            reject(_t13);
-          case 13:
-            return _context10.a(2);
+          case 37:
+            _context12.prev = 37;
+            _context12.t0 = _context12["catch"](0);
+            reject(_context12.t0);
+          case 40:
+          case "end":
+            return _context12.stop();
         }
-      }, _callee10, null, [[0, 12]]);
+      }, _callee12, null, [[0, 37]]);
     }));
-    return function (_x21, _x22) {
-      return _ref10.apply(this, arguments);
+    return function (_x23, _x24) {
+      return _ref12.apply(this, arguments);
     };
   }());
 };
 
 //DUYỆT 1 LỊCH LÀM VIỆC
 var acceptOne = function acceptOne(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(resolve, reject) {
-      var user_id, prefix, user, userSchedule, currentDate, result, _t14, _t15, _t16;
-      return _regenerator().w(function (_context11) {
-        while (1) switch (_context11.p = _context11.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(resolve, reject) {
+      var user_id, prefix, user, userSchedule, currentDate, result;
+      return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+        while (1) switch (_context13.prev = _context13.next) {
           case 0:
-            _context11.p = 0;
+            _context13.prev = 0;
             if (!(!data.user_id || !data.user_schedule_id)) {
-              _context11.n = 1;
+              _context13.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context11.n = 22;
+            _context13.next = 52;
             break;
-          case 1:
+          case 5:
             user_id = data.user_id.toLowerCase();
             prefix = user_id.slice(0, 2);
-            _context11.n = 2;
+            _context13.next = 9;
             return (0, _auth.getUserByID)(user_id);
-          case 2:
-            user = _context11.v;
+          case 9:
+            user = _context13.sent;
             if (!user) {
-              _context11.n = 21;
+              _context13.next = 51;
               break;
             }
-            _t14 = prefix;
-            _context11.n = _t14 === 'qt' ? 3 : _t14 === 'lt' ? 3 : _t14 === 'pt' ? 3 : _t14 === 'bs' ? 5 : 7;
+            _context13.t0 = prefix;
+            _context13.next = _context13.t0 === 'qt' ? 14 : _context13.t0 === 'lt' ? 14 : _context13.t0 === 'pt' ? 14 : _context13.t0 === 'bs' ? 18 : 22;
             break;
-          case 3:
-            _context11.n = 4;
+          case 14:
+            _context13.next = 16;
             return _index["default"].EmployeeSchedule.findOne({
               where: {
                 employee_schedule_id: data.user_schedule_id
@@ -1361,11 +1372,11 @@ var acceptOne = function acceptOne(data) {
               raw: true,
               nest: true
             });
-          case 4:
-            userSchedule = _context11.v;
-            return _context11.a(3, 8);
-          case 5:
-            _context11.n = 6;
+          case 16:
+            userSchedule = _context13.sent;
+            return _context13.abrupt("break", 23);
+          case 18:
+            _context13.next = 20;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 doctor_schedule_id: data.user_schedule_id
@@ -1376,31 +1387,31 @@ var acceptOne = function acceptOne(data) {
               raw: true,
               nest: true
             });
-          case 6:
-            userSchedule = _context11.v;
-            return _context11.a(3, 8);
-          case 7:
-            return _context11.a(3, 8);
-          case 8:
+          case 20:
+            userSchedule = _context13.sent;
+            return _context13.abrupt("break", 23);
+          case 22:
+            return _context13.abrupt("break", 23);
+          case 23:
             if (!userSchedule) {
-              _context11.n = 19;
+              _context13.next = 48;
               break;
             }
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate(); //ngày của lịch làm việc là tương lai
             if (!(userSchedule.Schedule.date > currentDate)) {
-              _context11.n = 17;
+              _context13.next = 45;
               break;
             }
             if (!(userSchedule.status === 0)) {
-              _context11.n = 15;
+              _context13.next = 42;
               break;
             }
-            _t15 = prefix;
-            _context11.n = _t15 === 'qt' ? 9 : _t15 === 'lt' ? 9 : _t15 === 'pt' ? 9 : _t15 === 'bs' ? 11 : 13;
+            _context13.t1 = prefix;
+            _context13.next = _context13.t1 === 'qt' ? 30 : _context13.t1 === 'lt' ? 30 : _context13.t1 === 'pt' ? 30 : _context13.t1 === 'bs' ? 34 : 38;
             break;
-          case 9:
-            _context11.n = 10;
+          case 30:
+            _context13.next = 32;
             return _index["default"].EmployeeSchedule.update({
               status: 1
             }, {
@@ -1408,11 +1419,11 @@ var acceptOne = function acceptOne(data) {
                 employee_schedule_id: data.user_schedule_id
               }
             });
-          case 10:
-            result = _context11.v;
-            return _context11.a(3, 14);
-          case 11:
-            _context11.n = 12;
+          case 32:
+            result = _context13.sent;
+            return _context13.abrupt("break", 39);
+          case 34:
+            _context13.next = 36;
             return _index["default"].DoctorSchedule.update({
               status: 1
             }, {
@@ -1420,12 +1431,12 @@ var acceptOne = function acceptOne(data) {
                 doctor_schedule_id: data.user_schedule_id
               }
             });
-          case 12:
-            result = _context11.v;
-            return _context11.a(3, 14);
-          case 13:
-            return _context11.a(3, 14);
-          case 14:
+          case 36:
+            result = _context13.sent;
+            return _context13.abrupt("break", 39);
+          case 38:
+            return _context13.abrupt("break", 39);
+          case 39:
             if (result[0] === 1) {
               resolve({
                 errCode: 0,
@@ -1437,92 +1448,93 @@ var acceptOne = function acceptOne(data) {
                 message: 'Failed'
               });
             }
-            _context11.n = 16;
+            _context13.next = 43;
             break;
-          case 15:
+          case 42:
             resolve({
               errCode: 2,
               type: 'status',
               message: 'Incorrect status'
             });
-          case 16:
-            _context11.n = 18;
+          case 43:
+            _context13.next = 46;
             break;
-          case 17:
+          case 45:
             resolve({
               errCode: 2,
               type: 'date',
               message: 'Cannot accept schedule from the past'
             });
-          case 18:
-            _context11.n = 20;
+          case 46:
+            _context13.next = 49;
             break;
-          case 19:
+          case 48:
             resolve({
               errCode: 1,
               message: "This schedule doesn't exist"
             });
-          case 20:
-            _context11.n = 22;
+          case 49:
+            _context13.next = 52;
             break;
-          case 21:
+          case 51:
             resolve({
               errCode: 1,
               message: "User doesn't exist"
             });
-          case 22:
-            _context11.n = 24;
+          case 52:
+            _context13.next = 57;
             break;
-          case 23:
-            _context11.p = 23;
-            _t16 = _context11.v;
-            reject(_t16);
-          case 24:
-            return _context11.a(2);
+          case 54:
+            _context13.prev = 54;
+            _context13.t2 = _context13["catch"](0);
+            reject(_context13.t2);
+          case 57:
+          case "end":
+            return _context13.stop();
         }
-      }, _callee11, null, [[0, 23]]);
+      }, _callee13, null, [[0, 54]]);
     }));
-    return function (_x23, _x24) {
-      return _ref11.apply(this, arguments);
+    return function (_x25, _x26) {
+      return _ref13.apply(this, arguments);
     };
   }());
 };
 
 //DUYỆT TẤT CẢ LỊCH LÀM VIỆC CỦA 1 NGÀY (CỦA 1 NHÂN VIÊN)
 var acceptAll = function acceptAll(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(resolve, reject) {
-      var user_id, prefix, user, userSchedules, currentDate, incorrectStatus, result, _t17, _t18, _t19;
-      return _regenerator().w(function (_context12) {
-        while (1) switch (_context12.p = _context12.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(resolve, reject) {
+      var user_id, prefix, user, userSchedules, currentDate, incorrectStatus, result;
+      return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+        while (1) switch (_context14.prev = _context14.next) {
           case 0:
-            _context12.p = 0;
+            _context14.prev = 0;
             if (!(!data.user_id || !data.list)) {
-              _context12.n = 1;
+              _context14.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context12.n = 22;
+            _context14.next = 53;
             break;
-          case 1:
+          case 5:
             user_id = data.user_id.toLowerCase();
             prefix = user_id.slice(0, 2);
-            _context12.n = 2;
+            _context14.next = 9;
             return (0, _auth.getUserByID)(user_id);
-          case 2:
-            user = _context12.v;
+          case 9:
+            user = _context14.sent;
             if (!user) {
-              _context12.n = 21;
+              _context14.next = 52;
               break;
             }
-            _t17 = prefix;
-            _context12.n = _t17 === 'qt' ? 3 : _t17 === 'lt' ? 3 : _t17 === 'pt' ? 3 : _t17 === 'bs' ? 5 : 7;
+            _context14.t0 = prefix;
+            _context14.next = _context14.t0 === 'qt' ? 14 : _context14.t0 === 'lt' ? 14 : _context14.t0 === 'pt' ? 14 : _context14.t0 === 'bs' ? 18 : 22;
             break;
-          case 3:
-            _context12.n = 4;
+          case 14:
+            _context14.next = 16;
             return _index["default"].EmployeeSchedule.findAll({
               where: {
                 employee_schedule_id: data.list
@@ -1533,11 +1545,11 @@ var acceptAll = function acceptAll(data) {
               raw: true,
               nest: true
             });
-          case 4:
-            userSchedules = _context12.v;
-            return _context12.a(3, 8);
-          case 5:
-            _context12.n = 6;
+          case 16:
+            userSchedules = _context14.sent;
+            return _context14.abrupt("break", 23);
+          case 18:
+            _context14.next = 20;
             return _index["default"].DoctorSchedule.findAll({
               where: {
                 doctor_schedule_id: data.list
@@ -1548,20 +1560,20 @@ var acceptAll = function acceptAll(data) {
               raw: true,
               nest: true
             });
-          case 6:
-            userSchedules = _context12.v;
-            return _context12.a(3, 8);
-          case 7:
-            return _context12.a(3, 8);
-          case 8:
+          case 20:
+            userSchedules = _context14.sent;
+            return _context14.abrupt("break", 23);
+          case 22:
+            return _context14.abrupt("break", 23);
+          case 23:
             if (!(userSchedules.length === data.list.length)) {
-              _context12.n = 19;
+              _context14.next = 49;
               break;
             }
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate(); //ngày của lịch làm việc là tương lai
             if (!(userSchedules[0].Schedule.date > currentDate)) {
-              _context12.n = 17;
+              _context14.next = 46;
               break;
             }
             //kiểm tra trong data.list có lịch nào đã được duyệt hay chưa
@@ -1572,7 +1584,7 @@ var acceptAll = function acceptAll(data) {
 
             //có lịch có status === 1 || status === 2
             if (!incorrectStatus) {
-              _context12.n = 9;
+              _context14.next = 31;
               break;
             }
             resolve({
@@ -1580,14 +1592,14 @@ var acceptAll = function acceptAll(data) {
               type: 'status',
               message: 'Incorrect status'
             });
-            _context12.n = 16;
+            _context14.next = 44;
             break;
-          case 9:
-            _t18 = prefix;
-            _context12.n = _t18 === 'qt' ? 10 : _t18 === 'lt' ? 10 : _t18 === 'pt' ? 10 : _t18 === 'bs' ? 12 : 14;
+          case 31:
+            _context14.t1 = prefix;
+            _context14.next = _context14.t1 === 'qt' ? 34 : _context14.t1 === 'lt' ? 34 : _context14.t1 === 'pt' ? 34 : _context14.t1 === 'bs' ? 38 : 42;
             break;
-          case 10:
-            _context12.n = 11;
+          case 34:
+            _context14.next = 36;
             return _index["default"].EmployeeSchedule.update({
               status: 1
             }, {
@@ -1595,11 +1607,11 @@ var acceptAll = function acceptAll(data) {
                 employee_schedule_id: data.list
               }
             });
-          case 11:
-            result = _context12.v;
-            return _context12.a(3, 15);
-          case 12:
-            _context12.n = 13;
+          case 36:
+            result = _context14.sent;
+            return _context14.abrupt("break", 43);
+          case 38:
+            _context14.next = 40;
             return _index["default"].DoctorSchedule.update({
               status: 1
             }, {
@@ -1607,12 +1619,12 @@ var acceptAll = function acceptAll(data) {
                 doctor_schedule_id: data.list
               }
             });
-          case 13:
-            result = _context12.v;
-            return _context12.a(3, 15);
-          case 14:
-            return _context12.a(3, 15);
-          case 15:
+          case 40:
+            result = _context14.sent;
+            return _context14.abrupt("break", 43);
+          case 42:
+            return _context14.abrupt("break", 43);
+          case 43:
             if (result) {
               resolve({
                 errCode: 0,
@@ -1624,69 +1636,70 @@ var acceptAll = function acceptAll(data) {
                 message: 'Failed'
               });
             }
-          case 16:
-            _context12.n = 18;
+          case 44:
+            _context14.next = 47;
             break;
-          case 17:
+          case 46:
             resolve({
               errCode: 2,
               type: 'date',
               message: 'Cannot accept schedule from the past'
             });
-          case 18:
-            _context12.n = 20;
+          case 47:
+            _context14.next = 50;
             break;
-          case 19:
+          case 49:
             resolve({
               errCode: 1,
               message: "This schedule doesn't exist"
             });
-          case 20:
-            _context12.n = 22;
+          case 50:
+            _context14.next = 53;
             break;
-          case 21:
+          case 52:
             resolve({
               errCode: 1,
               message: "User doesn't exist"
             });
-          case 22:
-            _context12.n = 24;
+          case 53:
+            _context14.next = 58;
             break;
-          case 23:
-            _context12.p = 23;
-            _t19 = _context12.v;
-            reject(_t19);
-          case 24:
-            return _context12.a(2);
+          case 55:
+            _context14.prev = 55;
+            _context14.t2 = _context14["catch"](0);
+            reject(_context14.t2);
+          case 58:
+          case "end":
+            return _context14.stop();
         }
-      }, _callee12, null, [[0, 23]]);
+      }, _callee14, null, [[0, 55]]);
     }));
-    return function (_x25, _x26) {
-      return _ref12.apply(this, arguments);
+    return function (_x27, _x28) {
+      return _ref14.apply(this, arguments);
     };
   }());
 };
 
 //DUYỆT LỊCH LÀM VIỆC TRONG 1 TUẦN CỦA TẤT CẢ NHÂN VIÊN
 var acceptForAWeek = function acceptForAWeek(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13(resolve, reject) {
-      var currentDate, daysOfWeek, doctorSchedules, employeeSchedules, _t20;
-      return _regenerator().w(function (_context13) {
-        while (1) switch (_context13.p = _context13.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(resolve, reject) {
+      var currentDate, daysOfWeek, doctorSchedules, employeeSchedules;
+      return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+        while (1) switch (_context15.prev = _context15.next) {
           case 0:
-            _context13.p = 0;
+            _context15.prev = 0;
             if (!(!data.week || !data.year)) {
-              _context13.n = 1;
+              _context15.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context13.n = 7;
+            _context15.next = 27;
             break;
-          case 1:
+          case 5:
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate(); //lấy 7 ngày của tuần cần duyệt
             //lọc những ngày trong tuần lớn hơn ngày hiện tại
@@ -1695,10 +1708,10 @@ var acceptForAWeek = function acceptForAWeek(data) {
               return date > currentDate;
             });
             if (!daysOfWeek.length) {
-              _context13.n = 6;
+              _context15.next = 26;
               break;
             }
-            _context13.n = 2;
+            _context15.next = 11;
             return _index["default"].DoctorSchedule.findAll({
               where: {
                 status: 0
@@ -1712,9 +1725,9 @@ var acceptForAWeek = function acceptForAWeek(data) {
               raw: true,
               nest: true
             });
-          case 2:
-            doctorSchedules = _context13.v;
-            _context13.n = 3;
+          case 11:
+            doctorSchedules = _context15.sent;
+            _context15.next = 14;
             return _index["default"].EmployeeSchedule.findAll({
               where: {
                 status: 0
@@ -1728,16 +1741,16 @@ var acceptForAWeek = function acceptForAWeek(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            employeeSchedules = _context13.v;
+          case 14:
+            employeeSchedules = _context15.sent;
             if (!doctorSchedules.length) {
-              _context13.n = 4;
+              _context15.next = 19;
               break;
             }
             doctorSchedules = doctorSchedules.map(function (item) {
               return item.doctor_schedule_id;
             });
-            _context13.n = 4;
+            _context15.next = 19;
             return _index["default"].DoctorSchedule.update({
               status: 1
             }, {
@@ -1745,15 +1758,15 @@ var acceptForAWeek = function acceptForAWeek(data) {
                 doctor_schedule_id: doctorSchedules
               }
             });
-          case 4:
+          case 19:
             if (!employeeSchedules.length) {
-              _context13.n = 5;
+              _context15.next = 23;
               break;
             }
             employeeSchedules = employeeSchedules.map(function (item) {
               return item.employee_schedule_id;
             });
-            _context13.n = 5;
+            _context15.next = 23;
             return _index["default"].EmployeeSchedule.update({
               status: 1
             }, {
@@ -1761,7 +1774,7 @@ var acceptForAWeek = function acceptForAWeek(data) {
                 employee_schedule_id: employeeSchedules
               }
             });
-          case 5:
+          case 23:
             if (doctorSchedules.length || employeeSchedules.length) {
               resolve({
                 errCode: 0,
@@ -1774,233 +1787,235 @@ var acceptForAWeek = function acceptForAWeek(data) {
                 message: 'Have no schedule need to be accepted'
               });
             }
-            _context13.n = 7;
+            _context15.next = 27;
             break;
-          case 6:
+          case 26:
             resolve({
               errCode: 2,
               type: 'date',
               message: 'Have no valid date'
             });
-          case 7:
-            _context13.n = 9;
+          case 27:
+            _context15.next = 32;
             break;
-          case 8:
-            _context13.p = 8;
-            _t20 = _context13.v;
-            reject(_t20);
-          case 9:
-            return _context13.a(2);
+          case 29:
+            _context15.prev = 29;
+            _context15.t0 = _context15["catch"](0);
+            reject(_context15.t0);
+          case 32:
+          case "end":
+            return _context15.stop();
         }
-      }, _callee13, null, [[0, 8]]);
+      }, _callee15, null, [[0, 29]]);
     }));
-    return function (_x27, _x28) {
-      return _ref13.apply(this, arguments);
+    return function (_x29, _x30) {
+      return _ref15.apply(this, arguments);
     };
   }());
 };
 
 //XÓA LỊCH LÀM VIỆC CỦA 1 NHÂN VIÊN
 var deleteUserSchedule = function deleteUserSchedule(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14(resolve, reject) {
-      var user_id, prefix, user, userSchedule, isBeingUsed, schedule_id, result, employeeSchedule, doctorSchedule, _t21, _t22, _t23;
-      return _regenerator().w(function (_context14) {
-        while (1) switch (_context14.p = _context14.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(resolve, reject) {
+      var user_id, prefix, user, userSchedule, isBeingUsed, schedule_id, result, employeeSchedule, doctorSchedule;
+      return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+        while (1) switch (_context16.prev = _context16.next) {
           case 0:
-            _context14.p = 0;
+            _context16.prev = 0;
             if (!(!data.user_id || !data.user_schedule_id)) {
-              _context14.n = 1;
+              _context16.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: 'Missing params'
             });
-            _context14.n = 29;
+            _context16.next = 71;
             break;
-          case 1:
+          case 5:
             user_id = data.user_id.toLowerCase();
             prefix = user_id.slice(0, 2);
-            _context14.n = 2;
+            _context16.next = 9;
             return (0, _auth.getUserByID)(user_id);
-          case 2:
-            user = _context14.v;
+          case 9:
+            user = _context16.sent;
             if (!user) {
-              _context14.n = 28;
+              _context16.next = 70;
               break;
             }
-            _t21 = prefix;
-            _context14.n = _t21 === 'qt' ? 3 : _t21 === 'lt' ? 3 : _t21 === 'pt' ? 3 : _t21 === 'bs' ? 5 : 9;
+            _context16.t0 = prefix;
+            _context16.next = _context16.t0 === 'qt' ? 14 : _context16.t0 === 'lt' ? 14 : _context16.t0 === 'pt' ? 14 : _context16.t0 === 'bs' ? 18 : 26;
             break;
-          case 3:
-            _context14.n = 4;
+          case 14:
+            _context16.next = 16;
             return _index["default"].EmployeeSchedule.findOne({
               where: {
                 employee_schedule_id: data.user_schedule_id
               }
             });
-          case 4:
-            userSchedule = _context14.v;
-            return _context14.a(3, 10);
-          case 5:
-            _context14.n = 6;
+          case 16:
+            userSchedule = _context16.sent;
+            return _context16.abrupt("break", 27);
+          case 18:
+            _context16.next = 20;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 doctor_schedule_id: data.user_schedule_id
               }
             });
-          case 6:
-            userSchedule = _context14.v;
+          case 20:
+            userSchedule = _context16.sent;
             if (!userSchedule) {
-              _context14.n = 8;
+              _context16.next = 25;
               break;
             }
-            _context14.n = 7;
+            _context16.next = 24;
             return _index["default"].Appointment.findOne({
               where: {
                 doctor_schedule_id: userSchedule.doctor_schedule_id
                 // status: {[Op.ne]: 2} -> vướng khóa ngoại nên lịch hẹn đã hủy thì không thể xóa lịch làm việc đó
               }
             });
-          case 7:
-            isBeingUsed = _context14.v;
-          case 8:
-            return _context14.a(3, 10);
-          case 9:
-            return _context14.a(3, 10);
-          case 10:
+          case 24:
+            isBeingUsed = _context16.sent;
+          case 25:
+            return _context16.abrupt("break", 27);
+          case 26:
+            return _context16.abrupt("break", 27);
+          case 27:
             if (!userSchedule) {
-              _context14.n = 26;
+              _context16.next = 67;
               break;
             }
             if (isBeingUsed) {
-              _context14.n = 24;
+              _context16.next = 64;
               break;
             }
             schedule_id = userSchedule.schedule_id;
-            _t22 = prefix;
-            _context14.n = _t22 === 'qt' ? 11 : _t22 === 'lt' ? 11 : _t22 === 'pt' ? 11 : _t22 === 'bs' ? 15 : 19;
+            _context16.t1 = prefix;
+            _context16.next = _context16.t1 === 'qt' ? 33 : _context16.t1 === 'lt' ? 33 : _context16.t1 === 'pt' ? 33 : _context16.t1 === 'bs' ? 43 : 53;
             break;
-          case 11:
-            _context14.n = 12;
+          case 33:
+            _context16.next = 35;
             return _index["default"].EmployeeSchedule.destroy({
               where: {
                 employee_schedule_id: data.user_schedule_id
               }
             });
-          case 12:
-            result = _context14.v;
-            _context14.n = 13;
+          case 35:
+            result = _context16.sent;
+            _context16.next = 38;
             return _index["default"].EmployeeSchedule.findOne({
               where: {
                 schedule_id: schedule_id
               }
             });
-          case 13:
-            employeeSchedule = _context14.v;
-            _context14.n = 14;
+          case 38:
+            employeeSchedule = _context16.sent;
+            _context16.next = 41;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 schedule_id: schedule_id
               }
             });
-          case 14:
-            doctorSchedule = _context14.v;
-            return _context14.a(3, 20);
-          case 15:
-            _context14.n = 16;
+          case 41:
+            doctorSchedule = _context16.sent;
+            return _context16.abrupt("break", 54);
+          case 43:
+            _context16.next = 45;
             return _index["default"].DoctorSchedule.destroy({
               where: {
                 doctor_schedule_id: data.user_schedule_id
               }
             });
-          case 16:
-            result = _context14.v;
-            _context14.n = 17;
+          case 45:
+            result = _context16.sent;
+            _context16.next = 48;
             return _index["default"].EmployeeSchedule.findOne({
               where: {
                 schedule_id: schedule_id
               }
             });
-          case 17:
-            employeeSchedule = _context14.v;
-            _context14.n = 18;
+          case 48:
+            employeeSchedule = _context16.sent;
+            _context16.next = 51;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 schedule_id: schedule_id
               }
             });
-          case 18:
-            doctorSchedule = _context14.v;
-            return _context14.a(3, 20);
-          case 19:
-            return _context14.a(3, 20);
-          case 20:
+          case 51:
+            doctorSchedule = _context16.sent;
+            return _context16.abrupt("break", 54);
+          case 53:
+            return _context16.abrupt("break", 54);
+          case 54:
             if (!(result === 1)) {
-              _context14.n = 22;
+              _context16.next = 61;
               break;
             }
             if (!(!employeeSchedule && !doctorSchedule)) {
-              _context14.n = 21;
+              _context16.next = 58;
               break;
             }
-            _context14.n = 21;
+            _context16.next = 58;
             return _index["default"].Schedule.destroy({
               where: {
                 schedule_id: schedule_id
               }
             });
-          case 21:
+          case 58:
             resolve({
               errCode: 0,
               message: 'Deleted'
             });
-            _context14.n = 23;
+            _context16.next = 62;
             break;
-          case 22:
+          case 61:
             resolve({
               errCode: 5,
               message: 'Failed'
             });
-          case 23:
-            _context14.n = 25;
+          case 62:
+            _context16.next = 65;
             break;
-          case 24:
+          case 64:
             resolve({
               errCode: 6,
               message: 'This schedule is already booked'
             });
-          case 25:
-            _context14.n = 27;
+          case 65:
+            _context16.next = 68;
             break;
-          case 26:
+          case 67:
             resolve({
               errCode: 1,
               message: "This schedule doesn't exist"
             });
-          case 27:
-            _context14.n = 29;
+          case 68:
+            _context16.next = 71;
             break;
-          case 28:
+          case 70:
             resolve({
               errCode: 1,
               message: "User doesn't exist"
             });
-          case 29:
-            _context14.n = 31;
+          case 71:
+            _context16.next = 76;
             break;
-          case 30:
-            _context14.p = 30;
-            _t23 = _context14.v;
-            reject(_t23);
-          case 31:
-            return _context14.a(2);
+          case 73:
+            _context16.prev = 73;
+            _context16.t2 = _context16["catch"](0);
+            reject(_context16.t2);
+          case 76:
+          case "end":
+            return _context16.stop();
         }
-      }, _callee14, null, [[0, 30]]);
+      }, _callee16, null, [[0, 73]]);
     }));
-    return function (_x29, _x30) {
-      return _ref14.apply(this, arguments);
+    return function (_x31, _x32) {
+      return _ref16.apply(this, arguments);
     };
   }());
 };

@@ -3,7 +3,7 @@
 var _express = _interopRequireDefault(require("express"));
 var _middleware = _interopRequireDefault(require("../controllers/middleware"));
 var _schedule = _interopRequireDefault(require("../controllers/schedule"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var router = _express["default"].Router();
 router.get("/all/week/:week/:year",
 // middleware.verifyAdmin,

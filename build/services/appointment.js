@@ -6,34 +6,33 @@ var _axios = _interopRequireDefault(require("axios"));
 var _index = _interopRequireDefault(require("../models/index"));
 var _index2 = _interopRequireDefault(require("../util/index"));
 var _mail = _interopRequireDefault(require("./mail"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var _require = require("sequelize"),
   Op = _require.Op;
 //ĐẶT LẠI TRẠNG THÁI LỊCH CỦA BÁC SĨ KHI HỦY HẸN
 var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(resolve, reject) {
-      var currentDate, currentTime, doctorSchedule, startTime, startHours, currentHours, gapHours, startMinutes, currentMinutes, gapMinutes, _t;
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.p = _context.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resolve, reject) {
+      var currentDate, currentTime, doctorSchedule, startTime, startHours, currentHours, gapHours, startMinutes, currentMinutes, gapMinutes;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
           case 0:
-            _context.p = 0;
+            _context.prev = 0;
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate();
             currentTime = _index2["default"].getCurrentTime(); //lấy thời gian của lịch hẹn cần hủy
-            _context.n = 1;
+            _context.next = 5;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 doctor_schedule_id: appointment.doctor_schedule_id
@@ -47,13 +46,13 @@ var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
               raw: true,
               nest: true
             });
-          case 1:
-            doctorSchedule = _context.v;
+          case 5:
+            doctorSchedule = _context.sent;
             if (!(currentDate < doctorSchedule.Schedule.date)) {
-              _context.n = 2;
+              _context.next = 9;
               break;
             }
-            _context.n = 2;
+            _context.next = 9;
             return _index["default"].DoctorSchedule.update({
               status: 1
             }, {
@@ -61,12 +60,12 @@ var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
                 doctor_schedule_id: appointment.doctor_schedule_id
               }
             });
-          case 2:
+          case 9:
             ;
 
             //ngày hủy = ngày hẹn
             if (!(currentDate === doctorSchedule.Schedule.date)) {
-              _context.n = 4;
+              _context.next = 22;
               break;
             }
             startTime = doctorSchedule.Schedule.Session.time.slice(0, 5); //lấy giờ
@@ -82,10 +81,10 @@ var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
             //hẹn: 18:00 - hủy: 17:45
             gapHours === 0 && gapMinutes >= 15 //hẹn: 18:30 - hủy: 18:15
             )) {
-              _context.n = 3;
+              _context.next = 21;
               break;
             }
-            _context.n = 3;
+            _context.next = 21;
             return _index["default"].DoctorSchedule.update({
               status: 1
             }, {
@@ -93,9 +92,9 @@ var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
                 doctor_schedule_id: appointment.doctor_schedule_id
               }
             });
-          case 3:
+          case 21:
             ;
-          case 4:
+          case 22:
             ;
             resolve({
               errCode: 0,
@@ -106,18 +105,19 @@ var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
               },
               message: "Canceled"
             });
-            _context.n = 6;
+            _context.next = 29;
             break;
-          case 5:
-            _context.p = 5;
-            _t = _context.v;
-            reject(_t);
-          case 6:
+          case 26:
+            _context.prev = 26;
+            _context.t0 = _context["catch"](0);
+            reject(_context.t0);
+          case 29:
             ;
-          case 7:
-            return _context.a(2);
+          case 30:
+          case "end":
+            return _context.stop();
         }
-      }, _callee, null, [[0, 5]]);
+      }, _callee, null, [[0, 26]]);
     }));
     return function (_x, _x2) {
       return _ref.apply(this, arguments);
@@ -129,14 +129,14 @@ var setDoctorScheduleStatus = function setDoctorScheduleStatus(appointment) {
 
 //LẤY TẤT CẢ LỊCH HẸN
 var getAll = function getAll() {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(resolve, reject) {
-      var appointments, _t2;
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.p = _context2.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(resolve, reject) {
+      var appointments;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.p = 0;
-            _context2.n = 1;
+            _context2.prev = 0;
+            _context2.next = 3;
             return _index["default"].Appointment.findAll({
               include: [{
                 model: _index["default"].Type,
@@ -163,25 +163,26 @@ var getAll = function getAll() {
               raw: true,
               nest: true
             });
-          case 1:
-            appointments = _context2.v;
+          case 3:
+            appointments = _context2.sent;
             resolve({
               errCode: 0,
               message: "Get all appointments",
               data: appointments
             });
-            _context2.n = 3;
+            _context2.next = 10;
             break;
-          case 2:
-            _context2.p = 2;
-            _t2 = _context2.v;
-            reject(_t2);
-          case 3:
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2["catch"](0);
+            reject(_context2.t0);
+          case 10:
             ;
-          case 4:
-            return _context2.a(2);
+          case 11:
+          case "end":
+            return _context2.stop();
         }
-      }, _callee2, null, [[0, 2]]);
+      }, _callee2, null, [[0, 7]]);
     }));
     return function (_x3, _x4) {
       return _ref2.apply(this, arguments);
@@ -191,29 +192,29 @@ var getAll = function getAll() {
 
 //LẤY LỊCH HẸN THEO ID
 var getByID = function getByID(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(resolve, reject) {
-      var user_id, prefix, appointment_id, appointment, details, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(resolve, reject) {
+      var user_id, prefix, appointment_id, appointment, details;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.p = 0;
+            _context3.prev = 0;
             if (!(!data.appointment_id || !data.user_id)) {
-              _context3.n = 1;
+              _context3.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context3.n = 8;
+            _context3.next = 28;
             break;
-          case 1:
+          case 5:
             //nhân viên nào đang gửi yêu cầu
             user_id = data.user_id.toLowerCase();
             prefix = user_id.slice(0, 2); //join các bảng dữ liệu
             appointment_id = data.appointment_id.toLowerCase();
-            _context3.n = 2;
+            _context3.next = 10;
             return _index["default"].Appointment.findOne({
               where: {
                 appointment_id: appointment_id
@@ -242,9 +243,9 @@ var getByID = function getByID(data) {
               raw: true,
               nest: true
             });
-          case 2:
-            appointment = _context3.v;
-            _context3.n = 3;
+          case 10:
+            appointment = _context3.sent;
+            _context3.next = 13;
             return _index["default"].Appointment.findAll({
               where: {
                 appointment_id: appointment_id
@@ -256,8 +257,8 @@ var getByID = function getByID(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            details = _context3.v;
+          case 13:
+            details = _context3.sent;
             if (details[0].Services.service_id !== null) {
               details = details.map(function (item) {
                 return item.Services;
@@ -270,30 +271,30 @@ var getByID = function getByID(data) {
 
             //tìm thấy lịch hẹn
             if (!appointment) {
-              _context3.n = 6;
+              _context3.next = 26;
               break;
             }
             if (!(prefix === "bs" && appointment.DoctorSchedule.Doctor.doctor_id !== user_id)) {
-              _context3.n = 4;
+              _context3.next = 19;
               break;
             }
-            return _context3.a(2, resolve({
+            return _context3.abrupt("return", resolve({
               errCode: 2,
               message: "Appointment doesn't belong to this doctor"
             }));
-          case 4:
+          case 19:
             ;
 
             //người gửi yêu cầu: bệnh nhân và lịch hẹn này không thuộc về bệnh nhân đó
             if (!(prefix === "bn" && appointment.patient_id !== user_id)) {
-              _context3.n = 5;
+              _context3.next = 22;
               break;
             }
-            return _context3.a(2, resolve({
+            return _context3.abrupt("return", resolve({
               errCode: 2,
               message: "Appointment doesn't belong to this patient"
             }));
-          case 5:
+          case 22:
             ;
 
             //người gửi yêu cầu: lễ tân/bác sĩ/bệnh nhân
@@ -302,29 +303,30 @@ var getByID = function getByID(data) {
               message: "Get appointment by ID",
               data: appointment
             });
-            _context3.n = 7;
+            _context3.next = 27;
             break;
-          case 6:
+          case 26:
             resolve({
               errCode: 1,
               message: "Appointment doesn't exist"
             });
-          case 7:
+          case 27:
             ;
-          case 8:
+          case 28:
             ;
-            _context3.n = 10;
+            _context3.next = 34;
             break;
-          case 9:
-            _context3.p = 9;
-            _t3 = _context3.v;
-            reject(_t3);
-          case 10:
+          case 31:
+            _context3.prev = 31;
+            _context3.t0 = _context3["catch"](0);
+            reject(_context3.t0);
+          case 34:
             ;
-          case 11:
-            return _context3.a(2);
+          case 35:
+          case "end":
+            return _context3.stop();
         }
-      }, _callee3, null, [[0, 9]]);
+      }, _callee3, null, [[0, 31]]);
     }));
     return function (_x5, _x6) {
       return _ref3.apply(this, arguments);
@@ -334,38 +336,38 @@ var getByID = function getByID(data) {
 
 //LẤY TẤT CẢ LỊCH HẸN ĐÃ ĐƯỢC DUYỆT/HỦY/HOÀN THÀNH THEO ID BÁC SĨ PHỤ TRÁCH
 var getAllByDoctorID = function getAllByDoctorID(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(resolve, reject) {
-      var doctor_id, doctor, appointments, _t4;
-      return _regenerator().w(function (_context4) {
-        while (1) switch (_context4.p = _context4.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(resolve, reject) {
+      var doctor_id, doctor, appointments;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.p = 0;
+            _context4.prev = 0;
             if (data.doctor_id) {
-              _context4.n = 1;
+              _context4.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context4.n = 6;
+            _context4.next = 18;
             break;
-          case 1:
+          case 5:
             doctor_id = data.doctor_id.toLowerCase();
-            _context4.n = 2;
+            _context4.next = 8;
             return _index["default"].Doctor.findOne({
               where: {
                 doctor_id: doctor_id
               }
             });
-          case 2:
-            doctor = _context4.v;
+          case 8:
+            doctor = _context4.sent;
             if (!doctor) {
-              _context4.n = 4;
+              _context4.next = 16;
               break;
             }
-            _context4.n = 3;
+            _context4.next = 12;
             return _index["default"].Appointment.findAll({
               where: {
                 status: _defineProperty({}, Op.ne, 0)
@@ -398,36 +400,37 @@ var getAllByDoctorID = function getAllByDoctorID(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            appointments = _context4.v;
+          case 12:
+            appointments = _context4.sent;
             resolve({
               errCode: 0,
               message: "Get all appointments by doctor ID",
               data: appointments
             });
-            _context4.n = 5;
+            _context4.next = 17;
             break;
-          case 4:
+          case 16:
             resolve({
               errCode: 1,
               message: "Doctor doesn't exist"
             });
-          case 5:
+          case 17:
             ;
-          case 6:
+          case 18:
             ;
-            _context4.n = 8;
+            _context4.next = 24;
             break;
-          case 7:
-            _context4.p = 7;
-            _t4 = _context4.v;
-            reject(_t4);
-          case 8:
+          case 21:
+            _context4.prev = 21;
+            _context4.t0 = _context4["catch"](0);
+            reject(_context4.t0);
+          case 24:
             ;
-          case 9:
-            return _context4.a(2);
+          case 25:
+          case "end":
+            return _context4.stop();
         }
-      }, _callee4, null, [[0, 7]]);
+      }, _callee4, null, [[0, 21]]);
     }));
     return function (_x7, _x8) {
       return _ref4.apply(this, arguments);
@@ -437,38 +440,38 @@ var getAllByDoctorID = function getAllByDoctorID(data) {
 
 //LẤY TẤT CẢ LỊCH HẸN THEO ID BỆNH NHÂN
 var getAllByPatientID = function getAllByPatientID(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(resolve, reject) {
-      var patient_id, patient, appointments, _t5;
-      return _regenerator().w(function (_context5) {
-        while (1) switch (_context5.p = _context5.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resolve, reject) {
+      var patient_id, patient, appointments;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.p = 0;
+            _context5.prev = 0;
             if (data.patient_id) {
-              _context5.n = 1;
+              _context5.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context5.n = 6;
+            _context5.next = 18;
             break;
-          case 1:
+          case 5:
             patient_id = data.patient_id.toLowerCase();
-            _context5.n = 2;
+            _context5.next = 8;
             return _index["default"].Patient.findOne({
               where: {
                 patient_id: patient_id
               }
             });
-          case 2:
-            patient = _context5.v;
+          case 8:
+            patient = _context5.sent;
             if (!patient) {
-              _context5.n = 4;
+              _context5.next = 16;
               break;
             }
-            _context5.n = 3;
+            _context5.next = 12;
             return _index["default"].Appointment.findAll({
               where: {
                 patient_id: patient_id
@@ -498,38 +501,39 @@ var getAllByPatientID = function getAllByPatientID(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            appointments = _context5.v;
+          case 12:
+            appointments = _context5.sent;
             resolve({
               errCode: 0,
               message: "Get all appointments by patient ID",
               data: appointments
             });
-            _context5.n = 5;
+            _context5.next = 17;
             break;
-          case 4:
+          case 16:
             resolve({
               errCode: 1,
               message: "Patient doesn't exist"
             });
-          case 5:
+          case 17:
             ;
-          case 6:
+          case 18:
             ;
-            _context5.n = 8;
+            _context5.next = 24;
             break;
-          case 7:
-            _context5.p = 7;
-            _t5 = _context5.v;
-            reject(_t5);
-          case 8:
+          case 21:
+            _context5.prev = 21;
+            _context5.t0 = _context5["catch"](0);
+            reject(_context5.t0);
+          case 24:
             ;
-          case 9:
-            return _context5.a(2);
+          case 25:
+          case "end":
+            return _context5.stop();
         }
-      }, _callee5, null, [[0, 7]]);
+      }, _callee5, null, [[0, 21]]);
     }));
-    return function (_x9, _x0) {
+    return function (_x9, _x10) {
       return _ref5.apply(this, arguments);
     };
   }());
@@ -537,81 +541,81 @@ var getAllByPatientID = function getAllByPatientID(data) {
 
 //ĐẶT LỊCH HẸN
 var bookAppointment = function bookAppointment(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(resolve, reject) {
-      var patient_id, patient, creator_id, appointmentCount, doctorSchedule, currentDate, currentTime, startTime, appointment_id, newAppointment, result, _t6;
-      return _regenerator().w(function (_context6) {
-        while (1) switch (_context6.p = _context6.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(resolve, reject) {
+      var patient_id, patient, creator_id, _createdAt, appointmentCount, doctorSchedule, currentDate, currentTime, startTime, appointment_id, newAppointment, result;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.p = 0;
+            _context6.prev = 0;
             if (!(!data.creator_id || !data.type_id || !data.doctor_schedule_id || !data.patient_id || !data.fullname || !data.dob || data.gender === undefined || !data.phone)) {
-              _context6.n = 1;
+              _context6.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context6.n = 22;
+            _context6.next = 69;
             break;
-          case 1:
+          case 5:
             if (!(data.type_id === 2)) {
-              _context6.n = 2;
+              _context6.next = 8;
               break;
             }
             if (data.reExamServices) {
-              _context6.n = 2;
+              _context6.next = 8;
               break;
             }
-            return _context6.a(2, resolve({
+            return _context6.abrupt("return", resolve({
               errCode: 3,
               message: "Missing params"
             }));
-          case 2:
+          case 8:
             ;
             patient_id = data.patient_id.toLowerCase();
-            _context6.n = 3;
+            _context6.next = 12;
             return _index["default"].Patient.findOne({
               where: {
                 patient_id: patient_id
               }
             });
-          case 3:
-            patient = _context6.v;
+          case 12:
+            patient = _context6.sent;
             if (!patient) {
-              _context6.n = 20;
+              _context6.next = 67;
               break;
             }
             //id của người tạo lịch hẹn
             creator_id = data.creator_id.toLowerCase(); //nếu là bệnh nhân thì kiểm tra số lần đặt lịch hẹn của ngày hôm nay
             if (!(creator_id.slice(0, 2) === "bn")) {
-              _context6.n = 6;
+              _context6.next = 22;
               break;
             }
-            _context6.n = 4;
+            _context6.next = 18;
             return _index["default"].Appointment.findAll({
               where: {
                 patient_id: patient_id,
-                createdAt: _defineProperty(_defineProperty({}, Op.gt, new Date().setHours(0, 0, 0, 0)), Op.lt, new Date())
+                createdAt: (_createdAt = {}, _defineProperty(_createdAt, Op.gt, new Date().setHours(0, 0, 0, 0)), _defineProperty(_createdAt, Op.lt, new Date()), _createdAt)
               }
             });
-          case 4:
-            appointmentCount = _context6.v;
+          case 18:
+            appointmentCount = _context6.sent;
             if (!(appointmentCount.length >= 3)) {
-              _context6.n = 5;
+              _context6.next = 21;
               break;
             }
-            return _context6.a(2, resolve({
+            return _context6.abrupt("return", resolve({
               errCode: 10,
               message: "Reached the limit times for booking per day"
             }));
-          case 5:
+          case 21:
             ;
-          case 6:
+          case 22:
             ;
 
             //tìm lịch làm việc được đặt
-            _context6.n = 7;
+            _context6.next = 25;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 doctor_schedule_id: data.doctor_schedule_id
@@ -625,45 +629,45 @@ var bookAppointment = function bookAppointment(data) {
               raw: true,
               nest: true
             });
-          case 7:
-            doctorSchedule = _context6.v;
+          case 25:
+            doctorSchedule = _context6.sent;
             if (!doctorSchedule) {
-              _context6.n = 18;
+              _context6.next = 63;
               break;
             }
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate();
             currentTime = _index2["default"].getCurrentTime(); //ngày đặt lớn hơn ngày hẹn -> không thể đặt lịch của quá khứ
             if (!(currentDate > doctorSchedule.Schedule.date)) {
-              _context6.n = 8;
+              _context6.next = 31;
               break;
             }
-            return _context6.a(2, resolve({
+            return _context6.abrupt("return", resolve({
               errCode: 2,
               type: "date",
               message: "Can't book for the past"
             }));
-          case 8:
+          case 31:
             ;
 
             //ngày đặt cùng ngày hẹn
             if (!(currentDate === doctorSchedule.Schedule.date)) {
-              _context6.n = 10;
+              _context6.next = 37;
               break;
             }
             startTime = doctorSchedule.Schedule.Session.time.slice(0, 5); //thời gian đặt lịch > thời gian bắt đầu ca khám
             if (!(currentTime > startTime)) {
-              _context6.n = 9;
+              _context6.next = 36;
               break;
             }
-            return _context6.a(2, resolve({
+            return _context6.abrupt("return", resolve({
               errCode: 2,
               type: "time",
               message: "This session is over"
             }));
-          case 9:
+          case 36:
             ;
-          case 10:
+          case 37:
             ;
 
             //thỏa các điều kiện:
@@ -672,11 +676,11 @@ var bookAppointment = function bookAppointment(data) {
 
             //lịch còn khả dụng
             if (!(doctorSchedule.status === 1)) {
-              _context6.n = 16;
+              _context6.next = 59;
               break;
             }
             appointment_id = _index2["default"].createID("lh");
-            _context6.n = 11;
+            _context6.next = 42;
             return _index["default"].Appointment.create({
               appointment_id: appointment_id,
               type_id: data.type_id,
@@ -690,17 +694,17 @@ var bookAppointment = function bookAppointment(data) {
               phone: data.phone,
               status: 0 //chờ xác nhận
             });
-          case 11:
-            newAppointment = _context6.v;
+          case 42:
+            newAppointment = _context6.sent;
             if (!newAppointment.dataValues.appointment_id) {
-              _context6.n = 14;
+              _context6.next = 55;
               break;
             }
             if (!(data.type_id === 2)) {
-              _context6.n = 12;
+              _context6.next = 47;
               break;
             }
-            _context6.n = 12;
+            _context6.next = 47;
             return _index["default"].Detail.bulkCreate(data.reExamServices.map(function (service) {
               return {
                 appointment_id: appointment_id,
@@ -708,11 +712,11 @@ var bookAppointment = function bookAppointment(data) {
                 quantity: service.quantity
               };
             }));
-          case 12:
+          case 47:
             ;
 
             //cập nhật status cho doctor_schedule này thành 2 -> đã được đặt
-            _context6.n = 13;
+            _context6.next = 50;
             return _index["default"].DoctorSchedule.update({
               status: 2
             }, {
@@ -720,8 +724,8 @@ var bookAppointment = function bookAppointment(data) {
                 doctor_schedule_id: data.doctor_schedule_id
               }
             });
-          case 13:
-            result = _context6.v;
+          case 50:
+            result = _context6.sent;
             if (result[0] === 1) {
               resolve({
                 errCode: 0,
@@ -738,18 +742,18 @@ var bookAppointment = function bookAppointment(data) {
               });
             }
             ;
-            _context6.n = 15;
+            _context6.next = 56;
             break;
-          case 14:
+          case 55:
             resolve({
               errCode: 5,
               message: "Failed"
             });
-          case 15:
+          case 56:
             ;
-            _context6.n = 17;
+            _context6.next = 60;
             break;
-          case 16:
+          case 59:
             if (doctorSchedule.status === 2) {
               resolve({
                 errCode: 9,
@@ -765,42 +769,43 @@ var bookAppointment = function bookAppointment(data) {
                 message: "Not accepted yet"
               });
             }
-          case 17:
+          case 60:
             ;
-            _context6.n = 19;
+            _context6.next = 64;
             break;
-          case 18:
+          case 63:
             resolve({
               errCode: 1,
               message: "Doctor's schedule doesn't exist"
             });
-          case 19:
+          case 64:
             ;
-            _context6.n = 21;
+            _context6.next = 68;
             break;
-          case 20:
+          case 67:
             resolve({
               errCode: 1,
               message: "Patient doesn't exist"
             });
-          case 21:
+          case 68:
             ;
-          case 22:
+          case 69:
             ;
-            _context6.n = 24;
+            _context6.next = 75;
             break;
-          case 23:
-            _context6.p = 23;
-            _t6 = _context6.v;
-            reject(_t6);
-          case 24:
+          case 72:
+            _context6.prev = 72;
+            _context6.t0 = _context6["catch"](0);
+            reject(_context6.t0);
+          case 75:
             ;
-          case 25:
-            return _context6.a(2);
+          case 76:
+          case "end":
+            return _context6.stop();
         }
-      }, _callee6, null, [[0, 23]]);
+      }, _callee6, null, [[0, 72]]);
     }));
-    return function (_x1, _x10) {
+    return function (_x11, _x12) {
       return _ref6.apply(this, arguments);
     };
   }());
@@ -808,72 +813,72 @@ var bookAppointment = function bookAppointment(data) {
 
 //DUYỆT LỊCH HẸN
 var acceptAppointment = function acceptAppointment(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(resolve, reject) {
-      var appointment_id, employee_id, employee, appointment, doctorSchedule, currentDate, currentTime, startTime, result, patient, _t7;
-      return _regenerator().w(function (_context7) {
-        while (1) switch (_context7.p = _context7.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resolve, reject) {
+      var appointment_id, employee_id, employee, appointment, doctorSchedule, currentDate, currentTime, startTime, result, patient;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) switch (_context7.prev = _context7.next) {
           case 0:
-            _context7.p = 0;
+            _context7.prev = 0;
             if (!(!data.appointment_id || !data.employee_id)) {
-              _context7.n = 1;
+              _context7.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context7.n = 17;
+            _context7.next = 52;
             break;
-          case 1:
+          case 5:
             appointment_id = data.appointment_id.toLowerCase();
             employee_id = data.employee_id.toLowerCase(); //tìm lễ tân duyệt lịch hẹn này
-            _context7.n = 2;
+            _context7.next = 9;
             return _index["default"].Employee.findOne({
               where: {
                 employee_id: employee_id
               }
             });
-          case 2:
-            employee = _context7.v;
+          case 9:
+            employee = _context7.sent;
             if (employee) {
-              _context7.n = 3;
+              _context7.next = 12;
               break;
             }
-            return _context7.a(2, resolve({
+            return _context7.abrupt("return", resolve({
               errCode: 1,
               message: "Employee doesn't exist"
             }));
-          case 3:
+          case 12:
             ;
 
             //tìm lịch hẹn
-            _context7.n = 4;
+            _context7.next = 15;
             return _index["default"].Appointment.findOne({
               where: {
                 appointment_id: appointment_id
               }
             });
-          case 4:
-            appointment = _context7.v;
+          case 15:
+            appointment = _context7.sent;
             if (appointment) {
-              _context7.n = 5;
+              _context7.next = 18;
               break;
             }
-            return _context7.a(2, resolve({
+            return _context7.abrupt("return", resolve({
               errCode: 1,
               message: "Appointment doesn't exist"
             }));
-          case 5:
+          case 18:
             ;
 
             //đã tìm thấy lễ tân và lịch hẹn
             //lịch hẹn chưa được duyệt
             if (!(appointment.status === 0)) {
-              _context7.n = 15;
+              _context7.next = 50;
               break;
             }
-            _context7.n = 6;
+            _context7.next = 22;
             return _index["default"].DoctorSchedule.findOne({
               where: {
                 doctor_schedule_id: appointment.doctor_schedule_id
@@ -890,47 +895,47 @@ var acceptAppointment = function acceptAppointment(data) {
               raw: true,
               nest: true
             });
-          case 6:
-            doctorSchedule = _context7.v;
+          case 22:
+            doctorSchedule = _context7.sent;
             //lấy thời gian hiện tại
             currentDate = _index2["default"].getCurrentDate();
             currentTime = _index2["default"].getCurrentTime(); //ngày duyệt > ngày hẹn
             if (!(currentDate > doctorSchedule.Schedule.date)) {
-              _context7.n = 7;
+              _context7.next = 27;
               break;
             }
-            return _context7.a(2, resolve({
+            return _context7.abrupt("return", resolve({
               errCode: 2,
               type: "date",
               message: "Can't accept appointment for the past"
             }));
-          case 7:
+          case 27:
             ;
 
             //ngày duyệt cùng ngày hẹn
             if (!(currentDate === doctorSchedule.Schedule.date)) {
-              _context7.n = 9;
+              _context7.next = 33;
               break;
             }
             startTime = doctorSchedule.Schedule.Session.time.slice(0, 5); //thời gian duyệt > thời gian bắt đầu ca khám
             if (!(currentTime > startTime)) {
-              _context7.n = 8;
+              _context7.next = 32;
               break;
             }
-            return _context7.a(2, resolve({
+            return _context7.abrupt("return", resolve({
               errCode: 2,
               type: "time",
               message: "This session is over"
             }));
-          case 8:
+          case 32:
             ;
-          case 9:
+          case 33:
             ;
 
             //thỏa các điều kiện
             //điều kiện 1: ngày duyệt <= ngày hẹn (doctor_schedule.date)
             //điều kiện 2: cùng ngày thì thời gian duyệt phải <= thời gian bắt đầu ca khám
-            _context7.n = 10;
+            _context7.next = 36;
             return _index["default"].Appointment.update({
               employee_id: employee_id,
               //lễ tân nào duyệt lịch hẹn này
@@ -940,21 +945,21 @@ var acceptAppointment = function acceptAppointment(data) {
                 appointment_id: appointment_id
               }
             });
-          case 10:
-            result = _context7.v;
+          case 36:
+            result = _context7.sent;
             if (!(result[0] === 1)) {
-              _context7.n = 13;
+              _context7.next = 46;
               break;
             }
-            _context7.n = 11;
+            _context7.next = 40;
             return _index["default"].Patient.findOne({
               where: {
                 patient_id: appointment.patient_id
               }
             });
-          case 11:
-            patient = _context7.v;
-            _context7.n = 12;
+          case 40:
+            patient = _context7.sent;
+            _context7.next = 43;
             return _mail["default"].appointmentInfo({
               email: patient.email,
               appointment_id: data.appointment_id.toUpperCase(),
@@ -967,7 +972,7 @@ var acceptAppointment = function acceptAppointment(data) {
               time: doctorSchedule.Schedule.Session.time,
               status: "Đã xác nhận"
             });
-          case 12:
+          case 43:
             resolve({
               errCode: 0,
               data: {
@@ -977,41 +982,42 @@ var acceptAppointment = function acceptAppointment(data) {
               },
               message: "Accepted"
             });
-            _context7.n = 14;
+            _context7.next = 47;
             break;
-          case 13:
+          case 46:
             resolve({
               errCode: 5,
               message: "Failed"
             });
-          case 14:
+          case 47:
             ;
-            _context7.n = 16;
+            _context7.next = 51;
             break;
-          case 15:
+          case 50:
             resolve({
               errCode: 2,
               type: "status",
               message: "Incorrect status"
             });
-          case 16:
+          case 51:
             ;
-          case 17:
+          case 52:
             ;
-            _context7.n = 19;
+            _context7.next = 58;
             break;
-          case 18:
-            _context7.p = 18;
-            _t7 = _context7.v;
-            reject(_t7);
-          case 19:
+          case 55:
+            _context7.prev = 55;
+            _context7.t0 = _context7["catch"](0);
+            reject(_context7.t0);
+          case 58:
             ;
-          case 20:
-            return _context7.a(2);
+          case 59:
+          case "end":
+            return _context7.stop();
         }
-      }, _callee7, null, [[0, 18]]);
+      }, _callee7, null, [[0, 55]]);
     }));
-    return function (_x11, _x12) {
+    return function (_x13, _x14) {
       return _ref7.apply(this, arguments);
     };
   }());
@@ -1019,92 +1025,92 @@ var acceptAppointment = function acceptAppointment(data) {
 
 //HỦY LỊCH HẸN BỞI LỄ TÂN
 var canceledByEmployee = function canceledByEmployee(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(resolve, reject) {
-      var appointment_id, employee_id, employee, appointment, details, result, patient, returnData, _t8;
-      return _regenerator().w(function (_context8) {
-        while (1) switch (_context8.p = _context8.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(resolve, reject) {
+      var appointment_id, employee_id, employee, appointment, details, result, patient, returnData;
+      return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+        while (1) switch (_context8.prev = _context8.next) {
           case 0:
-            _context8.p = 0;
+            _context8.prev = 0;
             if (!(!data.appointment_id || !data.employee_id)) {
-              _context8.n = 1;
+              _context8.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context8.n = 16;
+            _context8.next = 47;
             break;
-          case 1:
+          case 5:
             appointment_id = data.appointment_id.toLowerCase();
             employee_id = data.employee_id.toLowerCase(); //tìm lễ tân hủy lịch hẹn này
-            _context8.n = 2;
+            _context8.next = 9;
             return _index["default"].Employee.findOne({
               where: {
                 employee_id: employee_id
               }
             });
-          case 2:
-            employee = _context8.v;
+          case 9:
+            employee = _context8.sent;
             if (employee) {
-              _context8.n = 3;
+              _context8.next = 12;
               break;
             }
-            return _context8.a(2, resolve({
+            return _context8.abrupt("return", resolve({
               errCode: 1,
               message: "Employee doesn't exist"
             }));
-          case 3:
+          case 12:
             ;
 
             //tìm lịch hẹn
-            _context8.n = 4;
+            _context8.next = 15;
             return _index["default"].Appointment.findOne({
               where: {
                 appointment_id: appointment_id
               }
             });
-          case 4:
-            appointment = _context8.v;
+          case 15:
+            appointment = _context8.sent;
             if (appointment) {
-              _context8.n = 5;
+              _context8.next = 18;
               break;
             }
-            return _context8.a(2, resolve({
+            return _context8.abrupt("return", resolve({
               errCode: 1,
               message: "Appointment doesn't exist"
             }));
-          case 5:
+          case 18:
             ;
 
             //đã tìm thấy lễ tân và lịch hẹn
             //lịch hẹn ở trạng thái chờ xác nhận hoặc đã xác nhận
             if (!(appointment.status === 0 || appointment.status === 1)) {
-              _context8.n = 14;
+              _context8.next = 45;
               break;
             }
-            _context8.n = 6;
+            _context8.next = 22;
             return _index["default"].Detail.findOne({
               where: {
                 appointment_id: appointment_id
               }
             });
-          case 6:
-            details = _context8.v;
+          case 22:
+            details = _context8.sent;
             if (!details) {
-              _context8.n = 7;
+              _context8.next = 25;
               break;
             }
-            return _context8.a(2, resolve({
+            return _context8.abrupt("return", resolve({
               errCode: 6,
               message: "Appointment has details"
             }));
-          case 7:
+          case 25:
             ;
 
             //lịch hẹn chưa được khám
-            _context8.n = 8;
+            _context8.next = 28;
             return _index["default"].Appointment.update({
               employee_id: employee_id,
               //lễ tân nào hủy lịch hẹn này
@@ -1114,67 +1120,68 @@ var canceledByEmployee = function canceledByEmployee(data) {
                 appointment_id: appointment_id
               }
             });
-          case 8:
-            result = _context8.v;
+          case 28:
+            result = _context8.sent;
             if (!(result[0] === 1)) {
-              _context8.n = 12;
+              _context8.next = 41;
               break;
             }
-            _context8.n = 9;
+            _context8.next = 32;
             return _index["default"].Patient.findOne({
               where: {
                 patient_id: appointment.patient_id
               }
             });
-          case 9:
-            patient = _context8.v;
-            _context8.n = 10;
+          case 32:
+            patient = _context8.sent;
+            _context8.next = 35;
             return _mail["default"].canceledAppointment({
               email: patient.email,
               fullname: patient.fullname,
               appointment_id: appointment_id
             });
-          case 10:
-            _context8.n = 11;
+          case 35:
+            _context8.next = 37;
             return setDoctorScheduleStatus(appointment);
-          case 11:
-            returnData = _context8.v;
+          case 37:
+            returnData = _context8.sent;
             resolve(returnData);
-            _context8.n = 13;
+            _context8.next = 42;
             break;
-          case 12:
+          case 41:
             resolve({
               errCode: 5,
               message: "Failed"
             });
-          case 13:
+          case 42:
             ;
-            _context8.n = 15;
+            _context8.next = 46;
             break;
-          case 14:
+          case 45:
             resolve({
               errCode: 2,
               type: "status",
               message: "Incorrect status"
             });
-          case 15:
+          case 46:
             ;
-          case 16:
+          case 47:
             ;
-            _context8.n = 18;
+            _context8.next = 53;
             break;
-          case 17:
-            _context8.p = 17;
-            _t8 = _context8.v;
-            reject(_t8);
-          case 18:
+          case 50:
+            _context8.prev = 50;
+            _context8.t0 = _context8["catch"](0);
+            reject(_context8.t0);
+          case 53:
             ;
-          case 19:
-            return _context8.a(2);
+          case 54:
+          case "end":
+            return _context8.stop();
         }
-      }, _callee8, null, [[0, 17]]);
+      }, _callee8, null, [[0, 50]]);
     }));
-    return function (_x13, _x14) {
+    return function (_x15, _x16) {
       return _ref8.apply(this, arguments);
     };
   }());
@@ -1182,72 +1189,72 @@ var canceledByEmployee = function canceledByEmployee(data) {
 
 //HỦY LỊCH HẸN BỞI BỆNH NHÂN
 var canceledByPatient = function canceledByPatient(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(resolve, reject) {
-      var appointment_id, patient_id, patient, appointment, result, returnData, _t9;
-      return _regenerator().w(function (_context9) {
-        while (1) switch (_context9.p = _context9.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resolve, reject) {
+      var appointment_id, patient_id, patient, appointment, result, returnData;
+      return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+        while (1) switch (_context9.prev = _context9.next) {
           case 0:
-            _context9.p = 0;
+            _context9.prev = 0;
             if (!(!data.appointment_id || !data.patient_id)) {
-              _context9.n = 1;
+              _context9.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context9.n = 12;
+            _context9.next = 36;
             break;
-          case 1:
+          case 5:
             appointment_id = data.appointment_id.toLowerCase();
             patient_id = data.patient_id.toLowerCase(); //tìm bệnh nhân
-            _context9.n = 2;
+            _context9.next = 9;
             return _index["default"].Patient.findOne({
               where: {
                 patient_id: patient_id
               }
             });
-          case 2:
-            patient = _context9.v;
+          case 9:
+            patient = _context9.sent;
             if (patient) {
-              _context9.n = 3;
+              _context9.next = 12;
               break;
             }
-            return _context9.a(2, resolve({
+            return _context9.abrupt("return", resolve({
               errCode: 1,
               message: "Patient doesn't exist"
             }));
-          case 3:
+          case 12:
             ;
 
             //tìm lịch hẹn
-            _context9.n = 4;
+            _context9.next = 15;
             return _index["default"].Appointment.findOne({
               where: {
                 appointment_id: appointment_id
               }
             });
-          case 4:
-            appointment = _context9.v;
+          case 15:
+            appointment = _context9.sent;
             if (appointment) {
-              _context9.n = 5;
+              _context9.next = 18;
               break;
             }
-            return _context9.a(2, resolve({
+            return _context9.abrupt("return", resolve({
               errCode: 1,
               message: "Appointment doesn't exist"
             }));
-          case 5:
+          case 18:
             ;
 
             //đã tìm thấy bệnh nhân và lịch hẹn
             //lịch hẹn ở trạng thái chờ xác nhận
             if (!(appointment.status === 0)) {
-              _context9.n = 10;
+              _context9.next = 34;
               break;
             }
-            _context9.n = 6;
+            _context9.next = 22;
             return _index["default"].Appointment.update({
               status: 2
             },
@@ -1257,52 +1264,53 @@ var canceledByPatient = function canceledByPatient(data) {
                 appointment_id: appointment_id
               }
             });
-          case 6:
-            result = _context9.v;
+          case 22:
+            result = _context9.sent;
             if (!(result[0] === 1)) {
-              _context9.n = 8;
+              _context9.next = 30;
               break;
             }
-            _context9.n = 7;
+            _context9.next = 26;
             return setDoctorScheduleStatus(appointment);
-          case 7:
-            returnData = _context9.v;
+          case 26:
+            returnData = _context9.sent;
             resolve(returnData);
-            _context9.n = 9;
+            _context9.next = 31;
             break;
-          case 8:
+          case 30:
             resolve({
               errCode: 5,
               message: "Failed"
             });
-          case 9:
+          case 31:
             ;
-            _context9.n = 11;
+            _context9.next = 35;
             break;
-          case 10:
+          case 34:
             resolve({
               errCode: 2,
               type: "status",
               message: "Incorrect status"
             });
-          case 11:
+          case 35:
             ;
-          case 12:
+          case 36:
             ;
-            _context9.n = 14;
+            _context9.next = 42;
             break;
-          case 13:
-            _context9.p = 13;
-            _t9 = _context9.v;
-            reject(_t9);
-          case 14:
+          case 39:
+            _context9.prev = 39;
+            _context9.t0 = _context9["catch"](0);
+            reject(_context9.t0);
+          case 42:
             ;
-          case 15:
-            return _context9.a(2);
+          case 43:
+          case "end":
+            return _context9.stop();
         }
-      }, _callee9, null, [[0, 13]]);
+      }, _callee9, null, [[0, 39]]);
     }));
-    return function (_x15, _x16) {
+    return function (_x17, _x18) {
       return _ref9.apply(this, arguments);
     };
   }());
@@ -1310,39 +1318,39 @@ var canceledByPatient = function canceledByPatient(data) {
 
 //CẬP NHẬT CÁC DỊCH VỤ ĐÃ THỰC HIỆN CỦA LỊCH HẸN
 var saveDetails = function saveDetails(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(resolve, reject) {
-      var doctor_id, doctor, appointment_id, appointment, appointmentDetails, addList, oldList, deleteList, updateList, _iterator, _step, details, _t0, _t1;
-      return _regenerator().w(function (_context0) {
-        while (1) switch (_context0.p = _context0.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(resolve, reject) {
+      var doctor_id, doctor, appointment_id, appointment, appointmentDetails, addList, oldList, deleteList, updateList, _iterator, _step, details;
+      return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+        while (1) switch (_context10.prev = _context10.next) {
           case 0:
-            _context0.p = 0;
+            _context10.prev = 0;
             if (!(!data.doctor_id || !data.appointment_id || !data.detailsList)) {
-              _context0.n = 1;
+              _context10.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context0.n = 23;
+            _context10.next = 71;
             break;
-          case 1:
+          case 5:
             doctor_id = data.doctor_id.toLowerCase();
-            _context0.n = 2;
+            _context10.next = 8;
             return _index["default"].Doctor.findOne({
               where: {
                 doctor_id: doctor_id
               }
             });
-          case 2:
-            doctor = _context0.v;
+          case 8:
+            doctor = _context10.sent;
             if (!doctor) {
-              _context0.n = 21;
+              _context10.next = 69;
               break;
             }
             appointment_id = data.appointment_id.toLowerCase();
-            _context0.n = 3;
+            _context10.next = 13;
             return _index["default"].Appointment.findOne({
               where: {
                 appointment_id: appointment_id
@@ -1353,34 +1361,34 @@ var saveDetails = function saveDetails(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            appointment = _context0.v;
+          case 13:
+            appointment = _context10.sent;
             if (!appointment) {
-              _context0.n = 19;
+              _context10.next = 65;
               break;
             }
             if (!(appointment.DoctorSchedule.doctor_id === doctor_id)) {
-              _context0.n = 17;
+              _context10.next = 61;
               break;
             }
             if (!(appointment.status === 1)) {
-              _context0.n = 15;
+              _context10.next = 57;
               break;
             }
-            _context0.n = 4;
+            _context10.next = 19;
             return _index["default"].Detail.findAll({
               where: {
                 appointment_id: appointment_id
               }
             });
-          case 4:
-            appointmentDetails = _context0.v;
+          case 19:
+            appointmentDetails = _context10.sent;
             //thêm mới chi tiết
             addList = data.detailsList.filter(function (details) {
               return !details.detail_id;
             });
             if (!addList.length) {
-              _context0.n = 5;
+              _context10.next = 25;
               break;
             }
             addList = addList.map(function (details) {
@@ -1391,9 +1399,9 @@ var saveDetails = function saveDetails(data) {
                 description: details.description
               };
             });
-            _context0.n = 5;
+            _context10.next = 25;
             return _index["default"].Detail.bulkCreate(addList);
-          case 5:
+          case 25:
             ;
 
             //sửa chi tiết
@@ -1451,31 +1459,31 @@ var saveDetails = function saveDetails(data) {
               ;
             });
             if (!deleteList.length) {
-              _context0.n = 6;
+              _context10.next = 33;
               break;
             }
-            _context0.n = 6;
+            _context10.next = 33;
             return _index["default"].Detail.destroy({
               where: {
                 detail_id: deleteList
               }
             });
-          case 6:
+          case 33:
             ;
             if (!updateList.length) {
-              _context0.n = 14;
+              _context10.next = 53;
               break;
             }
             _iterator = _createForOfIteratorHelper(updateList);
-            _context0.p = 7;
+            _context10.prev = 36;
             _iterator.s();
-          case 8:
+          case 38:
             if ((_step = _iterator.n()).done) {
-              _context0.n = 10;
+              _context10.next = 44;
               break;
             }
             details = _step.value;
-            _context0.n = 9;
+            _context10.next = 42;
             return _index["default"].Detail.update({
               service_id: details.service_id,
               quantity: details.quantity,
@@ -1485,122 +1493,123 @@ var saveDetails = function saveDetails(data) {
                 detail_id: details.detail_id
               }
             });
-          case 9:
-            _context0.n = 8;
+          case 42:
+            _context10.next = 38;
             break;
-          case 10:
-            _context0.n = 12;
+          case 44:
+            _context10.next = 49;
             break;
-          case 11:
-            _context0.p = 11;
-            _t0 = _context0.v;
-            _iterator.e(_t0);
-          case 12:
-            _context0.p = 12;
+          case 46:
+            _context10.prev = 46;
+            _context10.t0 = _context10["catch"](36);
+            _iterator.e(_context10.t0);
+          case 49:
+            _context10.prev = 49;
             _iterator.f();
-            return _context0.f(12);
-          case 13:
+            return _context10.finish(49);
+          case 52:
             ;
-          case 14:
+          case 53:
             ;
             resolve({
               errCode: 0,
               message: "Saved"
             });
-            _context0.n = 16;
+            _context10.next = 58;
             break;
-          case 15:
+          case 57:
             resolve({
               errCode: 2,
               type: "status",
               message: "Incorrect status"
             });
-          case 16:
+          case 58:
             ;
-            _context0.n = 18;
+            _context10.next = 62;
             break;
-          case 17:
+          case 61:
             resolve({
               errCode: 2,
               type: "doctor",
               message: "Appointment doesn't belong to this doctor"
             });
-          case 18:
+          case 62:
             ;
-            _context0.n = 20;
+            _context10.next = 66;
             break;
-          case 19:
+          case 65:
             resolve({
               errCode: 1,
               message: "Appointment doesn't exist"
             });
-          case 20:
+          case 66:
             ;
-            _context0.n = 22;
+            _context10.next = 70;
             break;
-          case 21:
+          case 69:
             resolve({
               errCode: 1,
               message: "Doctor doesn't exist"
             });
-          case 22:
+          case 70:
             ;
-          case 23:
+          case 71:
             ;
-            _context0.n = 25;
+            _context10.next = 77;
             break;
-          case 24:
-            _context0.p = 24;
-            _t1 = _context0.v;
-            reject(_t1);
-          case 25:
+          case 74:
+            _context10.prev = 74;
+            _context10.t1 = _context10["catch"](0);
+            reject(_context10.t1);
+          case 77:
             ;
-          case 26:
-            return _context0.a(2);
+          case 78:
+          case "end":
+            return _context10.stop();
         }
-      }, _callee0, null, [[7, 11, 12, 13], [0, 24]]);
+      }, _callee10, null, [[0, 74], [36, 46, 49, 52]]);
     }));
-    return function (_x17, _x18) {
-      return _ref0.apply(this, arguments);
+    return function (_x19, _x20) {
+      return _ref10.apply(this, arguments);
     };
   }());
 };
 
 //CẬP NHẬT LỊCH HẸN ĐÃ HOÀN THÀNH (khi lịch hẹn là tái khám và không phát sinh dịch vụ)
 var confirmDone = function confirmDone(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(resolve, reject) {
-      var doctor_id, doctor, appointment_id, appointment, appointmentDetails, deleteList, updateList, _iterator2, _step2, details, result, _t10, _t11;
-      return _regenerator().w(function (_context1) {
-        while (1) switch (_context1.p = _context1.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(resolve, reject) {
+      var doctor_id, doctor, appointment_id, appointment, appointmentDetails, deleteList, updateList, _iterator2, _step2, details, result;
+      return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+        while (1) switch (_context11.prev = _context11.next) {
           case 0:
-            _context1.p = 0;
+            _context11.prev = 0;
             if (!(!data.doctor_id || !data.appointment_id || !data.detailsList)) {
-              _context1.n = 1;
+              _context11.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context1.n = 23;
+            _context11.next = 68;
             break;
-          case 1:
+          case 5:
             doctor_id = data.doctor_id.toLowerCase();
-            _context1.n = 2;
+            _context11.next = 8;
             return _index["default"].Doctor.findOne({
               where: {
                 doctor_id: doctor_id
               }
             });
-          case 2:
-            doctor = _context1.v;
+          case 8:
+            doctor = _context11.sent;
             if (!doctor) {
-              _context1.n = 21;
+              _context11.next = 66;
               break;
             }
             appointment_id = data.appointment_id.toLowerCase();
-            _context1.n = 3;
+            _context11.next = 13;
             return _index["default"].Appointment.findOne({
               where: {
                 appointment_id: appointment_id
@@ -1611,28 +1620,28 @@ var confirmDone = function confirmDone(data) {
               raw: true,
               nest: true
             });
-          case 3:
-            appointment = _context1.v;
+          case 13:
+            appointment = _context11.sent;
             if (!appointment) {
-              _context1.n = 19;
+              _context11.next = 62;
               break;
             }
             if (!(appointment.DoctorSchedule.doctor_id === doctor_id)) {
-              _context1.n = 17;
+              _context11.next = 58;
               break;
             }
             if (!(appointment.status === 1)) {
-              _context1.n = 15;
+              _context11.next = 54;
               break;
             }
-            _context1.n = 4;
+            _context11.next = 19;
             return _index["default"].Detail.findAll({
               where: {
                 appointment_id: appointment_id
               }
             });
-          case 4:
-            appointmentDetails = _context1.v;
+          case 19:
+            appointmentDetails = _context11.sent;
             //cập nhật chi tiết lịch hẹn
             deleteList = [];
             updateList = [];
@@ -1656,31 +1665,31 @@ var confirmDone = function confirmDone(data) {
               ;
             });
             if (!deleteList.length) {
-              _context1.n = 5;
+              _context11.next = 26;
               break;
             }
-            _context1.n = 5;
+            _context11.next = 26;
             return _index["default"].Detail.destroy({
               where: {
                 detail_id: deleteList
               }
             });
-          case 5:
+          case 26:
             ;
             if (!updateList.length) {
-              _context1.n = 13;
+              _context11.next = 46;
               break;
             }
             _iterator2 = _createForOfIteratorHelper(updateList);
-            _context1.p = 6;
+            _context11.prev = 29;
             _iterator2.s();
-          case 7:
+          case 31:
             if ((_step2 = _iterator2.n()).done) {
-              _context1.n = 9;
+              _context11.next = 37;
               break;
             }
             details = _step2.value;
-            _context1.n = 8;
+            _context11.next = 35;
             return _index["default"].Detail.update({
               description: details.description
             }, {
@@ -1688,27 +1697,27 @@ var confirmDone = function confirmDone(data) {
                 detail_id: details.detail_id
               }
             });
-          case 8:
-            _context1.n = 7;
+          case 35:
+            _context11.next = 31;
             break;
-          case 9:
-            _context1.n = 11;
+          case 37:
+            _context11.next = 42;
             break;
-          case 10:
-            _context1.p = 10;
-            _t10 = _context1.v;
-            _iterator2.e(_t10);
-          case 11:
-            _context1.p = 11;
+          case 39:
+            _context11.prev = 39;
+            _context11.t0 = _context11["catch"](29);
+            _iterator2.e(_context11.t0);
+          case 42:
+            _context11.prev = 42;
             _iterator2.f();
-            return _context1.f(11);
-          case 12:
+            return _context11.finish(42);
+          case 45:
             ;
-          case 13:
+          case 46:
             ;
 
             //cập nhật trạng thái lịch hẹn
-            _context1.n = 14;
+            _context11.next = 49;
             return _index["default"].Appointment.update({
               status: 3
             },
@@ -1718,8 +1727,8 @@ var confirmDone = function confirmDone(data) {
                 appointment_id: appointment_id
               }
             });
-          case 14:
-            result = _context1.v;
+          case 49:
+            result = _context11.sent;
             if (result[0] === 1) {
               resolve({
                 errCode: 0,
@@ -1732,136 +1741,138 @@ var confirmDone = function confirmDone(data) {
               });
             }
             ;
-            _context1.n = 16;
+            _context11.next = 55;
             break;
-          case 15:
+          case 54:
             resolve({
               errCode: 2,
               type: "status",
               message: "Incorrect status"
             });
-          case 16:
+          case 55:
             ;
-            _context1.n = 18;
+            _context11.next = 59;
             break;
-          case 17:
+          case 58:
             resolve({
               errCode: 2,
               type: "doctor",
               message: "Appointment doesn't belong to this doctor"
             });
-          case 18:
+          case 59:
             ;
-            _context1.n = 20;
+            _context11.next = 63;
             break;
-          case 19:
+          case 62:
             resolve({
               errCode: 1,
               message: "Appointment doesn't exist"
             });
-          case 20:
+          case 63:
             ;
-            _context1.n = 22;
+            _context11.next = 67;
             break;
-          case 21:
+          case 66:
             resolve({
               errCode: 1,
               message: "Doctor doesn't exist"
             });
-          case 22:
+          case 67:
             ;
-          case 23:
+          case 68:
             ;
-            _context1.n = 25;
+            _context11.next = 74;
             break;
-          case 24:
-            _context1.p = 24;
-            _t11 = _context1.v;
-            reject(_t11);
-          case 25:
+          case 71:
+            _context11.prev = 71;
+            _context11.t1 = _context11["catch"](0);
+            reject(_context11.t1);
+          case 74:
             ;
-          case 26:
-            return _context1.a(2);
+          case 75:
+          case "end":
+            return _context11.stop();
         }
-      }, _callee1, null, [[6, 10, 11, 12], [0, 24]]);
+      }, _callee11, null, [[0, 71], [29, 39, 42, 45]]);
     }));
-    return function (_x19, _x20) {
-      return _ref1.apply(this, arguments);
+    return function (_x21, _x22) {
+      return _ref11.apply(this, arguments);
     };
   }());
 };
 
 //GỬI CHI TIẾT LỊCH HẸN TỚI EMAIL
 var sendToEmail = function sendToEmail(data) {
-  return new Promise(/*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(resolve, reject) {
-      var patient_id, patient, _t12;
-      return _regenerator().w(function (_context10) {
-        while (1) switch (_context10.p = _context10.n) {
+  return new Promise( /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(resolve, reject) {
+      var patient_id, patient;
+      return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+        while (1) switch (_context12.prev = _context12.next) {
           case 0:
-            _context10.p = 0;
+            _context12.prev = 0;
             if (!(!data.patient_id || !data.filename || !data.file)) {
-              _context10.n = 1;
+              _context12.next = 5;
               break;
             }
             resolve({
               errCode: 3,
               message: "Missing params"
             });
-            _context10.n = 6;
+            _context12.next = 17;
             break;
-          case 1:
+          case 5:
             patient_id = data.patient_id.toLowerCase();
-            _context10.n = 2;
+            _context12.next = 8;
             return _index["default"].Patient.findOne({
               where: {
                 patient_id: patient_id
               }
             });
-          case 2:
-            patient = _context10.v;
+          case 8:
+            patient = _context12.sent;
             if (!patient) {
-              _context10.n = 4;
+              _context12.next = 15;
               break;
             }
-            _context10.n = 3;
+            _context12.next = 12;
             return _mail["default"].detailsInfo({
               email: patient.email,
               fullname: patient.fullname,
               filename: data.filename,
               file: data.file
             });
-          case 3:
+          case 12:
             resolve({
               errCode: 0,
               message: "Sent to email"
             });
-            _context10.n = 5;
+            _context12.next = 16;
             break;
-          case 4:
+          case 15:
             resolve({
               errCode: 1,
               message: "Patient doesn't exist"
             });
-          case 5:
+          case 16:
             ;
-          case 6:
+          case 17:
             ;
-            _context10.n = 8;
+            _context12.next = 23;
             break;
-          case 7:
-            _context10.p = 7;
-            _t12 = _context10.v;
-            reject(_t12);
-          case 8:
+          case 20:
+            _context12.prev = 20;
+            _context12.t0 = _context12["catch"](0);
+            reject(_context12.t0);
+          case 23:
             ;
-          case 9:
-            return _context10.a(2);
+          case 24:
+          case "end":
+            return _context12.stop();
         }
-      }, _callee10, null, [[0, 7]]);
+      }, _callee12, null, [[0, 20]]);
     }));
-    return function (_x21, _x22) {
-      return _ref10.apply(this, arguments);
+    return function (_x23, _x24) {
+      return _ref12.apply(this, arguments);
     };
   }());
 };

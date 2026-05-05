@@ -3,7 +3,7 @@
 var _express = _interopRequireDefault(require("express"));
 var _middleware = _interopRequireDefault(require("../controllers/middleware"));
 var _appointment = _interopRequireDefault(require("../controllers/appointment"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var router = _express["default"].Router();
 router.get("/all", _middleware["default"].verifyReceptionist, _appointment["default"].handleGetAll);
 router.get("/:appointment_id/:user_id",
