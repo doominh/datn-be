@@ -65,7 +65,7 @@ const getClinicContext = async () => {
             }
         }
         const doctorList = Object.values(doctorMap).map((d) => {
-            const specs = d.categories.length > 0 ? d.categories.join(', ') : 'Đa khoa';
+            const specs = d.categories.join(', ');
             return `- [BS. ${d.fullname}](/detailDoctor/${d.doctor_id}) (${d.degree || 'Bác sĩ'}) — Chuyên: ${specs}`;
         });
 
@@ -149,7 +149,7 @@ const getAvailableSchedules = async (date = null) => {
             }
 
             for (const r of results) {
-                r.specialty = (catMap[r.doctor_id] || []).join(', ') || 'Đa khoa';
+                r.specialty = (catMap[r.doctor_id] || []).join(', ');
             }
         }
 
@@ -306,7 +306,7 @@ const handleStructuredIntent = async (intent, message, sessionData) => {
                 };
             }
             const list = schedules
-                .map((s) => `- [${s.doctor}](/detailDoctor/${s.doctor_id}) (${s.specialty}) lúc **${s.time}**`)
+                .map((s) => `- [${s.doctor}](/detailDoctor/${s.doctor_id}) lúc **${s.time}**`)
                 .join('\n');
             return {
                 directReply: `**Lịch trống hôm nay (${moment().format('DD/MM/YYYY')}):**\n\n${list}\n\nNhấn vào tên bác sĩ để xem chi tiết và đặt lịch.`,
@@ -325,7 +325,7 @@ const handleStructuredIntent = async (intent, message, sessionData) => {
                 };
             }
             const list = schedules
-                .map((s) => `- [${s.doctor}](/detailDoctor/${s.doctor_id}) (${s.specialty}) lúc **${s.time}**`)
+                .map((s) => `- [${s.doctor}](/detailDoctor/${s.doctor_id}) lúc **${s.time}**`)
                 .join('\n');
             return {
                 directReply: `Ngày **${formattedDate}** (${dayOfWeek}) có các bác sĩ sau:\n\n${list}\n\nNhấn vào tên bác sĩ để xem chi tiết và đặt lịch.`,
@@ -410,7 +410,7 @@ const askGemini = async (message, conversationHistory = [], sessionData = {}) =>
         todaySchedules.length > 0
             ? todaySchedules
                   .slice(0, 10)
-                  .map((s) => `- [${s.doctor}](/detailDoctor/${s.doctor_id}) (${s.specialty}): ${s.date} lúc ${s.time}`)
+                  .map((s) => `- [${s.doctor}](/detailDoctor/${s.doctor_id}): ${s.date} lúc ${s.time}`)
                   .join('\n')
             : 'Chưa có lịch trống hôm nay.';
 

@@ -123,7 +123,7 @@ var getClinicContext = /*#__PURE__*/function () {
             _iterator.f();
           }
           doctorList = Object.values(doctorMap).map(function (d) {
-            var specs = d.categories.length > 0 ? d.categories.join(', ') : 'Đa khoa';
+            var specs = d.categories.join(', ');
             return "- [BS. ".concat(d.fullname, "](/detailDoctor/").concat(d.doctor_id, ") (").concat(d.degree || 'Bác sĩ', ") \u2014 Chuy\xEAn: ").concat(specs);
           });
           _clinicCache = {
@@ -304,7 +304,7 @@ var getAvailableSchedules = /*#__PURE__*/function () {
           try {
             for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
               r = _step4.value;
-              r.specialty = (catMap[r.doctor_id] || []).join(', ') || 'Đa khoa';
+              r.specialty = (catMap[r.doctor_id] || []).join(', ');
             }
           } catch (err) {
             _iterator4.e(err);
@@ -517,7 +517,7 @@ var handleStructuredIntent = /*#__PURE__*/function () {
           });
         case 19:
           _list = schedules.map(function (s) {
-            return "- [".concat(s.doctor, "](/detailDoctor/").concat(s.doctor_id, ") (").concat(s.specialty, ") l\xFAc **").concat(s.time, "**");
+            return "- [".concat(s.doctor, "](/detailDoctor/").concat(s.doctor_id, ") l\xFAc **").concat(s.time, "**");
           }).join('\n');
           return _context4.abrupt("return", {
             directReply: "**L\u1ECBch tr\u1ED1ng h\xF4m nay (".concat((0, _moment["default"])().format('DD/MM/YYYY'), "):**\n\n").concat(_list, "\n\nNh\u1EA5n v\xE0o t\xEAn b\xE1c s\u0129 \u0111\u1EC3 xem chi ti\u1EBFt v\xE0 \u0111\u1EB7t l\u1ECBch.")
@@ -545,7 +545,7 @@ var handleStructuredIntent = /*#__PURE__*/function () {
           });
         case 31:
           _list2 = _schedules.map(function (s) {
-            return "- [".concat(s.doctor, "](/detailDoctor/").concat(s.doctor_id, ") (").concat(s.specialty, ") l\xFAc **").concat(s.time, "**");
+            return "- [".concat(s.doctor, "](/detailDoctor/").concat(s.doctor_id, ") l\xFAc **").concat(s.time, "**");
           }).join('\n');
           return _context4.abrupt("return", {
             directReply: "Ng\xE0y **".concat(formattedDate, "** (").concat(dayOfWeek, ") c\xF3 c\xE1c b\xE1c s\u0129 sau:\n\n").concat(_list2, "\n\nNh\u1EA5n v\xE0o t\xEAn b\xE1c s\u0129 \u0111\u1EC3 xem chi ti\u1EBFt v\xE0 \u0111\u1EB7t l\u1ECBch.")
@@ -715,7 +715,7 @@ var askGemini = /*#__PURE__*/function () {
         case 32:
           todaySchedules = _context5.sent;
           scheduleContext = todaySchedules.length > 0 ? todaySchedules.slice(0, 10).map(function (s) {
-            return "- [".concat(s.doctor, "](/detailDoctor/").concat(s.doctor_id, ") (").concat(s.specialty, "): ").concat(s.date, " l\xFAc ").concat(s.time);
+            return "- [".concat(s.doctor, "](/detailDoctor/").concat(s.doctor_id, "): ").concat(s.date, " l\xFAc ").concat(s.time);
           }).join('\n') : 'Chưa có lịch trống hôm nay.';
           nowVN = (0, _moment["default"])().utcOffset('+07:00');
           todayStr = nowVN.format('DD/MM/YYYY');
