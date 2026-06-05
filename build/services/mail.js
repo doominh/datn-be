@@ -320,21 +320,24 @@ var appointmentInfo = /*#__PURE__*/function () {
 //GỬI EMAIL THÔNG TIN HÓA ĐƠN
 var billInfo = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data) {
+    var base64Data, fileBuffer;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
-          _context4.next = 2;
+          base64Data = data.file.includes(',') ? data.file.split(',')[1] : data.file;
+          fileBuffer = Buffer.from(base64Data, 'base64');
+          _context4.next = 4;
           return resend.emails.send({
             from: FROM,
             to: data.email,
             subject: 'Thông tin hóa đơn',
             attachments: [{
               filename: data.filename,
-              content: require('fs').readFileSync(data.file)
+              content: fileBuffer
             }],
             html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin h\xF3a \u0111\u01A1n d\u1ECBch v\u1EE5 t\u1EA1i ph\xF2ng kh\xE1m.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        ")
           });
-        case 2:
+        case 4:
         case "end":
           return _context4.stop();
       }
@@ -348,21 +351,24 @@ var billInfo = /*#__PURE__*/function () {
 //GỬI EMAIL CHI TIẾT LỊCH HẸN
 var detailsInfo = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(data) {
+    var base64Data, fileBuffer;
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) switch (_context5.prev = _context5.next) {
         case 0:
-          _context5.next = 2;
+          base64Data = data.file.includes(',') ? data.file.split(',')[1] : data.file;
+          fileBuffer = Buffer.from(base64Data, 'base64');
+          _context5.next = 4;
           return resend.emails.send({
             from: FROM,
             to: data.email,
             subject: 'Thông tin chi tiết lịch hẹn',
             attachments: [{
               filename: data.filename,
-              content: require('fs').readFileSync(data.file)
+              content: fileBuffer
             }],
             html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin chi ti\u1EBFt l\u1ECBch h\u1EB9n.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        ")
           });
-        case 2:
+        case 4:
         case "end":
           return _context5.stop();
       }

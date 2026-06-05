@@ -320,6 +320,9 @@ const appointmentInfo = async (data) => {
 
 //GỬI EMAIL THÔNG TIN HÓA ĐƠN
 const billInfo = async (data) => {
+	const base64Data = data.file.includes(',') ? data.file.split(',')[1] : data.file;
+	const fileBuffer = Buffer.from(base64Data, 'base64');
+
 	await resend.emails.send({
 		from: FROM,
 		to: data.email,
@@ -327,7 +330,7 @@ const billInfo = async (data) => {
 		attachments: [
 			{
 				filename: data.filename,
-				content: require('fs').readFileSync(data.file),
+				content: fileBuffer,
 			},
 		],
 		html: `
@@ -340,6 +343,9 @@ const billInfo = async (data) => {
 
 //GỬI EMAIL CHI TIẾT LỊCH HẸN
 const detailsInfo = async (data) => {
+	const base64Data = data.file.includes(',') ? data.file.split(',')[1] : data.file;
+	const fileBuffer = Buffer.from(base64Data, 'base64');
+
 	await resend.emails.send({
 		from: FROM,
 		to: data.email,
@@ -347,7 +353,7 @@ const detailsInfo = async (data) => {
 		attachments: [
 			{
 				filename: data.filename,
-				content: require('fs').readFileSync(data.file),
+				content: fileBuffer,
 			},
 		],
 		html: `
