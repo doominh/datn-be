@@ -10,288 +10,250 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 require('dotenv').config();
 
 // -------------------- NODEMAILER SERVICE -----------------
-//GỬI MAIL XÁC NHẬN NGƯỜI DÙNG
-var verify = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive\" <".concat(process.env.EMAIL_APP, ">"),
-            to: data.email,
-            subject: 'Xác minh tài khoản',
-            html: data.isPatient ? "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n email x\xE1c nh\u1EADn thao t\xE1c \u0111\u0103ng k\xFD t\xE0i kho\u1EA3n \u0111\xE3 th\u1EF1c hi\u1EC7n tr\xEAn website.</p>\n        <p>B\u1EA1n c\u1EA7n x\xE1c nh\u1EADn theo \u0111\u01B0\u1EDDng d\u1EABn \u0111\u01B0\u1EE3c \u0111\xEDnh k\xE8m b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 k\xEDch ho\u1EA1t t\xE0i kho\u1EA3n.</p>\n        <p>N\u1EBFu b\u1EA1n kh\xF4ng th\u1EF1c hi\u1EC7n \u0111\u0103ng k\xFD t\xE0i kho\u1EA3n v\u1EDBi Toothhive, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        <a href=").concat(data.redirectLink, ">X\xE1c minh t\xE0i kho\u1EA3n</a>\n        ") : "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p>B\u1EA1n c\u1EA7n x\xE1c nh\u1EADn theo \u0111\u01B0\u1EDDng d\u1EABn \u0111\u01B0\u1EE3c \u0111\xEDnh k\xE8m b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 c\xF3 th\u1EC3 \u0111\u0103ng nh\u1EADp v\xE0o h\u1EC7 th\u1ED1ng qu\u1EA3n l\xFD c\u1EE7a Toothhive.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        <a href=").concat(data.redirectLink, ">X\xE1c minh t\xE0i kho\u1EA3n</a>\n        ")
-          });
-        case 3:
-          info = _context.sent;
-        case 4:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee);
-  }));
-  return function verify(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
+// //GỬI MAIL XÁC NHẬN NGƯỜI DÙNG
+// const verify = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
 
-//GỬI EMAIL QUÊN MẬT KHẨU
-var forgotPassword = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context2.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive\" <".concat(process.env.EMAIL_APP, ">"),
-            to: data.email,
-            subject: 'Đặt lại mật khẩu',
-            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n email \u0111\u1EB7t l\u1EA1i m\u1EADt kh\u1EA9u cho tr\u01B0\u1EDDng h\u1EE3p qu\xEAn m\u1EADt kh\u1EA9u c\u1EE7a b\u1EA1n.</p>\n        <p>B\u1EA1n c\u1EA7n x\xE1c nh\u1EADn theo \u0111\u01B0\u1EDDng d\u1EABn \u0111\u01B0\u1EE3c \u0111\xEDnh k\xE8m b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 \u0111\u1EB7t l\u1EA1i m\u1EADt kh\u1EA9u m\u1EDBi</p>\n        <p>N\u1EBFu b\u1EA1n kh\xF4ng th\u1EF1c hi\u1EC7n h\xE0nh \u0111\u1ED9ng n\xE0y, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        <p>\u0110\u01B0\u1EDDng d\u1EABn x\xE1c nh\u1EADn s\u1EBD c\xF3 hi\u1EC7u l\u1EF1c trong v\xF2ng <b>15 PH\xDAT</b></p>\n        <a href=").concat(data.redirectLink, ">\u0110\u1EB7t l\u1EA1i m\u1EADt kh\u1EA9u</a>\n        ")
-          });
-        case 3:
-          info = _context2.sent;
-        case 4:
-        case "end":
-          return _context2.stop();
-      }
-    }, _callee2);
-  }));
-  return function forgotPassword(_x2) {
-    return _ref2.apply(this, arguments);
-  };
-}();
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive" <${process.env.EMAIL_APP}>`,
+// 		to: data.email,
+// 		subject: 'Xác minh tài khoản',
+// 		html: data.isPatient
+// 			? `
+//         <h3>Xin chào ${data.fullname}!</h3>
+//         <p><b>Toothhive</b> gửi đến bạn email xác nhận thao tác đăng ký tài khoản đã thực hiện trên website.</p>
+//         <p>Bạn cần xác nhận theo đường dẫn được đính kèm bên dưới để kích hoạt tài khoản.</p>
+//         <p>Nếu bạn không thực hiện đăng ký tài khoản với Toothhive, vui lòng liên hệ với chúng tôi để được hỗ trợ.</p>
+//         <a href=${data.redirectLink}>Xác minh tài khoản</a>
+//         `
+// 			: `
+//         <h3>Xin chào ${data.fullname}!</h3>
+//         <p>Bạn cần xác nhận theo đường dẫn được đính kèm bên dưới để có thể đăng nhập vào hệ thống quản lý của Toothhive.</p>
+//         <p>Nếu bạn nghĩ đây là sự nhầm lẫn, vui lòng liên hệ với chúng tôi để được hỗ trợ.</p>
+//         <a href=${data.redirectLink}>Xác minh tài khoản</a>
+//         `,
+// 	});
+// };
 
-//GỬI EMAIL THÔNG TIN ĐẶT LỊCH HẸN
-var appointmentInfo = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context3.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive\" <".concat(process.env.EMAIL_APP, ">"),
-            to: data.email,
-            subject: 'Thông tin lịch hẹn',
-            html: "\n        <h2 style=\"text-align: center\">X\xC1C NH\u1EACN \u0110\u1EB6T L\u1ECACH H\u1EB8N TH\xC0NH C\xD4NG</h2>\n        <hr/>\n        <div style=\"width: 100%; font-size: 14px\">\n            <div style=\"float: left; width: 20%\">\n                <p><b>M\xE3 l\u1ECBch h\u1EB9n</b></p>\n                <p><b>T\xEAn b\u1EC7nh nh\xE2n</b></p>\n                <p><b>Ng\xE0y sinh</b></p>\n                <p><b>Gi\u1EDBi t\xEDnh</b></p>\n                <p><b>S\u1ED1 \u0111i\u1EC7n tho\u1EA1i</b></p>\n                <p><b>B\xE1c s\u0129 ph\u1EE5 tr\xE1ch</b></p>\n                <p><b>Ng\xE0y h\u1EB9n</b></p>\n                <p><b>Ca kh\xE1m</b></p>\n                <p><b>Tr\u1EA1ng th\xE1i l\u1ECBch h\u1EB9n</b></p>\n                <p><b>\u0110\u1ECBa ch\u1EC9 ph\xF2ng kh\xE1m</b></p>\n            </div>\n            <div style=\"float: right; width: 80%\">\n                <p>".concat(data.appointment_id, "</p>\n                <p>").concat(data.fullname, "</p>\n                <p>").concat(data.dob, "</p>\n                <p>").concat(data.gender ? 'Nam' : 'Nữ', "</p>\n                <p>").concat(data.phone, "</p>\n                <p>").concat(data.doctor_name, "</p>\n                <p>").concat(data.date, "</p>\n                <p>").concat(data.time, "</p>\n                <p style=\"color: #28a745\">").concat(data.status, "</p>\n                <p> 237 Nguy\u1EC5n T\u1EA5t Th\xE0nh, Qu\u1EADn 4, Tp.HCM</p>\n            </div>\n        </div>\n        ")
-          });
-        case 3:
-          info = _context3.sent;
-        case 4:
-        case "end":
-          return _context3.stop();
-      }
-    }, _callee3);
-  }));
-  return function appointmentInfo(_x3) {
-    return _ref3.apply(this, arguments);
-  };
-}();
+// //GỬI EMAIL QUÊN MẬT KHẨU
+// const forgotPassword = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
 
-//GỬI EMAIL THÔNG TIN HÓA ĐƠN
-var billInfo = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context4.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive\" <".concat(process.env.EMAIL_APP, ">"),
-            to: data.email,
-            subject: 'Thông tin hóa đơn',
-            attachments: [{
-              filename: data.filename,
-              path: data.file,
-              contentType: 'application/pdf'
-            }],
-            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin h\xF3a \u0111\u01A1n d\u1ECBch v\u1EE5 t\u1EA1i ph\xF2ng kh\xE1m.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        ")
-          });
-        case 3:
-          info = _context4.sent;
-        case 4:
-        case "end":
-          return _context4.stop();
-      }
-    }, _callee4);
-  }));
-  return function billInfo(_x4) {
-    return _ref4.apply(this, arguments);
-  };
-}();
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive" <${process.env.EMAIL_APP}>`,
+// 		to: data.email,
+// 		subject: 'Đặt lại mật khẩu',
+// 		html: `
+//         <h3>Xin chào ${data.fullname}!</h3>
+//         <p><b>Toothhive</b> gửi đến bạn email đặt lại mật khẩu cho trường hợp quên mật khẩu của bạn.</p>
+//         <p>Bạn cần xác nhận theo đường dẫn được đính kèm bên dưới để đặt lại mật khẩu mới</p>
+//         <p>Nếu bạn không thực hiện hành động này, vui lòng liên hệ với chúng tôi để được hỗ trợ.</p>
+//         <p>Đường dẫn xác nhận sẽ có hiệu lực trong vòng <b>15 PHÚT</b></p>
+//         <a href=${data.redirectLink}>Đặt lại mật khẩu</a>
+//         `,
+// 	});
+// };
 
-//GỬI EMAIL CHI TIẾT LỊCH HẸN
-var detailsInfo = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context5.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive\" <".concat(process.env.EMAIL_APP, ">"),
-            to: data.email,
-            subject: 'Thông tin chi tiết lịch hẹn',
-            attachments: [{
-              filename: data.filename,
-              path: data.file,
-              contentType: 'application/pdf'
-            }],
-            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin chi ti\u1EBFt l\u1ECBch h\u1EB9n.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        ")
-          });
-        case 3:
-          info = _context5.sent;
-        case 4:
-        case "end":
-          return _context5.stop();
-      }
-    }, _callee5);
-  }));
-  return function detailsInfo(_x5) {
-    return _ref5.apply(this, arguments);
-  };
-}();
+// //GỬI EMAIL THÔNG TIN ĐẶT LỊCH HẸN
+// const appointmentInfo = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
 
-//GỬI EMAIL THÔNG BÁO LỊCH HẸN BỊ HỦY
-var canceledAppointment = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-      while (1) switch (_context6.prev = _context6.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context6.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive\" <".concat(process.env.EMAIL_APP, ">"),
-            to: data.email,
-            subject: 'Thông báo hủy lịch hẹn',
-            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin l\u1ECBch h\u1EB9n ").concat(data.appointment_id.toUpperCase(), " \u0111\xE3 b\u1ECB h\u1EE7y.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        ")
-          });
-        case 3:
-          info = _context6.sent;
-        case 4:
-        case "end":
-          return _context6.stop();
-      }
-    }, _callee6);
-  }));
-  return function canceledAppointment(_x6) {
-    return _ref6.apply(this, arguments);
-  };
-}();
-var contactUs = /*#__PURE__*/function () {
-  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(data) {
-    var transporter, info;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
-        case 0:
-          transporter = _nodemailer["default"].createTransport({
-            host: 'smtp.gmail.com',
-            // port: 587,
-            // secure: false,
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL_APP,
-              pass: process.env.EMAIL_APP_PASSWORD
-            }
-          });
-          _context7.next = 3;
-          return transporter.sendMail({
-            from: "\"Toothhive Contact\" <".concat(process.env.EMAIL_APP, ">"),
-            to: 'toothhive@gmail.com',
-            subject: 'Liên hệ từ người dùng',
-            html: "\n\t\t\t\t\t<h3>Th\xF4ng tin li\xEAn h\u1EC7</h3>\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li><b>H\u1ECD v\xE0 t\xEAn:</b> ".concat(data.fullName, "</li>\n\t\t\t\t\t\t\t<li><b>S\u1ED1 \u0111i\u1EC7n tho\u1EA1i:</b> ").concat(data.phone, "</li>\n\t\t\t\t\t\t\t<li><b>Email:</b> ").concat(data.email, "</li>\n\t\t\t\t\t\t\t<li><b>L\u1EDDi nh\u1EAFn:</b> ").concat(data.message, "</li>\n\t\t\t\t\t</ul>\n\t\t\t")
-          });
-        case 3:
-          info = _context7.sent;
-        case 4:
-        case "end":
-          return _context7.stop();
-      }
-    }, _callee7);
-  }));
-  return function contactUs(_x7) {
-    return _ref7.apply(this, arguments);
-  };
-}();
-module.exports = {
-  verify: verify,
-  forgotPassword: forgotPassword,
-  appointmentInfo: appointmentInfo,
-  billInfo: billInfo,
-  detailsInfo: detailsInfo,
-  canceledAppointment: canceledAppointment,
-  contactUs: contactUs
-};
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive" <${process.env.EMAIL_APP}>`,
+// 		to: data.email,
+// 		subject: 'Thông tin lịch hẹn',
+// 		html: `
+//         <h2 style="text-align: center">XÁC NHẬN ĐẶT LỊCH HẸN THÀNH CÔNG</h2>
+//         <hr/>
+//         <div style="width: 100%; font-size: 14px">
+//             <div style="float: left; width: 20%">
+//                 <p><b>Mã lịch hẹn</b></p>
+//                 <p><b>Tên bệnh nhân</b></p>
+//                 <p><b>Ngày sinh</b></p>
+//                 <p><b>Giới tính</b></p>
+//                 <p><b>Số điện thoại</b></p>
+//                 <p><b>Bác sĩ phụ trách</b></p>
+//                 <p><b>Ngày hẹn</b></p>
+//                 <p><b>Ca khám</b></p>
+//                 <p><b>Trạng thái lịch hẹn</b></p>
+//                 <p><b>Địa chỉ phòng khám</b></p>
+//             </div>
+//             <div style="float: right; width: 80%">
+//                 <p>${data.appointment_id}</p>
+//                 <p>${data.fullname}</p>
+//                 <p>${data.dob}</p>
+//                 <p>${data.gender ? 'Nam' : 'Nữ'}</p>
+//                 <p>${data.phone}</p>
+//                 <p>${data.doctor_name}</p>
+//                 <p>${data.date}</p>
+//                 <p>${data.time}</p>
+//                 <p style="color: #28a745">${data.status}</p>
+//                 <p> 237 Nguyễn Tất Thành, Quận 4, Tp.HCM</p>
+//             </div>
+//         </div>
+//         `,
+// 	});
+// };
+
+// //GỬI EMAIL THÔNG TIN HÓA ĐƠN
+// const billInfo = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
+
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive" <${process.env.EMAIL_APP}>`,
+// 		to: data.email,
+// 		subject: 'Thông tin hóa đơn',
+// 		attachments: [
+// 			{
+// 				filename: data.filename,
+// 				path: data.file,
+// 				contentType: 'application/pdf',
+// 			},
+// 		],
+// 		html: `
+//         <h3>Xin chào ${data.fullname}!</h3>
+//         <p><b>Toothhive</b> gửi đến bạn thông tin hóa đơn dịch vụ tại phòng khám.</p>
+//         <p>Nếu bạn nghĩ đây là sự nhầm lẫn, vui lòng liên hệ với chúng tôi để được hỗ trợ.</p>
+//         `,
+// 	});
+// };
+
+// //GỬI EMAIL CHI TIẾT LỊCH HẸN
+// const detailsInfo = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
+
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive" <${process.env.EMAIL_APP}>`,
+// 		to: data.email,
+// 		subject: 'Thông tin chi tiết lịch hẹn',
+// 		attachments: [
+// 			{
+// 				filename: data.filename,
+// 				path: data.file,
+// 				contentType: 'application/pdf',
+// 			},
+// 		],
+// 		html: `
+//         <h3>Xin chào ${data.fullname}!</h3>
+//         <p><b>Toothhive</b> gửi đến bạn thông tin chi tiết lịch hẹn.</p>
+//         <p>Nếu bạn nghĩ đây là sự nhầm lẫn, vui lòng liên hệ với chúng tôi để được hỗ trợ.</p>
+//         `,
+// 	});
+// };
+
+// //GỬI EMAIL THÔNG BÁO LỊCH HẸN BỊ HỦY
+// const canceledAppointment = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
+
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive" <${process.env.EMAIL_APP}>`,
+// 		to: data.email,
+// 		subject: 'Thông báo hủy lịch hẹn',
+// 		html: `
+//         <h3>Xin chào ${data.fullname}!</h3>
+//         <p><b>Toothhive</b> gửi đến bạn thông tin lịch hẹn ${data.appointment_id.toUpperCase()} đã bị hủy.</p>
+//         <p>Nếu bạn nghĩ đây là sự nhầm lẫn, vui lòng liên hệ với chúng tôi để được hỗ trợ.</p>
+//         `,
+// 	});
+// };
+// const contactUs = async (data) => {
+// 	let transporter = nodemailer.createTransport({
+// 		host: 'smtp.gmail.com',
+// 		// port: 587,
+// 		// secure: false,
+// 		port: 465,
+// 		secure: true,
+// 		auth: {
+// 			user: process.env.EMAIL_APP,
+// 			pass: process.env.EMAIL_APP_PASSWORD,
+// 		},
+// 	});
+
+// 	let info = await transporter.sendMail({
+// 		from: `"Toothhive Contact" <${process.env.EMAIL_APP}>`,
+// 		to: 'toothhive@gmail.com',
+// 		subject: 'Liên hệ từ người dùng',
+// 		html: `
+// 					<h3>Thông tin liên hệ</h3>
+// 					<ul>
+// 							<li><b>Họ và tên:</b> ${data.fullName}</li>
+// 							<li><b>Số điện thoại:</b> ${data.phone}</li>
+// 							<li><b>Email:</b> ${data.email}</li>
+// 							<li><b>Lời nhắn:</b> ${data.message}</li>
+// 					</ul>
+// 			`,
+// 	});
+// };
+
+// module.exports = {
+// 	verify,
+// 	forgotPassword,
+// 	appointmentInfo,
+// 	billInfo,
+// 	detailsInfo,
+// 	canceledAppointment,
+// 	contactUs,
+// };
 
 // -------------------- RESEND MAIL SERVICE -----------------
 // const resend = new Resend(process.env.RESEND_API_KEY);
@@ -463,3 +425,232 @@ module.exports = {
 // 	canceledAppointment,
 // 	contactUs,
 // };
+
+// -------------------- BREVOR SERVICE -----------------
+var FROM_NAME = 'Toothhive';
+var FROM_EMAIL = process.env.EMAIL_APP;
+var sendMail = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref) {
+    var to, subject, html, _ref$attachments, attachments, _require, BrevoClient, client, body;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          to = _ref.to, subject = _ref.subject, html = _ref.html, _ref$attachments = _ref.attachments, attachments = _ref$attachments === void 0 ? [] : _ref$attachments;
+          _require = require('@getbrevo/brevo'), BrevoClient = _require.BrevoClient;
+          client = new BrevoClient({
+            apiKey: process.env.BREVO_API_KEY
+          });
+          body = {
+            sender: {
+              name: FROM_NAME,
+              email: FROM_EMAIL
+            },
+            to: [{
+              email: to
+            }],
+            subject: subject,
+            htmlContent: html
+          };
+          if (attachments.length > 0) {
+            body.attachment = attachments.map(function (a) {
+              return {
+                name: a.filename,
+                content: a.content.toString('base64')
+              };
+            });
+          }
+          return _context.abrupt("return", client.transactionalEmails.sendTransacEmail(body));
+        case 6:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return function sendMail(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+// GỬI MAIL XÁC NHẬN NGƯỜI DÙNG
+var verify = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(data) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return sendMail({
+            to: data.email,
+            subject: 'Xác minh tài khoản',
+            html: data.isPatient ? "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n email x\xE1c nh\u1EADn thao t\xE1c \u0111\u0103ng k\xFD t\xE0i kho\u1EA3n \u0111\xE3 th\u1EF1c hi\u1EC7n tr\xEAn website.</p>\n        <p>B\u1EA1n c\u1EA7n x\xE1c nh\u1EADn theo \u0111\u01B0\u1EDDng d\u1EABn \u0111\u01B0\u1EE3c \u0111\xEDnh k\xE8m b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 k\xEDch ho\u1EA1t t\xE0i kho\u1EA3n.</p>\n        <p>N\u1EBFu b\u1EA1n kh\xF4ng th\u1EF1c hi\u1EC7n \u0111\u0103ng k\xFD t\xE0i kho\u1EA3n v\u1EDBi Toothhive, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        <a href=").concat(data.redirectLink, ">X\xE1c minh t\xE0i kho\u1EA3n</a>\n        ") : "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p>B\u1EA1n c\u1EA7n x\xE1c nh\u1EADn theo \u0111\u01B0\u1EDDng d\u1EABn \u0111\u01B0\u1EE3c \u0111\xEDnh k\xE8m b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 c\xF3 th\u1EC3 \u0111\u0103ng nh\u1EADp v\xE0o h\u1EC7 th\u1ED1ng qu\u1EA3n l\xFD c\u1EE7a Toothhive.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        <a href=").concat(data.redirectLink, ">X\xE1c minh t\xE0i kho\u1EA3n</a>\n        ")
+          });
+        case 2:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return function verify(_x2) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+// GỬI EMAIL QUÊN MẬT KHẨU
+var forgotPassword = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(data) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return sendMail({
+            to: data.email,
+            subject: 'Đặt lại mật khẩu',
+            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n email \u0111\u1EB7t l\u1EA1i m\u1EADt kh\u1EA9u cho tr\u01B0\u1EDDng h\u1EE3p qu\xEAn m\u1EADt kh\u1EA9u c\u1EE7a b\u1EA1n.</p>\n        <p>B\u1EA1n c\u1EA7n x\xE1c nh\u1EADn theo \u0111\u01B0\u1EDDng d\u1EABn \u0111\u01B0\u1EE3c \u0111\xEDnh k\xE8m b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 \u0111\u1EB7t l\u1EA1i m\u1EADt kh\u1EA9u m\u1EDBi</p>\n        <p>N\u1EBFu b\u1EA1n kh\xF4ng th\u1EF1c hi\u1EC7n h\xE0nh \u0111\u1ED9ng n\xE0y, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        <p>\u0110\u01B0\u1EDDng d\u1EABn x\xE1c nh\u1EADn s\u1EBD c\xF3 hi\u1EC7u l\u1EF1c trong v\xF2ng <b>15 PH\xDAT</b></p>\n        <a href=").concat(data.redirectLink, ">\u0110\u1EB7t l\u1EA1i m\u1EADt kh\u1EA9u</a>\n        ")
+          });
+        case 2:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return function forgotPassword(_x3) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+// GỬI EMAIL THÔNG TIN ĐẶT LỊCH HẸN
+var appointmentInfo = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
+          return sendMail({
+            to: data.email,
+            subject: 'Thông tin lịch hẹn',
+            html: "\n        <h2 style=\"text-align: center\">X\xC1C NH\u1EACN \u0110\u1EB6T L\u1ECACH H\u1EB8N TH\xC0NH C\xD4NG</h2>\n        <hr/>\n        <div style=\"width: 100%; font-size: 14px\">\n            <div style=\"float: left; width: 20%\">\n                <p><b>M\xE3 l\u1ECBch h\u1EB9n</b></p>\n                <p><b>T\xEAn b\u1EC7nh nh\xE2n</b></p>\n                <p><b>Ng\xE0y sinh</b></p>\n                <p><b>Gi\u1EDBi t\xEDnh</b></p>\n                <p><b>S\u1ED1 \u0111i\u1EC7n tho\u1EA1i</b></p>\n                <p><b>B\xE1c s\u0129 ph\u1EE5 tr\xE1ch</b></p>\n                <p><b>Ng\xE0y h\u1EB9n</b></p>\n                <p><b>Ca kh\xE1m</b></p>\n                <p><b>Tr\u1EA1ng th\xE1i l\u1ECBch h\u1EB9n</b></p>\n                <p><b>\u0110\u1ECBa ch\u1EC9 ph\xF2ng kh\xE1m</b></p>\n            </div>\n            <div style=\"float: right; width: 80%\">\n                <p>".concat(data.appointment_id, "</p>\n                <p>").concat(data.fullname, "</p>\n                <p>").concat(data.dob, "</p>\n                <p>").concat(data.gender ? 'Nam' : 'Nữ', "</p>\n                <p>").concat(data.phone, "</p>\n                <p>").concat(data.doctor_name, "</p>\n                <p>").concat(data.date, "</p>\n                <p>").concat(data.time, "</p>\n                <p style=\"color: #28a745\">").concat(data.status, "</p>\n                <p> 237 Nguy\u1EC5n T\u1EA5t Th\xE0nh, Qu\u1EADn 4, Tp.HCM</p>\n            </div>\n        </div>\n        ")
+          });
+        case 2:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4);
+  }));
+  return function appointmentInfo(_x4) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+// GỬI EMAIL THÔNG TIN HÓA ĐƠN
+var billInfo = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(data) {
+    var base64Data, fileBuffer;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          base64Data = data.file.includes(',') ? data.file.split(',')[1] : data.file;
+          fileBuffer = Buffer.from(base64Data, 'base64');
+          _context5.next = 4;
+          return sendMail({
+            to: data.email,
+            subject: 'Thông tin hóa đơn',
+            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin h\xF3a \u0111\u01A1n d\u1ECBch v\u1EE5 t\u1EA1i ph\xF2ng kh\xE1m.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        "),
+            attachments: [{
+              filename: data.filename,
+              content: fileBuffer
+            }]
+          });
+        case 4:
+        case "end":
+          return _context5.stop();
+      }
+    }, _callee5);
+  }));
+  return function billInfo(_x5) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+// GỬI EMAIL CHI TIẾT LỊCH HẸN
+var detailsInfo = /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(data) {
+    var base64Data, fileBuffer;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          base64Data = data.file.includes(',') ? data.file.split(',')[1] : data.file;
+          fileBuffer = Buffer.from(base64Data, 'base64');
+          _context6.next = 4;
+          return sendMail({
+            to: data.email,
+            subject: 'Thông tin chi tiết lịch hẹn',
+            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin chi ti\u1EBFt l\u1ECBch h\u1EB9n.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        "),
+            attachments: [{
+              filename: data.filename,
+              content: fileBuffer
+            }]
+          });
+        case 4:
+        case "end":
+          return _context6.stop();
+      }
+    }, _callee6);
+  }));
+  return function detailsInfo(_x6) {
+    return _ref7.apply(this, arguments);
+  };
+}();
+
+// GỬI EMAIL THÔNG BÁO LỊCH HẸN BỊ HỦY
+var canceledAppointment = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(data) {
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
+        case 0:
+          _context7.next = 2;
+          return sendMail({
+            to: data.email,
+            subject: 'Thông báo hủy lịch hẹn',
+            html: "\n        <h3>Xin ch\xE0o ".concat(data.fullname, "!</h3>\n        <p><b>Toothhive</b> g\u1EEDi \u0111\u1EBFn b\u1EA1n th\xF4ng tin l\u1ECBch h\u1EB9n ").concat(data.appointment_id.toUpperCase(), " \u0111\xE3 b\u1ECB h\u1EE7y.</p>\n        <p>N\u1EBFu b\u1EA1n ngh\u0129 \u0111\xE2y l\xE0 s\u1EF1 nh\u1EA7m l\u1EABn, vui l\xF2ng li\xEAn h\u1EC7 v\u1EDBi ch\xFAng t\xF4i \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3.</p>\n        ")
+          });
+        case 2:
+        case "end":
+          return _context7.stop();
+      }
+    }, _callee7);
+  }));
+  return function canceledAppointment(_x7) {
+    return _ref8.apply(this, arguments);
+  };
+}();
+
+// GỬI EMAIL LIÊN HỆ
+var contactUs = /*#__PURE__*/function () {
+  var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(data) {
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) switch (_context8.prev = _context8.next) {
+        case 0:
+          _context8.next = 2;
+          return sendMail({
+            to: 'toothhive@gmail.com',
+            subject: 'Liên hệ từ người dùng',
+            html: "\n\t\t\t\t<h3>Th\xF4ng tin li\xEAn h\u1EC7</h3>\n\t\t\t\t<ul>\n\t\t\t\t\t\t<li><b>H\u1ECD v\xE0 t\xEAn:</b> ".concat(data.fullName, "</li>\n\t\t\t\t\t\t<li><b>S\u1ED1 \u0111i\u1EC7n tho\u1EA1i:</b> ").concat(data.phone, "</li>\n\t\t\t\t\t\t<li><b>Email:</b> ").concat(data.email, "</li>\n\t\t\t\t\t\t<li><b>L\u1EDDi nh\u1EAFn:</b> ").concat(data.message, "</li>\n\t\t\t\t</ul>\n\t\t\t")
+          });
+        case 2:
+        case "end":
+          return _context8.stop();
+      }
+    }, _callee8);
+  }));
+  return function contactUs(_x8) {
+    return _ref9.apply(this, arguments);
+  };
+}();
+module.exports = {
+  verify: verify,
+  forgotPassword: forgotPassword,
+  appointmentInfo: appointmentInfo,
+  billInfo: billInfo,
+  detailsInfo: detailsInfo,
+  canceledAppointment: canceledAppointment,
+  contactUs: contactUs
+};
