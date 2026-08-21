@@ -1,4 +1,4 @@
-import geminiService from '../services/gemini.service';
+import geminiService from '../services/chatbot';
 
 const handleChat = async (req, res) => {
     try {
