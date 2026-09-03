@@ -3,21 +3,32 @@ import geminiService from '../services/chatbot';
 const handleChat = async (req, res) => {
     try {
         const { message, history = [], sessionData = {} } = req.body;
+        const patientId = req.verifiedPatientId || null;
 
         if (!message?.trim()) {
             return res.status(400).json({ errCode: 1, message: 'Tin nhắn không được trống' });
         }
 
         // Xử lý intent + DB query + Gemini
-        const result = await geminiService.askGemini(message, history, sessionData);
+        const result = await geminiService.askGemini(message, history, sessionData, patientId);
+
+        if (result.bookingCreated) {
+            const socket = req.app.get('socketio');
+            socket.emit('new_appointment', {
+                message: 'Yêu cầu đặt lịch hẹn mới',
+                appointment_id: result.bookingCreated.appointment_id,
+                fullname: result.bookingCreated.fullname,
+            });
+        }
 
         const reply = result.directReply || result.text || 'Xin lỗi, tôi chưa có câu trả lời phù hợp.';
         const action = result.action || null;
+        const quickReplies = result.quickReplies || null;
         const newSessionData = result.sessionUpdate
             ? { ...sessionData, ...result.sessionUpdate }
             : sessionData;
 
-        return res.json({ errCode: 0, reply, action, sessionData: newSessionData });
+        return res.json({ errCode: 0, reply, action, quickReplies, sessionData: newSessionData });
 
     } catch (error) {
         console.error('Chat error:', error?.response?.data || error.message || error);

@@ -20,6 +20,21 @@ const verifyPatient = async(req, res, next) => {
     else return res.status(401).json("You are not authenticated");
 };
 
+//XÁC THỰC BỆNH NHÂN KHÔNG BẮT BUỘC
+const verifyPatientOptional = async (req, res, next) => {
+    const token = req.headers.token;
+    if (token) {
+        const accessToken = token.split(" ")[1];
+        jwt.verify(accessToken, process.env.JWT_ACCESS_TOKEN, (err, user) => {
+            if (!err && user?.user_id?.slice(0, 2) === "bn") {
+                req.verifiedPatientId = user.user_id;
+            }
+            next();
+        });
+    } else {
+        next();
+    }
+};
 
 //XÁC THỰC QUẢN TRỊ VIÊN
 const verifyAdmin = async(req, res, next) => {
@@ -282,6 +297,7 @@ const verifyPatientOrAdminOrReceptionistOrDoctor = async(req, res, next) => {
 
 module.exports = {
     verifyPatient,
+    verifyPatientOptional,
     verifyAdmin,
     verifyReceptionist,
     verifyDoctor,

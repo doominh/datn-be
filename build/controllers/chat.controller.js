@@ -17,40 +17,51 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var handleChat = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var _req$body, message, _req$body$history, history, _req$body$sessionData, sessionData, result, reply, action, newSessionData, _error$response, _error$response2;
+    var _req$body, message, _req$body$history, history, _req$body$sessionData, sessionData, patientId, result, socket, reply, action, quickReplies, newSessionData, _error$response, _error$response2;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
           _req$body = req.body, message = _req$body.message, _req$body$history = _req$body.history, history = _req$body$history === void 0 ? [] : _req$body$history, _req$body$sessionData = _req$body.sessionData, sessionData = _req$body$sessionData === void 0 ? {} : _req$body$sessionData;
+          patientId = req.verifiedPatientId || null;
           if (message !== null && message !== void 0 && message.trim()) {
-            _context.next = 4;
+            _context.next = 5;
             break;
           }
           return _context.abrupt("return", res.status(400).json({
             errCode: 1,
             message: 'Tin nhắn không được trống'
           }));
-        case 4:
-          _context.next = 6;
-          return _chatbot["default"].askGemini(message, history, sessionData);
-        case 6:
+        case 5:
+          _context.next = 7;
+          return _chatbot["default"].askGemini(message, history, sessionData, patientId);
+        case 7:
           result = _context.sent;
+          if (result.bookingCreated) {
+            socket = req.app.get('socketio');
+            socket.emit('new_appointment', {
+              message: 'Yêu cầu đặt lịch hẹn mới',
+              appointment_id: result.bookingCreated.appointment_id,
+              fullname: result.bookingCreated.fullname
+            });
+          }
           reply = result.directReply || result.text || 'Xin lỗi, tôi chưa có câu trả lời phù hợp.';
           action = result.action || null;
+          quickReplies = result.quickReplies || null;
           newSessionData = result.sessionUpdate ? _objectSpread(_objectSpread({}, sessionData), result.sessionUpdate) : sessionData;
           return _context.abrupt("return", res.json({
             errCode: 0,
             reply: reply,
             action: action,
+            quickReplies: quickReplies,
             sessionData: newSessionData
           }));
-        case 13:
-          _context.prev = 13;
+        case 16:
+          _context.prev = 16;
           _context.t0 = _context["catch"](0);
           console.error('Chat error:', (_context.t0 === null || _context.t0 === void 0 ? void 0 : (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data) || _context.t0.message || _context.t0);
           if (!((_context.t0 === null || _context.t0 === void 0 ? void 0 : (_error$response2 = _context.t0.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.status) === 429)) {
-            _context.next = 18;
+            _context.next = 21;
             break;
           }
           return _context.abrupt("return", res.json({
@@ -58,17 +69,17 @@ var handleChat = /*#__PURE__*/function () {
             reply: 'Hệ thống đang xử lý nhiều yêu cầu. Vui lòng thử lại sau giây lát hoặc gọi **(028) 1234 5678** để được hỗ trợ trực tiếp.',
             action: null
           }));
-        case 18:
+        case 21:
           return _context.abrupt("return", res.status(500).json({
             errCode: 99,
             reply: 'Đã xảy ra lỗi. Vui lòng thử lại sau.',
             action: null
           }));
-        case 19:
+        case 22:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 13]]);
+    }, _callee, null, [[0, 16]]);
   }));
   return function handleChat(_x, _x2) {
     return _ref.apply(this, arguments);

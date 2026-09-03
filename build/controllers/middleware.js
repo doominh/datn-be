@@ -44,44 +44,39 @@ var verifyPatient = /*#__PURE__*/function () {
   };
 }();
 
-//XÁC THỰC QUẢN TRỊ VIÊN
-var verifyAdmin = /*#__PURE__*/function () {
+//XÁC THỰC BỆNH NHÂN KHÔNG BẮT BUỘC
+var verifyPatientOptional = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           token = req.headers.token;
-          if (!token) {
-            _context2.next = 6;
-            break;
+          if (token) {
+            accessToken = token.split(" ")[1];
+            _jsonwebtoken["default"].verify(accessToken, process.env.JWT_ACCESS_TOKEN, function (err, user) {
+              var _user$user_id;
+              if (!err && (user === null || user === void 0 ? void 0 : (_user$user_id = user.user_id) === null || _user$user_id === void 0 ? void 0 : _user$user_id.slice(0, 2)) === "bn") {
+                req.verifiedPatientId = user.user_id;
+              }
+              next();
+            });
+          } else {
+            next();
           }
-          accessToken = token.split(" ")[1];
-          _jsonwebtoken["default"].verify(accessToken, process.env.JWT_ACCESS_TOKEN, function (err, user) {
-            if (err) {
-              return res.status(403).json("Token is not valid");
-            } else {
-              if (user.user_id.slice(0, 2) === "qt") next();else return res.status(403).json("Role is not valid");
-            }
-            ;
-          });
-          _context2.next = 7;
-          break;
-        case 6:
-          return _context2.abrupt("return", res.status(401).json("You are not authenticated"));
-        case 7:
+        case 2:
         case "end":
           return _context2.stop();
       }
     }, _callee2);
   }));
-  return function verifyAdmin(_x4, _x5, _x6) {
+  return function verifyPatientOptional(_x4, _x5, _x6) {
     return _ref2.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC LỄ TÂN
-var verifyReceptionist = /*#__PURE__*/function () {
+//XÁC THỰC QUẢN TRỊ VIÊN
+var verifyAdmin = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -97,7 +92,7 @@ var verifyReceptionist = /*#__PURE__*/function () {
             if (err) {
               return res.status(403).json("Token is not valid");
             } else {
-              if (user.user_id.slice(0, 2) === "lt") next();else return res.status(403).json("Role is not valid");
+              if (user.user_id.slice(0, 2) === "qt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -111,13 +106,13 @@ var verifyReceptionist = /*#__PURE__*/function () {
       }
     }, _callee3);
   }));
-  return function verifyReceptionist(_x7, _x8, _x9) {
+  return function verifyAdmin(_x7, _x8, _x9) {
     return _ref3.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC BÁC SĨ
-var verifyDoctor = /*#__PURE__*/function () {
+//XÁC THỰC LỄ TÂN
+var verifyReceptionist = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -133,7 +128,7 @@ var verifyDoctor = /*#__PURE__*/function () {
             if (err) {
               return res.status(403).json("Token is not valid");
             } else {
-              if (user.user_id.slice(0, 2) === "bs") next();else return res.status(403).json("Role is not valid");
+              if (user.user_id.slice(0, 2) === "lt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -147,13 +142,13 @@ var verifyDoctor = /*#__PURE__*/function () {
       }
     }, _callee4);
   }));
-  return function verifyDoctor(_x10, _x11, _x12) {
+  return function verifyReceptionist(_x10, _x11, _x12) {
     return _ref4.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC NGƯỜI DÙNG (BN, QT, LT, BS, PT)
-var verifyUser = /*#__PURE__*/function () {
+//XÁC THỰC BÁC SĨ
+var verifyDoctor = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
@@ -169,10 +164,7 @@ var verifyUser = /*#__PURE__*/function () {
             if (err) {
               return res.status(403).json("Token is not valid");
             } else {
-              var prefix = user.user_id.slice(0, 2);
-              if (prefix === "bn" || prefix === "qt" || prefix === "lt" || prefix === "bs" || prefix === "pt") {
-                next();
-              } else return res.status(403).json("Role is not valid");
+              if (user.user_id.slice(0, 2) === "bs") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -186,13 +178,13 @@ var verifyUser = /*#__PURE__*/function () {
       }
     }, _callee5);
   }));
-  return function verifyUser(_x13, _x14, _x15) {
+  return function verifyDoctor(_x13, _x14, _x15) {
     return _ref5.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC ADMIN / LỄ TÂN
-var verifyAdminOrReceptionist = /*#__PURE__*/function () {
+//XÁC THỰC NGƯỜI DÙNG (BN, QT, LT, BS, PT)
+var verifyUser = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
@@ -209,7 +201,9 @@ var verifyAdminOrReceptionist = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "qt" || prefix === "lt") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "bn" || prefix === "qt" || prefix === "lt" || prefix === "bs" || prefix === "pt") {
+                next();
+              } else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -223,13 +217,13 @@ var verifyAdminOrReceptionist = /*#__PURE__*/function () {
       }
     }, _callee6);
   }));
-  return function verifyAdminOrReceptionist(_x16, _x17, _x18) {
+  return function verifyUser(_x16, _x17, _x18) {
     return _ref6.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC LỄ TÂN / BÁC SĨ
-var verifyReceptionistOrDoctor = /*#__PURE__*/function () {
+//XÁC THỰC ADMIN / LỄ TÂN
+var verifyAdminOrReceptionist = /*#__PURE__*/function () {
   var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee7$(_context7) {
@@ -246,7 +240,7 @@ var verifyReceptionistOrDoctor = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "qt" || prefix === "lt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -260,13 +254,13 @@ var verifyReceptionistOrDoctor = /*#__PURE__*/function () {
       }
     }, _callee7);
   }));
-  return function verifyReceptionistOrDoctor(_x19, _x20, _x21) {
+  return function verifyAdminOrReceptionist(_x19, _x20, _x21) {
     return _ref7.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC ADMIN / LỄ TÂN / BÁC SĨ
-var verifyAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
+//XÁC THỰC LỄ TÂN / BÁC SĨ
+var verifyReceptionistOrDoctor = /*#__PURE__*/function () {
   var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee8$(_context8) {
@@ -283,7 +277,7 @@ var verifyAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "qt" || prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -297,13 +291,13 @@ var verifyAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
       }
     }, _callee8);
   }));
-  return function verifyAdminOrReceptionistOrDoctor(_x22, _x23, _x24) {
+  return function verifyReceptionistOrDoctor(_x22, _x23, _x24) {
     return _ref8.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC BỆNH NHÂN / LỄ TÂN / BÁC SĨ
-var verifyPatientOrReceptionistOrDoctor = /*#__PURE__*/function () {
+//XÁC THỰC ADMIN / LỄ TÂN / BÁC SĨ
+var verifyAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
   var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee9$(_context9) {
@@ -320,7 +314,7 @@ var verifyPatientOrReceptionistOrDoctor = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "bn" || prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "qt" || prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -334,13 +328,13 @@ var verifyPatientOrReceptionistOrDoctor = /*#__PURE__*/function () {
       }
     }, _callee9);
   }));
-  return function verifyPatientOrReceptionistOrDoctor(_x25, _x26, _x27) {
+  return function verifyAdminOrReceptionistOrDoctor(_x25, _x26, _x27) {
     return _ref9.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC ADMIN / LỄ TÂN / BÁC SĨ / PHỤ TÁ
-var verifyAdminOrReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
+//XÁC THỰC BỆNH NHÂN / LỄ TÂN / BÁC SĨ
+var verifyPatientOrReceptionistOrDoctor = /*#__PURE__*/function () {
   var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee10$(_context10) {
@@ -357,7 +351,7 @@ var verifyAdminOrReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "qt" || prefix === "lt" || prefix === "bs" || prefix === "pt") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "bn" || prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -371,13 +365,13 @@ var verifyAdminOrReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
       }
     }, _callee10);
   }));
-  return function verifyAdminOrReceptionistOrDoctorOrAssistant(_x28, _x29, _x30) {
+  return function verifyPatientOrReceptionistOrDoctor(_x28, _x29, _x30) {
     return _ref10.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC LỄ TÂN / BÁC SĨ / PHỤ TÁ
-var verifyReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
+//XÁC THỰC ADMIN / LỄ TÂN / BÁC SĨ / PHỤ TÁ
+var verifyAdminOrReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
   var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee11$(_context11) {
@@ -394,7 +388,7 @@ var verifyReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "lt" || prefix === "bs" || prefix === "pt") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "qt" || prefix === "lt" || prefix === "bs" || prefix === "pt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -408,13 +402,13 @@ var verifyReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
       }
     }, _callee11);
   }));
-  return function verifyReceptionistOrDoctorOrAssistant(_x31, _x32, _x33) {
+  return function verifyAdminOrReceptionistOrDoctorOrAssistant(_x31, _x32, _x33) {
     return _ref11.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC ADMIN / LỄ TÂN / PHỤ TÁ
-var verifyAdminOrReceptionistOrAssistant = /*#__PURE__*/function () {
+//XÁC THỰC LỄ TÂN / BÁC SĨ / PHỤ TÁ
+var verifyReceptionistOrDoctorOrAssistant = /*#__PURE__*/function () {
   var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee12$(_context12) {
@@ -431,7 +425,7 @@ var verifyAdminOrReceptionistOrAssistant = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "qt" || prefix === "lt" || prefix === "pt") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "lt" || prefix === "bs" || prefix === "pt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -445,13 +439,13 @@ var verifyAdminOrReceptionistOrAssistant = /*#__PURE__*/function () {
       }
     }, _callee12);
   }));
-  return function verifyAdminOrReceptionistOrAssistant(_x34, _x35, _x36) {
+  return function verifyReceptionistOrDoctorOrAssistant(_x34, _x35, _x36) {
     return _ref12.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC BỆNH NHÂN / ADMIN / LỄ TÂN
-var verifyPatientOrAdminOrReceptionist = /*#__PURE__*/function () {
+//XÁC THỰC ADMIN / LỄ TÂN / PHỤ TÁ
+var verifyAdminOrReceptionistOrAssistant = /*#__PURE__*/function () {
   var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee13$(_context13) {
@@ -468,7 +462,7 @@ var verifyPatientOrAdminOrReceptionist = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "bn" || prefix === "qt" || prefix === "lt") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "qt" || prefix === "lt" || prefix === "pt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -482,13 +476,13 @@ var verifyPatientOrAdminOrReceptionist = /*#__PURE__*/function () {
       }
     }, _callee13);
   }));
-  return function verifyPatientOrAdminOrReceptionist(_x37, _x38, _x39) {
+  return function verifyAdminOrReceptionistOrAssistant(_x37, _x38, _x39) {
     return _ref13.apply(this, arguments);
   };
 }();
 
-//XÁC THỰC BỆNH NHÂN / ADMIN / LỄ TÂN / BÁC SĨ
-var verifyPatientOrAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
+//XÁC THỰC BỆNH NHÂN / ADMIN / LỄ TÂN
+var verifyPatientOrAdminOrReceptionist = /*#__PURE__*/function () {
   var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(req, res, next) {
     var token, accessToken;
     return _regeneratorRuntime().wrap(function _callee14$(_context14) {
@@ -505,7 +499,7 @@ var verifyPatientOrAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
               return res.status(403).json("Token is not valid");
             } else {
               var prefix = user.user_id.slice(0, 2);
-              if (prefix === "bn" || prefix === "qt" || prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
+              if (prefix === "bn" || prefix === "qt" || prefix === "lt") next();else return res.status(403).json("Role is not valid");
             }
             ;
           });
@@ -519,12 +513,50 @@ var verifyPatientOrAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
       }
     }, _callee14);
   }));
-  return function verifyPatientOrAdminOrReceptionistOrDoctor(_x40, _x41, _x42) {
+  return function verifyPatientOrAdminOrReceptionist(_x40, _x41, _x42) {
     return _ref14.apply(this, arguments);
+  };
+}();
+
+//XÁC THỰC BỆNH NHÂN / ADMIN / LỄ TÂN / BÁC SĨ
+var verifyPatientOrAdminOrReceptionistOrDoctor = /*#__PURE__*/function () {
+  var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(req, res, next) {
+    var token, accessToken;
+    return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+      while (1) switch (_context15.prev = _context15.next) {
+        case 0:
+          token = req.headers.token;
+          if (!token) {
+            _context15.next = 6;
+            break;
+          }
+          accessToken = token.split(" ")[1];
+          _jsonwebtoken["default"].verify(accessToken, process.env.JWT_ACCESS_TOKEN, function (err, user) {
+            if (err) {
+              return res.status(403).json("Token is not valid");
+            } else {
+              var prefix = user.user_id.slice(0, 2);
+              if (prefix === "bn" || prefix === "qt" || prefix === "lt" || prefix === "bs") next();else return res.status(403).json("Role is not valid");
+            }
+            ;
+          });
+          _context15.next = 7;
+          break;
+        case 6:
+          return _context15.abrupt("return", res.status(401).json("You are not authenticated"));
+        case 7:
+        case "end":
+          return _context15.stop();
+      }
+    }, _callee15);
+  }));
+  return function verifyPatientOrAdminOrReceptionistOrDoctor(_x43, _x44, _x45) {
+    return _ref15.apply(this, arguments);
   };
 }();
 module.exports = {
   verifyPatient: verifyPatient,
+  verifyPatientOptional: verifyPatientOptional,
   verifyAdmin: verifyAdmin,
   verifyReceptionist: verifyReceptionist,
   verifyDoctor: verifyDoctor,

@@ -31,7 +31,7 @@ var extractDate = exports.extractDate = function extractDate(message) {
     var offset = thuMap[thuMatch[1]];
     if (offset !== undefined) {
       var isNextWeek = msg.includes('tuần sau') || msg.includes('tuần tới');
-      var targetDay = offset + 1;
+      var targetDay = offset;
       var target = today.clone().isoWeekday(targetDay);
       if (isNextWeek || target.isBefore(today, 'day')) target.add(1, 'weeks');
       return target.format('YYYY-MM-DD');

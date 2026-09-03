@@ -16,10 +16,14 @@ var FAQ_INTENT_PATTERNS = exports.FAQ_INTENT_PATTERNS = [{
   regex: /(danh sách|đội ngũ|có những) bác sĩ|giới thiệu bác sĩ/i
 }, {
   intent: 'BOOK_APPOINTMENT',
-  regex: /muốn (đặt|book) lịch|đặt lịch khám/i
+  regex: /(?:muốn|cần|xin|cho tôi|giúp tôi|hãy)?\s*(?:đặt(?:\s+lịch(?: khám)?)?|book(?:\s+lịch(?: khám)?)?)/i
 }, {
   intent: 'CHECK_APPOINTMENT',
   regex: /tra cứu|kiểm tra|xem (lại )?lịch|lịch hẹn|lịch khám|cuộc hẹn/i
+}, {
+  intent: 'ASK_UPCOMING_SCHEDULE',
+  regex: /lịch (làm việc|khám|trống)|bác sĩ.*lịch|lịch.*bác sĩ/i,
+  include: /sắp tới|tới đây|vài ngày|những ngày|tuần này|tuần tới|7 ngày/i
 }, {
   intent: 'ASK_SCHEDULE',
   regex: /còn lịch trống|lịch trống không|còn chỗ khám/i

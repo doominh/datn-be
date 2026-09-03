@@ -6,8 +6,9 @@ export const FAQ_INTENT_PATTERNS = [
     },
     { intent: 'ASK_WORKING_HOURS', regex: /giờ (làm việc|mở cửa)|mấy giờ (mở|đóng)|làm việc (thứ|ngày) nào/i },
     { intent: 'ASK_DOCTOR', regex: /(danh sách|đội ngũ|có những) bác sĩ|giới thiệu bác sĩ/i },
-    { intent: 'BOOK_APPOINTMENT', regex: /muốn (đặt|book) lịch|đặt lịch khám/i },
+    { intent: 'BOOK_APPOINTMENT', regex: /(?:muốn|cần|xin|cho tôi|giúp tôi|hãy)?\s*(?:đặt(?:\s+lịch(?: khám)?)?|book(?:\s+lịch(?: khám)?)?)/i },
     { intent: 'CHECK_APPOINTMENT', regex: /tra cứu|kiểm tra|xem (lại )?lịch|lịch hẹn|lịch khám|cuộc hẹn/i },
+    { intent: 'ASK_UPCOMING_SCHEDULE', regex: /lịch (làm việc|khám|trống)|bác sĩ.*lịch|lịch.*bác sĩ/i, include: /sắp tới|tới đây|vài ngày|những ngày|tuần này|tuần tới|7 ngày/i },
     { intent: 'ASK_SCHEDULE', regex: /còn lịch trống|lịch trống không|còn chỗ khám/i },
 ];
 

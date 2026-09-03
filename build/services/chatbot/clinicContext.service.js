@@ -156,6 +156,7 @@ var getAvailableSchedules = exports.getAvailableSchedules = /*#__PURE__*/functio
       res,
       _iterator3,
       _step3,
+      _s$DoctorSchedule,
       _s$Session,
       _s$Session$time,
       s,
@@ -191,7 +192,6 @@ var getAvailableSchedules = exports.getAvailableSchedules = /*#__PURE__*/functio
           }
           return _context2.abrupt("return", []);
         case 8:
-          // Gộp categories theo doctor_id (raw:true trả flat rows nên phải gộp tay)
           doctorMap = {};
           _iterator2 = _createForOfIteratorHelper(activeDoctors);
           try {
@@ -235,6 +235,7 @@ var getAvailableSchedules = exports.getAvailableSchedules = /*#__PURE__*/functio
               for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                 s = _step3.value;
                 results.push({
+                  doctor_schedule_id: (_s$DoctorSchedule = s.DoctorSchedule) === null || _s$DoctorSchedule === void 0 ? void 0 : _s$DoctorSchedule.doctor_schedule_id,
                   doctor_id: doc.doctor_id,
                   doctor: "BS. ".concat(doc.fullname),
                   specialty: doc.categories.join(', '),

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { extractDoctorName, startBookingFlow } from '../booking/bookingFlow.service';
 import { extractPhone } from '../utils/extractPhone';
 import { getClinicContext, getAvailableSchedules } from '../clinicContext.service';
 import { getAppointmentsByPhone } from '../appointment.service';
@@ -22,10 +23,10 @@ export const handleStructuredIntent = async (intent, message, sessionData) => {
                 };
             }
             const list = appointments
-                .map(
-                    (a, i) =>
-                        `**${i + 1}. ${a.patient_name}** — ${a.doctor}\n   Ngày: ${a.date} lúc ${a.time}\n   Trạng thái: ${a.status}`,
-                )
+                .map((a, i) => {
+                    const name = (a.patient_name || '').trim();
+                    return `${i + 1}. **${name}** — ${a.doctor}<br>Ngày: ${a.date} lúc ${a.time}<br>Trạng thái: ${a.status}`;
+                })
                 .join('\n\n');
             return {
                 directReply: `Tìm thấy **${appointments.length} lịch hẹn** với số **${phone}**:\n\n${list}\n\nBạn cần hỗ trợ thêm không?`,
@@ -68,6 +69,47 @@ export const handleStructuredIntent = async (intent, message, sessionData) => {
             };
         }
 
+        case 'ASK_UPCOMING_SCHEDULE': {
+            const requestedDoctor = extractDoctorName(message) || sessionData?._meta?.requestedDoctor || null;
+            const startDate = moment().add(1, 'day');
+            const upcomingSchedules = [];
+            for (let offset = 0; offset < 7; offset += 1) {
+                const date = startDate.clone().add(offset, 'days').format('YYYY-MM-DD');
+                const schedules = await getAvailableSchedules(date);
+                const filteredSchedules = requestedDoctor
+                    ? schedules.filter((schedule) => schedule.doctor
+                        .toLowerCase()
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9\s]/g, ' ')
+                        .replace(/\s+/g, ' ')
+                        .trim()
+                        .includes(requestedDoctor))
+                    : schedules;
+                if (filteredSchedules.length) upcomingSchedules.push({ date, schedules: filteredSchedules });
+            }
+
+            if (!upcomingSchedules.length) {
+                return {
+                    directReply: 'Trong 7 ngày tới hiện chưa có lịch làm việc của bác sĩ. Bạn thử chọn một ngày khác hoặc gọi hotline **(028) 1234 5678** nhé.',
+                };
+            }
+
+            const list = upcomingSchedules.map(({ date, schedules }) => {
+                const formattedDate = moment(date).format('DD/MM/YYYY');
+                const dayOfWeek = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'][moment(date).day()];
+                const slots = schedules.slice(0, 10)
+                    .map((schedule) => `- **${schedule.doctor}** — ${schedule.time}`)
+                    .join('\n');
+                return `**${formattedDate} (${dayOfWeek})**\n${slots}`;
+            }).join('\n\n');
+
+            return {
+                directReply: `Lịch làm việc của các bác sĩ trong 7 ngày tới:\n\n${list}\n\nBạn muốn đặt lịch vào ngày nào?`,
+                sessionUpdate: requestedDoctor ? { _meta: { requestedDoctor } } : undefined,
+            };
+        }
+
         case 'ASK_DOCTOR': {
             const { doctorList } = await getClinicContext();
             if (!doctorList.length) {
@@ -79,9 +121,7 @@ export const handleStructuredIntent = async (intent, message, sessionData) => {
         }
 
         case 'BOOK_APPOINTMENT':
-            return {
-                directReply: 'Bạn có thể đặt lịch khám trực tuyến: [**Đặt lịch ngay**](/dat-lich)\n\nHoặc gọi hotline **(028) 1234 5678** để được hỗ trợ trực tiếp.',
-            };
+            return startBookingFlow(message, sessionData);
 
         case 'ASK_PRICE': {
             const { serviceList } = await getClinicContext();
