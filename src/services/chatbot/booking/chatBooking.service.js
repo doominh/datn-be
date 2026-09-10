@@ -2,19 +2,17 @@ import moment from 'moment';
 import appointmentServices from '../../appointment';
 import patientServices from '../../patient';
 
-// Map errCode câu trả lời tiếng Việt cho chatbot
 const ERROR_MESSAGES = {
-    1: 'Không tìm thấy thông tin lịch làm việc hoặc bệnh nhân. Bạn thử chọn lại giúp mình nhé.',
-    2: 'Khung giờ này không còn hợp lệ (đã qua ngày/giờ khám, hoặc lịch chưa được duyệt). Bạn chọn khung giờ khác giúp mình nhé.',
-    9: 'Rất tiếc, khung giờ này vừa có người khác đặt mất rồi. Bạn chọn khung giờ khác giúp mình nhé.',
-    10: 'Bạn đã đặt tối đa 3 lịch hẹn trong hôm nay rồi. Vui lòng thử lại vào ngày mai hoặc gọi hotline **(028) 1234 5678**.',
+    1: 'Không tìm thấy thông tin lịch làm việc hoặc bệnh nhân. {U} thử chọn lại giúp {s} nhé.',
+    2: 'Khung giờ này không còn hợp lệ (đã qua ngày/giờ khám, hoặc lịch chưa được duyệt). {U} chọn khung giờ khác giúp {s} nhé.',
+    9: 'Rất tiếc, khung giờ này vừa có người khác đặt mất rồi. {U} chọn khung giờ khác giúp {s} nhé.',
+    10: '{U} đã đặt tối đa 3 lịch hẹn trong hôm nay rồi. Vui lòng thử lại vào ngày mai hoặc gọi hotline **(028) 1234 5678**.',
 };
 
-// Đặt lịch thật qua chatbot cho bệnh nhân đã xác thực
 export const commitBooking = async (pendingBooking, patientId) => {
     const patientResult = await patientServices.getByID({ patient_id: patientId });
     if (patientResult.errCode !== 0) {
-        return { directReply: 'Mình không lấy được thông tin tài khoản của bạn, vui lòng đăng nhập lại giúp mình.' };
+        return { directReply: '{S} không lấy được thông tin tài khoản của {u}, vui lòng đăng nhập lại giúp {s}.' };
     }
     const patient = patientResult.data;
 
@@ -36,5 +34,5 @@ export const commitBooking = async (pendingBooking, patientId) => {
         };
     }
 
-    return { directReply: ERROR_MESSAGES[result.errCode] || 'Đặt lịch không thành công, bạn thử lại giúp mình nhé.' };
+    return { directReply: ERROR_MESSAGES[result.errCode] || 'Đặt lịch không thành công, {u} thử lại giúp {s} nhé.' };
 };

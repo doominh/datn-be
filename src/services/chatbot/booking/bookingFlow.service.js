@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { extractDate } from '../utils/extractDate';
-import { getAvailableSchedules } from '../clinicContext.service';
+import { getAvailableSchedules, matchServiceCategory } from '../clinicContext.service';
 import { commitBooking } from './chatBooking.service';
 
 const DAY_LABELS = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
@@ -11,7 +10,7 @@ const CONFIRM_QUICK_REPLIES = [
     { label: 'Hủy', text: 'Hủy' },
 ];
 
-const normalizeDoctorName = (name = '') => name
+export const normalizeDoctorName = (name = '') => name
     .toLowerCase()
     .replace(/^bs\.?\s*/i, '')
     .normalize('NFD')
@@ -20,291 +19,199 @@ const normalizeDoctorName = (name = '') => name
     .replace(/\s+/g, ' ')
     .trim();
 
-export const extractDoctorName = (message = '') => {
-    const match = message.match(/(?:với|cùng|của)\s+bác sĩ\s+(.+?)(?=\s+(?:vào|ngày|hôm|thứ|trong|tuần)\b|$)/i)
-        || message.match(/bác sĩ\s+(.+?)(?=\s+(?:vào|ngày|hôm|thứ|trong|tuần)\b|$)/i);
-    const doctorName = match?.[1]?.trim();
-    if (!doctorName || /^(này|đó|ấy)$/i.test(doctorName)) return null;
-    return normalizeDoctorName(doctorName);
+const filterByDoctor = (schedules, requestedDoctor) => (requestedDoctor
+    ? schedules.filter((s) => normalizeDoctorName(s.doctor).includes(requestedDoctor))
+    : schedules);
+
+const filterByCategory = (schedules, requestedCategory) => (requestedCategory
+    ? schedules.filter((s) => (s.specialty || '').toLowerCase().includes(requestedCategory.toLowerCase()))
+    : schedules);
+
+const getFilteredSchedules = async (date, { requestedDoctor, requestedCategory } = {}) => {
+    const all = await getAvailableSchedules(date);
+    const byDoctor = filterByDoctor(all, requestedDoctor);
+    if (!requestedCategory) return byDoctor;
+    const byDoctorAndCategory = filterByCategory(byDoctor, requestedCategory);
+    return byDoctorAndCategory.length ? byDoctorAndCategory : byDoctor;
 };
 
-const isAskingForAnotherDoctor = (message = '') =>
-    /(?:còn|cho|tìm|đổi|chọn)\s+(?:bác sĩ|bs)\s+(?:nào\s+)?(?:khác|không)/i.test(message)
-    || /bác sĩ\s+(?:nào\s+)?khác/i.test(message);
+const describeFilters = ({ requestedCategory } = {}) =>
+    (requestedCategory ? ` cho dịch vụ **${requestedCategory}**` : '');
 
-const isAskingForAnotherDate = (message = '') =>
-    /(?:đổi|chọn|sang|xem|tìm)\s+(?:ngày|lịch)\s+khác/i.test(message)
-    || /ngày khác/i.test(message);
+const currentFiltersFromSession = (sessionData) => ({
+    requestedDoctor: sessionData?._meta?.requestedDoctor || null,
+    requestedCategory: sessionData?._meta?.requestedCategory || null,
+});
 
-const isAskingForAnotherTime = (message = '') =>
-    /(?:còn|cho|tìm|đổi|chọn)\s+(?:khung giờ|giờ)\s+(?:nào\s+)?khác/i.test(message)
-    || /giờ khác/i.test(message);
-
-const isAskingForThisWeek = (message = '') => /tuần này/i.test(message);
-
-const getDoctorSchedules = async (date, doctorName = null) => {
-    const schedules = await getAvailableSchedules(date);
-    return doctorName
-        ? schedules.filter((schedule) => normalizeDoctorName(schedule.doctor).includes(doctorName))
-        : schedules;
-};
-
-const buildSlotOptionsReply = (date, schedules, message) => {
+const buildSlotOptionsReply = (schedules, message, filters = {}) => {
     const options = schedules.slice(0, 6);
     if (!options.length) {
         return {
-            directReply: `${message}\n\nHiện không còn khung giờ phù hợp trong ngày này. Bạn muốn chọn ngày khác không?`,
-            sessionUpdate: { waitingFor: 'booking_date' },
+            directReply: `${message}\n\nHiện không còn khung giờ phù hợp trong ngày này. {U} muốn chọn ngày khác không?`,
+            sessionUpdate: { waitingFor: 'booking_date', _meta: filters },
         };
     }
-    const list = options.map((schedule, index) =>
-        `${index + 1}. **${schedule.doctor}** — ${schedule.time}`,
-    ).join('\n');
-
+    const list = options.map((s, i) => `${i + 1}. **${s.doctor}** — ${s.time}`).join('\n');
     return {
-        directReply: `${message}\n\n${list}\n\nBạn chọn số tương ứng nhé.`,
-        sessionUpdate: { waitingFor: 'booking_slot', _meta: { scheduleOptions: options, requestedDoctor: null } },
-        quickReplies: options.map((schedule, index) => ({
-            label: `${index + 1}. ${schedule.doctor.replace(/^BS\.\s*/i, '')} - ${schedule.time}`,
-            text: `${index + 1}`,
-        })),
+        directReply: `${message}\n\n${list}\n\n{U} chọn số tương ứng nhé.`,
+        sessionUpdate: { waitingFor: 'booking_slot', _meta: { ...filters, scheduleOptions: options } },
+        quickReplies: options.map((s, i) => ({ label: `${i + 1}. ${s.doctor.replace(/^BS\.\s*/i, '')} - ${s.time}`, text: `${i + 1}` })),
     };
 };
 
-const buildWeekSlotOptionsReply = (schedules, requestedDoctor) => {
+const buildWeekSlotOptionsReply = (schedules, filters = {}) => {
     const options = schedules.slice(0, 6);
     if (!options.length) {
         return {
-            directReply: requestedDoctor
-                ? `Trong tuần này hiện không có lịch trống cho **${requestedDoctor}**. Bạn chọn tuần khác hoặc bác sĩ khác nhé.`
-                : 'Trong tuần này hiện không còn lịch trống. Bạn chọn tuần khác nhé.',
-            sessionUpdate: { waitingFor: 'booking_date', _meta: { requestedDoctor } },
+            directReply: `Trong tuần này hiện không có lịch trống${describeFilters(filters)}. {U} chọn tuần khác hoặc điều kiện khác nhé.`,
+            sessionUpdate: { waitingFor: 'booking_date', _meta: filters },
         };
     }
-
-    const list = options.map((schedule, index) => {
-        const dateLabel = `${moment(schedule.date).format('DD/MM/YYYY')} (${DAY_LABELS[moment(schedule.date).day()]})`;
-        return `${index + 1}. **${schedule.doctor}** — ${dateLabel} lúc **${schedule.time}**`;
+    const list = options.map((s, i) => {
+        const dateLabel = `${moment(s.date).format('DD/MM/YYYY')} (${DAY_LABELS[moment(s.date).day()]})`;
+        return `${i + 1}. **${s.doctor}** — ${dateLabel} lúc **${s.time}**`;
     }).join('\n');
-
     return {
-        directReply: `Các khung giờ của **${options[0].doctor}** trong tuần này:\n\n${list}\n\nBạn chọn số tương ứng nhé.`,
-        sessionUpdate: { waitingFor: 'booking_slot', _meta: { scheduleOptions: options, requestedDoctor } },
-        quickReplies: options.map((schedule, index) => ({
-            label: `${index + 1}. ${moment(schedule.date).format('DD/MM')} - ${schedule.time}`,
-            text: `${index + 1}`,
-        })),
+        directReply: `Các khung giờ trong tuần này${describeFilters(filters)}:\n\n${list}\n\n{U} chọn số tương ứng nhé.`,
+        sessionUpdate: { waitingFor: 'booking_slot', _meta: { ...filters, scheduleOptions: options } },
+        quickReplies: options.map((s, i) => ({ label: `${i + 1}. ${moment(s.date).format('DD/MM')} - ${s.time}`, text: `${i + 1}` })),
     };
 };
 
-// Câu hỏi xác nhận
 const buildConfirmReply = (pendingBooking, patientId) => {
-    const confirmText = `Bạn muốn đặt lịch **${pendingBooking.doctor}** lúc **${pendingBooking.time}** ngày **${moment(pendingBooking.date).format('DD/MM/YYYY')}** — đúng không?`;
-
+    const confirmText = `{U} muốn đặt lịch **${pendingBooking.doctor}** lúc **${pendingBooking.time}** ngày **${moment(pendingBooking.date).format('DD/MM/YYYY')}** — đúng không?`;
     if (patientId) {
-        return {
-            directReply: confirmText,
-            sessionUpdate: { waitingFor: 'booking_confirm', pendingBooking },
-            quickReplies: CONFIRM_QUICK_REPLIES,
-        };
+        return { directReply: confirmText, sessionUpdate: { waitingFor: 'booking_confirm', pendingBooking }, quickReplies: CONFIRM_QUICK_REPLIES };
     }
-
     return {
-        directReply: `${confirmText}\n\n[Đăng nhập để mình đặt giúp](/login) · [Đăng ký tài khoản](/register) · ${MANUAL_LINK}`,
+        directReply: `${confirmText}\n\n[Đăng nhập để tiếp tục](/login) · [Đăng ký tài khoản](/register) · ${MANUAL_LINK}`,
         sessionUpdate: { waitingFor: 'booking_confirm', pendingBooking },
     };
 };
 
-// BƯỚC 1 — nhận ngày, gợi ý slot trống
-const handleBookingDate = async (message, requestedDoctor = null) => {
-    if (isAskingForThisWeek(message)) {
-        const startDate = moment().startOf('day');
-        const endDate = startDate.clone().endOf('isoWeek');
-        const weekSchedules = [];
-
-        for (const date = startDate.clone(); date.isSameOrBefore(endDate, 'day'); date.add(1, 'day')) {
-            const schedules = await getAvailableSchedules(date.format('YYYY-MM-DD'));
-            weekSchedules.push(...(requestedDoctor
-                ? schedules.filter((schedule) => normalizeDoctorName(schedule.doctor).includes(requestedDoctor))
-                : schedules));
-        }
-
-        return buildWeekSlotOptionsReply(weekSchedules, requestedDoctor);
-    }
-
-    const targetDate = extractDate(message);
-    if (!targetDate) {
+const buildDateResultReply = async (targetDate, filters) => {
+    if (!targetDate || !moment(targetDate, 'YYYY-MM-DD', true).isValid()) {
         return {
-            directReply: `Mình chưa nhận ra ngày bạn muốn khám. Bạn thử nhập lại kiểu "ngày mai" hoặc "20/09" nhé.`,
-            sessionUpdate: { waitingFor: 'booking_date' },
+            directReply: `{S} chưa nhận ra ngày {u} muốn khám. {U} thử nhập lại kiểu "ngày mai" hoặc "20/09" nhé.`,
+            sessionUpdate: { waitingFor: 'booking_date', _meta: filters },
         };
     }
     if (moment(targetDate).isBefore(moment(), 'day')) {
         return {
-            directReply: 'Ngày bạn chọn đã qua rồi, bạn cho mình ngày khác nhé.',
-            sessionUpdate: { waitingFor: 'booking_date' },
+            directReply: 'Ngày {u} chọn đã qua rồi, {u} cho {s} ngày khác nhé.',
+            sessionUpdate: { waitingFor: 'booking_date', _meta: filters },
         };
     }
 
-    const allSchedules = await getAvailableSchedules(targetDate);
-    const schedules = requestedDoctor
-        ? allSchedules.filter((schedule) => normalizeDoctorName(schedule.doctor).includes(requestedDoctor))
-        : allSchedules;
+    const schedules = await getFilteredSchedules(targetDate, filters);
     const formattedDate = moment(targetDate).format('DD/MM/YYYY');
     const dayOfWeek = DAY_LABELS[moment(targetDate).day()];
 
     if (!schedules.length) {
         return {
-            directReply: requestedDoctor
-                ? `Ngày **${formattedDate}** (${dayOfWeek}) hiện không có lịch trống cho **${requestedDoctor}**. Bạn chọn ngày khác giúp mình, hoặc ${MANUAL_LINK}.`
-                : `Ngày **${formattedDate}** (${dayOfWeek}) hiện không còn lịch trống. Bạn chọn ngày khác giúp mình, hoặc ${MANUAL_LINK}.`,
-            sessionUpdate: { waitingFor: 'booking_date', _meta: { requestedDoctor } },
+            directReply: `Ngày **${formattedDate}** (${dayOfWeek}) hiện không có lịch trống${describeFilters(filters)}. {U} chọn ngày khác giúp {s}, hoặc ${MANUAL_LINK}.`,
+            sessionUpdate: { waitingFor: 'booking_date', _meta: filters },
         };
     }
 
-    const options = schedules.slice(0, 6);
-    const list = options.map((s, i) => `${i + 1}. **${s.doctor}** — ${s.time}`).join('\n');
-
-    return {
-        directReply: `Ngày **${formattedDate}** (${dayOfWeek}) còn các khung giờ sau, bạn chọn số tương ứng nhé:\n\n${list}\n\nHoặc ${MANUAL_LINK}.`,
-        sessionUpdate: { waitingFor: 'booking_slot', _meta: { scheduleOptions: options, requestedDoctor } },
-        quickReplies: options.map((schedule, index) => ({
-            label: `${index + 1}. ${schedule.doctor.replace(/^BS\.\s*/i, '')} - ${schedule.time}`,
-            text: `${index + 1}`,
-        })),
-    };
+    return buildSlotOptionsReply(
+        schedules,
+        `Ngày **${formattedDate}** (${dayOfWeek}) còn các khung giờ sau${describeFilters(filters)}, {u} chọn số tương ứng nhé:`,
+        { ...filters, requestedDate: targetDate },
+    );
 };
 
-// BƯỚC 2 — nhận số thứ tự, tạo pendingBooking, hỏi xác nhận
-const handleBookingSlot = async (message, sessionData, patientId) => {
+export const startBookingFlow = async (args = {}, sessionData = {}) => {
+    const requestedDoctor = args.doctor_name ? normalizeDoctorName(args.doctor_name) : (sessionData?._meta?.requestedDoctor || null);
+    const matchedCategory = args.service_name ? await matchServiceCategory(args.service_name) : null;
+    const requestedCategory = matchedCategory || sessionData?._meta?.requestedCategory || null;
+    const filters = { requestedDoctor, requestedCategory };
+
+    if (args.is_whole_week && !args.date) {
+        const startDate = moment().startOf('day');
+        const endDate = startDate.clone().endOf('isoWeek');
+        const weekSchedules = [];
+        for (const d = startDate.clone(); d.isSameOrBefore(endDate, 'day'); d.add(1, 'day')) {
+            weekSchedules.push(...(await getFilteredSchedules(d.format('YYYY-MM-DD'), filters)));
+        }
+        return buildWeekSlotOptionsReply(weekSchedules, filters);
+    }
+
+    const targetDate = args.date || sessionData?._meta?.requestedDate || null;
+    if (!targetDate) {
+        return {
+            directReply: `{U} muốn đặt lịch khám${describeFilters(filters)} vào ngày nào? (VD: "ngày mai", "20/09")\n\nHoặc {u} có thể ${MANUAL_LINK} nếu muốn tự chọn.`,
+            sessionUpdate: { waitingFor: 'booking_date', pendingBooking: null, _meta: filters },
+        };
+    }
+
+    return buildDateResultReply(targetDate, filters);
+};
+
+export const handleSlotSelection = async (index, sessionData, patientId) => {
     const options = sessionData?._meta?.scheduleOptions || [];
-    const date = options[0]?.date;
-    const currentDoctor = sessionData?._meta?.requestedDoctor;
-
-    if (isAskingForAnotherDate(message)) {
+    const slot = options[index - 1];
+    if (!slot) {
+        const list = options.map((s, i) => `${i + 1}. **${s.doctor}** — ${s.time}`).join('\n');
         return {
-            directReply: 'Bạn cho mình ngày cụ thể muốn đổi sang nhé, ví dụ “ngày kia” hoặc “10/09”.',
-            sessionUpdate: { waitingFor: 'booking_date', _meta: { requestedDoctor: currentDoctor } },
+            directReply: `{S} chưa rõ {u} muốn chọn mục nào, {u} chọn giúp {s} theo số thứ tự bên dưới nhé:\n\n${list}`,
+            sessionUpdate: { waitingFor: 'booking_slot', _meta: sessionData?._meta },
         };
     }
-
-    if (isAskingForAnotherDoctor(message)) {
-        const otherSchedules = date
-            ? (await getDoctorSchedules(date)).filter(
-                (schedule) => !currentDoctor || !normalizeDoctorName(schedule.doctor).includes(currentDoctor),
-            )
-            : [];
-
-        if (!otherSchedules.length) {
-            return {
-                directReply: 'Ngày này hiện không còn lịch của bác sĩ nào khác. Bạn có muốn tiếp tục với bác sĩ đang hiển thị hoặc chọn ngày khác không?',
-                sessionUpdate: { waitingFor: 'booking_slot' },
-            };
-        }
-
-        return buildSlotOptionsReply(
-            date,
-            otherSchedules,
-            `Ngoài bác sĩ đang chọn, ngày **${moment(date).format('DD/MM/YYYY')}** còn các lựa chọn sau:`,
-        );
-    }
-
-    const requestedDoctor = extractDoctorName(message);
-    if (requestedDoctor && date) {
-        const doctorSchedules = await getDoctorSchedules(date, requestedDoctor);
-        if (!doctorSchedules.length) {
-            return {
-                directReply: `Ngày **${moment(date).format('DD/MM/YYYY')}** hiện không có lịch trống cho bác sĩ **${requestedDoctor}**. Bạn muốn chọn bác sĩ khác hay ngày khác?`,
-                sessionUpdate: { waitingFor: 'booking_slot', _meta: { scheduleOptions: options, requestedDoctor: currentDoctor } },
-            };
-        }
-        return buildSlotOptionsReply(
-            date,
-            doctorSchedules,
-            `Các khung giờ của **${doctorSchedules[0].doctor}** vào ngày **${moment(date).format('DD/MM/YYYY')}** là:`,
-        );
-    }
-
-    if (isAskingForAnotherTime(message) && date) {
-        const doctorSchedules = await getDoctorSchedules(date, currentDoctor);
-        return buildSlotOptionsReply(
-            date,
-            doctorSchedules,
-            `Các khung giờ còn lại vào ngày **${moment(date).format('DD/MM/YYYY')}** là:`,
-        );
-    }
-
-    const match = message.match(/\d+/);
-    const picked = match ? parseInt(match[0], 10) : null;
-
-    if (!picked || !options[picked - 1]) {
-        return {
-            directReply: 'Bạn chọn giúp mình đúng số thứ tự trong danh sách ở trên nhé.',
-            sessionUpdate: { waitingFor: 'booking_slot' },
-        };
-    }
-
-    const slot = options[picked - 1];
-    const pendingBooking = {
-        doctor_schedule_id: slot.doctor_schedule_id,
-        doctor: slot.doctor,
-        date: slot.date,
-        time: slot.time,
-    };
-
+    const pendingBooking = { doctor_schedule_id: slot.doctor_schedule_id, doctor: slot.doctor, date: slot.date, time: slot.time };
     return buildConfirmReply(pendingBooking, patientId);
 };
 
-// BƯỚC 3 — xác nhận (hoặc nhắc lại sau khi vừa đăng nhập xong)
-const handleBookingConfirm = async (message, sessionData, patientId) => {
+export const handleSlotDateChange = async (date, sessionData) => buildDateResultReply(date, currentFiltersFromSession(sessionData));
+
+export const handleSlotDoctorChange = async (doctorName, sessionData) => {
+    const options = sessionData?._meta?.scheduleOptions || [];
+    const date = options[0]?.date;
+    const currentFilters = currentFiltersFromSession(sessionData);
+    if (!doctorName || !date) {
+        return { directReply: '{U} muốn đổi sang bác sĩ nào ạ?', sessionUpdate: { waitingFor: 'booking_slot', _meta: sessionData?._meta } };
+    }
+    const doctorFilters = { ...currentFilters, requestedDoctor: normalizeDoctorName(doctorName) };
+    const doctorSchedules = await getFilteredSchedules(date, doctorFilters);
+    if (!doctorSchedules.length) {
+        return {
+            directReply: `Ngày **${moment(date).format('DD/MM/YYYY')}** hiện không có lịch trống cho bác sĩ **${doctorName}**. {U} muốn chọn bác sĩ khác hay ngày khác?`,
+            sessionUpdate: { waitingFor: 'booking_slot', _meta: { ...currentFilters, scheduleOptions: options } },
+        };
+    }
+    return buildSlotOptionsReply(doctorSchedules, `Các khung giờ của **${doctorSchedules[0].doctor}** vào ngày **${moment(date).format('DD/MM/YYYY')}** là:`, doctorFilters);
+};
+
+export const handleSlotTimeChange = async (sessionData) => {
+    const options = sessionData?._meta?.scheduleOptions || [];
+    const date = options[0]?.date;
+    const currentFilters = currentFiltersFromSession(sessionData);
+    if (!date) {
+        return { directReply: '{U} muốn xem khung giờ ngày nào ạ?', sessionUpdate: { waitingFor: 'booking_date', _meta: currentFilters } };
+    }
+    const doctorSchedules = await getFilteredSchedules(date, currentFilters);
+    return buildSlotOptionsReply(doctorSchedules, `Các khung giờ còn lại vào ngày **${moment(date).format('DD/MM/YYYY')}** là:`, currentFilters);
+};
+
+export const handleBookingConfirmDecision = async (decision, sessionData, patientId) => {
     const pendingBooking = sessionData?.pendingBooking;
     if (!pendingBooking) {
+        return { directReply: '{U} muốn đặt lịch khám mới phải không? Cho {s} biết ngày {u} muốn khám nhé.', sessionUpdate: { waitingFor: null } };
+    }
+    if (decision === 'decline') {
         return {
-            directReply: 'Bạn muốn đặt lịch khám mới phải không? Cho mình biết ngày bạn muốn khám nhé.',
-            sessionUpdate: { waitingFor: null },
+            directReply: '{S} đã hủy yêu cầu đặt lịch này. {U} cần gì khác cứ nhắn {s} nhé.',
+            sessionUpdate: { waitingFor: null, pendingBooking: null, _meta: null },
         };
     }
-
-    const msg = message.trim().toLowerCase();
-    if (/^(hủy|huỷ|không|thôi)/.test(msg)) {
-        return {
-            directReply: 'Mình đã hủy yêu cầu đặt lịch này. Bạn cần gì khác cứ nhắn mình nhé.',
-            sessionUpdate: { waitingFor: null, pendingBooking: null },
-        };
-    }
-
-    if (!patientId) {
-        return buildConfirmReply(pendingBooking, null);
-    }
-
-    if (!/^(xác nhận|có|đồng ý|ok|yes|đặt)/.test(msg)) {
-        return buildConfirmReply(pendingBooking, patientId);
-    }
+    if (!patientId) return buildConfirmReply(pendingBooking, null);
 
     const result = await commitBooking(pendingBooking, patientId);
-    return { ...result, sessionUpdate: { waitingFor: null, pendingBooking: null } };
+    return { ...result, sessionUpdate: { waitingFor: null, pendingBooking: null, _meta: null } };
 };
 
-export const handleBookingFlow = async (waitingFor, message, sessionData, patientId) => {
-    switch (waitingFor) {
-        case 'booking_date':
-            return handleBookingDate(message, sessionData?._meta?.requestedDoctor);
-        case 'booking_slot':
-            return handleBookingSlot(message, sessionData, patientId);
-        case 'booking_confirm':
-            return handleBookingConfirm(message, sessionData, patientId);
-        default:
-            return null;
-    }
-};
-
-// BƯỚC 0 — bắt đầu luồng, đồng thời xử lý ngày nếu người dùng đã nêu
-export const startBookingFlow = async (message = '', sessionData = {}) => {
-    const requestedDoctor = extractDoctorName(message) || sessionData?._meta?.requestedDoctor || null;
-    if (extractDate(message)) return handleBookingDate(message, requestedDoctor);
-
-    return {
-        directReply: `Bạn muốn đặt lịch khám vào ngày nào? (VD: "ngày mai", "20/09")\n\nHoặc bạn có thể ${MANUAL_LINK} nếu muốn tự chọn.`,
-        sessionUpdate: { waitingFor: 'booking_date', pendingBooking: null, _meta: { requestedDoctor } },
-    };
+export const resumeBookingConfirm = (sessionData, patientId) => {
+    const pendingBooking = sessionData?.pendingBooking;
+    if (!pendingBooking) return null;
+    return buildConfirmReply(pendingBooking, patientId);
 };
