@@ -4,10 +4,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.callGeminiWithFallback = void 0;
-var _axios = _interopRequireDefault(require("axios"));
-var _geminiTools = require("../intent/geminiTools");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+exports.startCancelFlow = exports.handleCancelSelection = exports.handleCancelConfirmDecision = void 0;
+var _appointment = require("../appointment.service");
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -16,118 +14,180 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-var GEMINI_MODELS = ['gemini-3.5-flash-lite', 'gemini-2.5-flash'];
-var geminiUrl = function geminiUrl(model) {
-  return "https://generativelanguage.googleapis.com/v1/models/".concat(model, ":generateContent");
-};
-var DEFAULT_TOOLS = [{
-  functionDeclarations: _geminiTools.GENERAL_TOOLS
+var CONFIRM_CANCEL_QUICK_REPLIES = [{
+  label: 'Xác nhận hủy lịch',
+  text: 'Xác nhận hủy lịch'
+}, {
+  label: 'Không hủy nữa',
+  text: 'Không hủy nữa'
 }];
-var callGeminiWithFallback = exports.callGeminiWithFallback = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(contents) {
-    var options,
-      _options$tools,
-      tools,
-      toolConfig,
-      lastError,
-      _i,
-      _GEMINI_MODELS,
-      model,
-      _response$data$candid,
-      _response$data$candid2,
-      _response$data$candid3,
-      _parts$find,
-      response,
-      parts,
-      functionCallPart,
-      text,
-      _e$response,
-      _e$response2,
-      status,
-      _args = arguments;
+var buildCancelOptionsReply = function buildCancelOptionsReply(appointments) {
+  var list = appointments.map(function (a, i) {
+    return "".concat(i + 1, ". **").concat(a.doctor, "** \u2014 ").concat(a.date, " l\xFAc ").concat(a.time, " (Tr\u1EA1ng th\xE1i: ").concat(a.status, ")");
+  }).join('\n');
+  return {
+    directReply: "{U} \u0111ang c\xF3 c\xE1c l\u1ECBch h\u1EB9n sau \u0111\xE2y c\xF3 th\u1EC3 h\u1EE7y:\n\n".concat(list, "\n\n{U} ch\u1ECDn s\u1ED1 t\u01B0\u01A1ng \u1EE9ng v\u1EDBi l\u1ECBch mu\u1ED1n h\u1EE7y nh\xE9."),
+    sessionUpdate: {
+      waitingFor: 'cancel_select',
+      _meta: {
+        cancelOptions: appointments
+      }
+    },
+    quickReplies: appointments.map(function (a, i) {
+      return {
+        label: "".concat(i + 1, ". ").concat(a.doctor.replace(/^BS\.\s*/i, ''), " - ").concat(a.date),
+        text: "".concat(i + 1)
+      };
+    })
+  };
+};
+var buildCancelConfirmReply = function buildCancelConfirmReply(pendingCancel) {
+  return {
+    directReply: "{U} mu\u1ED1n h\u1EE7y l\u1ECBch h\u1EB9n **".concat(pendingCancel.doctor, "** l\xFAc **").concat(pendingCancel.time, "** ng\xE0y **").concat(pendingCancel.date, "** (Tr\u1EA1ng th\xE1i: ").concat(pendingCancel.status, ") \u2014 \u0111\xFAng kh\xF4ng?"),
+    sessionUpdate: {
+      waitingFor: 'cancel_confirm',
+      pendingCancel: pendingCancel
+    },
+    quickReplies: CONFIRM_CANCEL_QUICK_REPLIES
+  };
+};
+var startCancelFlow = exports.startCancelFlow = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(phone) {
+    var appointments;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
-          _options$tools = options.tools, tools = _options$tools === void 0 ? DEFAULT_TOOLS : _options$tools, toolConfig = options.toolConfig;
-          lastError = null;
-          _i = 0, _GEMINI_MODELS = GEMINI_MODELS;
-        case 4:
-          if (!(_i < _GEMINI_MODELS.length)) {
-            _context.next = 29;
+          if (phone) {
+            _context.next = 2;
             break;
           }
-          model = _GEMINI_MODELS[_i];
-          _context.prev = 6;
-          _context.next = 9;
-          return _axios["default"].post(geminiUrl(model), _objectSpread(_objectSpread({
-            contents: contents,
-            tools: tools
-          }, toolConfig ? {
-            toolConfig: toolConfig
-          } : {}), {}, {
-            generationConfig: {
-              maxOutputTokens: 1536,
-              thinkingConfig: {
-                thinkingBudget: 512
-              },
-              temperature: 0.5
+          return _context.abrupt("return", {
+            directReply: 'Để hủy lịch hẹn, {u} vui lòng cung cấp **số điện thoại** đã đặt lịch.',
+            sessionUpdate: {
+              waitingFor: 'phone_for_cancel'
             }
-          }), {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-goog-api-key': process.env.GEMINI_API_KEY
-            },
-            timeout: 30000
           });
-        case 9:
-          response = _context.sent;
-          parts = ((_response$data$candid = response.data.candidates) === null || _response$data$candid === void 0 ? void 0 : (_response$data$candid2 = _response$data$candid[0]) === null || _response$data$candid2 === void 0 ? void 0 : (_response$data$candid3 = _response$data$candid2.content) === null || _response$data$candid3 === void 0 ? void 0 : _response$data$candid3.parts) || [];
-          functionCallPart = parts.find(function (p) {
-            return p.functionCall;
-          });
-          if (!functionCallPart) {
-            _context.next = 14;
-            break;
-          }
-          return _context.abrupt("return", {
-            functionCall: functionCallPart.functionCall,
-            text: null
-          });
-        case 14:
-          text = (_parts$find = parts.find(function (p) {
-            return p.text;
-          })) === null || _parts$find === void 0 ? void 0 : _parts$find.text;
-          return _context.abrupt("return", {
-            functionCall: null,
-            text: text || 'Xin lỗi, tôi chưa có thông tin về vấn đề này. Vui lòng gọi **(028) 1234 5678**.'
-          });
-        case 18:
-          _context.prev = 18;
-          _context.t0 = _context["catch"](6);
-          lastError = _context.t0;
-          status = _context.t0 === null || _context.t0 === void 0 ? void 0 : (_e$response = _context.t0.response) === null || _e$response === void 0 ? void 0 : _e$response.status;
-          console.error("[geminiClient] model \"".concat(model, "\" l\u1ED7i ").concat(status || 'network', ":"), JSON.stringify(_context.t0 === null || _context.t0 === void 0 ? void 0 : (_e$response2 = _context.t0.response) === null || _e$response2 === void 0 ? void 0 : _e$response2.data) || _context.t0.message);
-          if (!(status === 429 || status === 503)) {
-            _context.next = 25;
-            break;
-          }
-          return _context.abrupt("continue", 26);
-        case 25:
-          throw _context.t0;
-        case 26:
-          _i++;
+        case 2:
           _context.next = 4;
-          break;
-        case 29:
-          throw lastError;
-        case 30:
+          return (0, _appointment.getCancellableAppointmentsByPhone)(phone);
+        case 4:
+          appointments = _context.sent;
+          if (appointments.length) {
+            _context.next = 7;
+            break;
+          }
+          return _context.abrupt("return", {
+            directReply: "Kh\xF4ng t\xECm th\u1EA5y l\u1ECBch h\u1EB9n n\xE0o \u0111ang **ch\u1EDD x\xE1c nh\u1EADn** v\u1EDBi s\u1ED1 \u0111i\u1EC7n tho\u1EA1i **".concat(phone, "** \u0111\u1EC3 h\u1EE7y. Nh\u1EEFng l\u1ECBch \u0111\xE3 \u0111\u01B0\u1EE3c duy\u1EC7t vui l\xF2ng g\u1ECDi hotline **(028) 1234 5678** \u0111\u1EC3 \u0111\u01B0\u1EE3c h\u1ED7 tr\u1EE3."),
+            sessionUpdate: {
+              phone: phone,
+              waitingFor: null
+            }
+          });
+        case 7:
+          return _context.abrupt("return", _objectSpread(_objectSpread({}, buildCancelOptionsReply(appointments)), {}, {
+            sessionUpdate: {
+              phone: phone,
+              waitingFor: 'cancel_select',
+              _meta: {
+                cancelOptions: appointments
+              }
+            }
+          }));
+        case 8:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[6, 18]]);
+    }, _callee);
   }));
-  return function callGeminiWithFallback(_x) {
+  return function startCancelFlow(_x) {
     return _ref.apply(this, arguments);
+  };
+}();
+var handleCancelSelection = exports.handleCancelSelection = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(index, sessionData) {
+    var _sessionData$_meta;
+    var options, target, list;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          options = (sessionData === null || sessionData === void 0 ? void 0 : (_sessionData$_meta = sessionData._meta) === null || _sessionData$_meta === void 0 ? void 0 : _sessionData$_meta.cancelOptions) || [];
+          target = options[index - 1];
+          if (target) {
+            _context2.next = 5;
+            break;
+          }
+          list = options.map(function (a, i) {
+            return "".concat(i + 1, ". **").concat(a.doctor, "** \u2014 ").concat(a.date, " l\xFAc ").concat(a.time, " (Tr\u1EA1ng th\xE1i: ").concat(a.status, ")");
+          }).join('\n');
+          return _context2.abrupt("return", {
+            directReply: "{S} ch\u01B0a r\xF5 {u} mu\u1ED1n h\u1EE7y l\u1ECBch n\xE0o, {u} ch\u1ECDn gi\xFAp {s} theo s\u1ED1 th\u1EE9 t\u1EF1 b\xEAn d\u01B0\u1EDBi nh\xE9:\n\n".concat(list),
+            sessionUpdate: {
+              waitingFor: 'cancel_select'
+            }
+          });
+        case 5:
+          return _context2.abrupt("return", buildCancelConfirmReply(target));
+        case 6:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return function handleCancelSelection(_x2, _x3) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+var handleCancelConfirmDecision = exports.handleCancelConfirmDecision = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(decision, sessionData) {
+    var pendingCancel, success;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          pendingCancel = sessionData === null || sessionData === void 0 ? void 0 : sessionData.pendingCancel;
+          if (pendingCancel) {
+            _context3.next = 3;
+            break;
+          }
+          return _context3.abrupt("return", {
+            directReply: '{U} muốn hủy lịch hẹn nào ạ? Cho {s} xin số điện thoại đã đặt lịch nhé.',
+            sessionUpdate: {
+              waitingFor: 'phone_for_cancel',
+              pendingCancel: null
+            }
+          });
+        case 3:
+          if (!(decision === 'decline')) {
+            _context3.next = 5;
+            break;
+          }
+          return _context3.abrupt("return", {
+            directReply: '{S} vẫn giữ nguyên lịch hẹn này cho {u} nhé, không hủy gì cả.',
+            sessionUpdate: {
+              waitingFor: null,
+              pendingCancel: null,
+              _meta: null
+            }
+          });
+        case 5:
+          _context3.next = 7;
+          return (0, _appointment.cancelAppointmentByPhone)(pendingCancel.appointment_id, sessionData === null || sessionData === void 0 ? void 0 : sessionData.phone);
+        case 7:
+          success = _context3.sent;
+          return _context3.abrupt("return", {
+            directReply: success ? "\u0110\xE3 h\u1EE7y th\xE0nh c\xF4ng l\u1ECBch h\u1EB9n **".concat(pendingCancel.doctor, "** l\xFAc **").concat(pendingCancel.time, "** ng\xE0y **").concat(pendingCancel.date, "**.") : 'Rất tiếc, {s} không hủy được lịch hẹn này (có thể đã được duyệt hoặc không còn tồn tại). {U} vui lòng gọi hotline **(028) 1234 5678** để được hỗ trợ.',
+            sessionUpdate: {
+              waitingFor: null,
+              pendingCancel: null,
+              _meta: null
+            }
+          });
+        case 9:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return function handleCancelConfirmDecision(_x4, _x5) {
+    return _ref3.apply(this, arguments);
   };
 }();

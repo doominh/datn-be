@@ -5,10 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.QUICK_REPLY_ACTIONS = void 0;
 var QUICK_REPLY_ACTIONS = exports.QUICK_REPLY_ACTIONS = {
-  'Tôi muốn đặt lịch khám': 'BOOK_APPOINTMENT',
-  'Cho tôi xem bảng giá dịch vụ': 'ASK_PRICE',
-  'Còn lịch trống không?': 'ASK_SCHEDULE',
-  'Tra cứu lịch hẹn của tôi': 'CHECK_APPOINTMENT',
-  'Giới thiệu các bác sĩ của phòng khám': 'ASK_DOCTOR',
-  'Giờ làm việc của phòng khám?': 'ASK_WORKING_HOURS'
+  'Tôi muốn đặt lịch khám': 'book_appointment',
+  'Cho tôi xem bảng giá dịch vụ': 'ask_price',
+  'Còn lịch trống không?': 'ask_schedule_today',
+  'Tra cứu lịch hẹn của tôi': 'check_appointment',
+  'Tôi muốn hủy lịch hẹn': 'cancel_appointment',
+  'Giới thiệu các bác sĩ của phòng khám': 'ask_doctor_list',
+  'Giờ làm việc của phòng khám?': 'ask_working_hours'
 };
