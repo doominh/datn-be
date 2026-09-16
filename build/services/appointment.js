@@ -442,7 +442,7 @@ var getAllByDoctorID = function getAllByDoctorID(data) {
 var getAllByPatientID = function getAllByPatientID(data) {
   return new Promise( /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resolve, reject) {
-      var patient_id, patient, appointments;
+      var patient_id, patient, appointments, detailsRaw, detailsMap, result;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
@@ -455,7 +455,7 @@ var getAllByPatientID = function getAllByPatientID(data) {
               errCode: 3,
               message: "Missing params"
             });
-            _context5.next = 18;
+            _context5.next = 24;
             break;
           case 5:
             patient_id = data.patient_id.toLowerCase();
@@ -468,7 +468,7 @@ var getAllByPatientID = function getAllByPatientID(data) {
           case 8:
             patient = _context5.sent;
             if (!patient) {
-              _context5.next = 16;
+              _context5.next = 22;
               break;
             }
             _context5.next = 12;
@@ -503,35 +503,62 @@ var getAllByPatientID = function getAllByPatientID(data) {
             });
           case 12:
             appointments = _context5.sent;
+            _context5.next = 15;
+            return _index["default"].Appointment.findAll({
+              where: {
+                patient_id: patient_id
+              },
+              include: {
+                model: _index["default"].Service,
+                include: _index["default"].Category
+              },
+              raw: true,
+              nest: true
+            });
+          case 15:
+            detailsRaw = _context5.sent;
+            detailsMap = {};
+            detailsRaw.forEach(function (item) {
+              if (item.Services && item.Services.service_id !== null) {
+                if (!detailsMap[item.appointment_id]) detailsMap[item.appointment_id] = [];
+                detailsMap[item.appointment_id].push(item.Services);
+              }
+              ;
+            });
+            result = appointments.map(function (appointment) {
+              return _objectSpread(_objectSpread({}, appointment), {}, {
+                details: detailsMap[appointment.appointment_id] || []
+              });
+            });
             resolve({
               errCode: 0,
               message: "Get all appointments by patient ID",
-              data: appointments
+              data: result
             });
-            _context5.next = 17;
+            _context5.next = 23;
             break;
-          case 16:
+          case 22:
             resolve({
               errCode: 1,
               message: "Patient doesn't exist"
             });
-          case 17:
+          case 23:
             ;
-          case 18:
-            ;
-            _context5.next = 24;
-            break;
-          case 21:
-            _context5.prev = 21;
-            _context5.t0 = _context5["catch"](0);
-            reject(_context5.t0);
           case 24:
             ;
-          case 25:
+            _context5.next = 30;
+            break;
+          case 27:
+            _context5.prev = 27;
+            _context5.t0 = _context5["catch"](0);
+            reject(_context5.t0);
+          case 30:
+            ;
+          case 31:
           case "end":
             return _context5.stop();
         }
-      }, _callee5, null, [[0, 21]]);
+      }, _callee5, null, [[0, 27]]);
     }));
     return function (_x9, _x10) {
       return _ref5.apply(this, arguments);

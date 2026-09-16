@@ -327,10 +327,37 @@ const getAllByPatientID = (data) => {
                         raw: true,
                         nest: true
                     });
+
+                    //lấy chi tiết dịch vụ (nếu có) của các lịch hẹn
+                    const detailsRaw = await db.Appointment.findAll({
+                        where: {patient_id: patient_id},
+                        include: {
+                            model: db.Service,
+                            include: db.Category
+                        },
+                        raw: true,
+                        nest: true
+                    });
+
+                    const detailsMap = {};
+                    detailsRaw.forEach(item => {
+                        if(item.Services && item.Services.service_id !== null) {
+                            if(!detailsMap[item.appointment_id]) detailsMap[item.appointment_id] = [];
+                            detailsMap[item.appointment_id].push(item.Services);
+                        };
+                    });
+
+                    const result = appointments.map(appointment => {
+                        return {
+                            ...appointment,
+                            details: detailsMap[appointment.appointment_id] || []
+                        };
+                    });
+
                     resolve({
                         errCode: 0,
                         message: "Get all appointments by patient ID",
-                        data: appointments
+                        data: result
                     });
                 }
                 else {
