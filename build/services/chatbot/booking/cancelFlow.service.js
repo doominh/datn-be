@@ -174,7 +174,7 @@ var handleCancelConfirmDecision = exports.handleCancelConfirmDecision = /*#__PUR
         case 7:
           success = _context3.sent;
           return _context3.abrupt("return", {
-            directReply: success ? "\u0110\xE3 h\u1EE7y th\xE0nh c\xF4ng l\u1ECBch h\u1EB9n **".concat(pendingCancel.doctor, "** l\xFAc **").concat(pendingCancel.time, "** ng\xE0y **").concat(pendingCancel.date, "**.") : 'Rất tiếc, {s} không hủy được lịch hẹn này (có thể đã được duyệt hoặc không còn tồn tại). {U} vui lòng gọi hotline **(028) 1234 5678** để được hỗ trợ.',
+            directReply: success ? "\u0110\xE3 h\u1EE7y th\xE0nh c\xF4ng l\u1ECBch h\u1EB9n **".concat(pendingCancel.doctor, "** l\xFAc **").concat(pendingCancel.time, "** ng\xE0y **").concat(pendingCancel.date, "**.\n\n[Xem danh s\xE1ch l\u1ECBch h\u1EB9n](/quan-ly-lich-hen)") : 'Rất tiếc, {s} không hủy được lịch hẹn này (có thể đã được duyệt hoặc không còn tồn tại). {U} vui lòng gọi hotline **(028) 1234 5678** để được hỗ trợ.',
             sessionUpdate: {
               waitingFor: null,
               pendingCancel: null,

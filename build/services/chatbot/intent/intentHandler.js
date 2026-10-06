@@ -179,7 +179,7 @@ var handleStructuredIntent = exports.handleStructuredIntent = /*#__PURE__*/funct
             directReply: 'Trong 7 ngày tới hiện chưa có lịch làm việc của bác sĩ. {U} thử chọn một ngày khác hoặc gọi hotline **(028) 1234 5678** nhé.'
           });
         case 53:
-          _list3 = upcomingSchedules.map(function (_ref2) {
+          _list3 = upcomingSchedules.map(function (_ref2, index) {
             var date = _ref2.date,
               schedules = _ref2.schedules;
             var formattedDate = (0, _moment["default"])(date).format('DD/MM/YYYY');
@@ -187,7 +187,8 @@ var handleStructuredIntent = exports.handleStructuredIntent = /*#__PURE__*/funct
             var slots = schedules.slice(0, 10).map(function (s) {
               return "- **".concat(s.doctor, "** \u2014 ").concat(s.time);
             }).join('\n');
-            return "**".concat(formattedDate, " (").concat(dayOfWeek, ")**\n").concat(slots);
+            var openAttr = index === 0 ? ' open' : '';
+            return "<details".concat(openAttr, ">\n<summary><strong>").concat(formattedDate, " (").concat(dayOfWeek, ")</strong></summary>\n\n").concat(slots, "\n\n</details>");
           }).join('\n\n');
           return _context.abrupt("return", {
             directReply: "L\u1ECBch l\xE0m vi\u1EC7c c\u1EE7a c\xE1c b\xE1c s\u0129 trong 7 ng\xE0y t\u1EDBi:\n\n".concat(_list3, "\n\n{U} mu\u1ED1n \u0111\u1EB7t l\u1ECBch v\xE0o ng\xE0y n\xE0o?"),
