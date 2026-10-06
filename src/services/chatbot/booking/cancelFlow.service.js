@@ -76,7 +76,7 @@ export const handleCancelConfirmDecision = async (decision, sessionData) => {
     const success = await cancelAppointmentByPhone(pendingCancel.appointment_id, sessionData?.phone);
     return {
         directReply: success
-            ? `Đã hủy thành công lịch hẹn **${pendingCancel.doctor}** lúc **${pendingCancel.time}** ngày **${pendingCancel.date}**.`
+            ? `Đã hủy thành công lịch hẹn **${pendingCancel.doctor}** lúc **${pendingCancel.time}** ngày **${pendingCancel.date}**.\n\n[Xem danh sách lịch hẹn](/quan-ly-lich-hen)`
             : 'Rất tiếc, {s} không hủy được lịch hẹn này (có thể đã được duyệt hoặc không còn tồn tại). {U} vui lòng gọi hotline **(028) 1234 5678** để được hỗ trợ.',
         sessionUpdate: { waitingFor: null, pendingCancel: null, _meta: null },
     };

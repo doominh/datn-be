@@ -92,11 +92,12 @@ export const handleStructuredIntent = async (functionName, sessionData, args = {
             if (!upcomingSchedules.length) {
                 return { directReply: 'Trong 7 ngày tới hiện chưa có lịch làm việc của bác sĩ. {U} thử chọn một ngày khác hoặc gọi hotline **(028) 1234 5678** nhé.' };
             }
-            const list = upcomingSchedules.map(({ date, schedules }) => {
+            const list = upcomingSchedules.map(({ date, schedules }, index) => {
                 const formattedDate = moment(date).format('DD/MM/YYYY');
                 const dayOfWeek = DAY_LABELS[moment(date).day()];
                 const slots = schedules.slice(0, 10).map((s) => `- **${s.doctor}** — ${s.time}`).join('\n');
-                return `**${formattedDate} (${dayOfWeek})**\n${slots}`;
+                const openAttr = index === 0 ? ' open' : '';
+                return `<details${openAttr}>\n<summary><strong>${formattedDate} (${dayOfWeek})</strong></summary>\n\n${slots}\n\n</details>`;
             }).join('\n\n');
             return {
                 directReply: `Lịch làm việc của các bác sĩ trong 7 ngày tới:\n\n${list}\n\n{U} muốn đặt lịch vào ngày nào?`,
